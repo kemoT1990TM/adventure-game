@@ -7,6 +7,7 @@ buildscript {
 	}
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath 'com.google.cloud.tools:appengine-gradle-plugin:1.3.3'
 	}
 }
 
@@ -14,6 +15,7 @@ apply plugin: 'java'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'war'
+apply plugin: 'com.google.cloud.tools.appengine'
 
 group = 'com.tkjavadev'
 version = '0.0.1-SNAPSHOT'
@@ -32,4 +34,11 @@ dependencies {
 	runtime 'org.springframework.boot:spring-boot-starter-tomcat'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	runtime 'com.h2database:h2'
+}
+
+appengine {
+	deploy {
+		version = 'v1'
+		project = "adventure-game-228714"
+	}
 }
