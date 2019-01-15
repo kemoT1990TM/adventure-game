@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" type="text/css" href="css/Grid.css"/>
+    <link rel="stylesheet" type="text/css" href="css/normalize.css"/>
+    <link rel="stylesheet" type="text/css" href="css/style.css"/>
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&amp;subset=latin-ext" rel="stylesheet"/>
+    <title>GAME FINISHED!</title>
+</head>
+<body>
+<div class="row">
+    <h1>YOUR ADVENTURE HAS COME TO AN END!</h1>
+    <h3 th:text="${__${T(com.tkjavadev.adventuregame.util.AttributeNames).DESCRIPTION}__}">Description</h3>
+    <h3><a class="btn" th:href="@{__${T(com.tkjavadev.adventuregame.util.GameMappings).RESTART}__}">PLAY AGAIN</a></h3>
+    <h3><a class="btn" th:href="@{__${T(com.tkjavadev.adventuregame.util.GameMappings).HOME}__}">HOME</a></h3>
+   </div>
+     <div>
+        <footer>
+            <p>Copyright &copy; 2018 Tomasz Kartasiński. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>

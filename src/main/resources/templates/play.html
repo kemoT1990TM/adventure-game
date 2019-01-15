@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" type="text/css" href="css/Grid.css"/>
+    <link rel="stylesheet" type="text/css" href="css/normalize.css"/>
+    <link rel="stylesheet" type="text/css" href="css/style.css"/>
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&amp;subset=latin-ext" rel="stylesheet"/>
+    <title>ADVENTURE!</title>
+</head>
+<body>
+<div class="row">
+    <h3 class="container" th:text="${__${T(com.tkjavadev.adventuregame.util.AttributeNames).DESCRIPTION}__}">Description</h3>
+        <table>
+            <tr>
+                <h3>AVALIABLE DIRECTIONS ARE:</h3>
+            </tr>
+    <tr th:each="exit:${exits}">
+        <form th:action="@{__${T(com.tkjavadev.adventuregame.util.GameMappings).PLAY}__}" method="post">
+            <input type="hidden" th:value="${exit.getDirection()}" id="direction" name="direction"/>
+            <button class="btn" type="submit" value="value" th:text="${exit.getFullName()}">Direction</button>
+        </form>
+    </tr>
+        </table>
+    </div>
+    <div>
+        <footer>
+            <p>Copyright &copy; 2018 Tomasz Kartasiński. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>
