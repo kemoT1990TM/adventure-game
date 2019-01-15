@@ -19,10 +19,10 @@ spring:
     database: H2
     openInView: false
     show_sql: true
-    generate-ddl: true
+#    generate-ddl: true
     hibernate:
       ddl-auto: create-drop
       naming-strategy: org.hibernate.cfg.EJB3NamingStrategy
     properties:
       hibernate.cache.use_query_cache: false
-      hibernate.generate_statistics: true
+#      hibernate.generate_statistics: true
