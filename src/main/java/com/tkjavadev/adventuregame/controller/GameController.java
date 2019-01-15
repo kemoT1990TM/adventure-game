@@ -27,7 +27,7 @@ public class GameController {
     public String play(Model model) {
         model.addAttribute(AttributeNames.DESCRIPTION, gameService.getDescription());
         model.addAttribute(AttributeNames.EXITS, gameService.getAvaliableExits());
-        log.info("model = {}", model);
+//        log.info("model = {}", model);
         if (gameService.isGameOver()) {
             return ViewNames.GAME_OVER;
         }
@@ -36,14 +36,14 @@ public class GameController {
 
     @PostMapping(GameMappings.PLAY)
     public String processMessage(@RequestParam String direction) {
-        log.info("direction = {}", direction);
+//        log.info("direction = {}", direction);
         gameService.changeDirection(direction);
         return GameMappings.REDIRECT_PLAY;
     }
 
     @GetMapping(GameMappings.RESTART)
     public String restart() {
-        log.info("reset() called");
+//        log.info("reset() called");
         gameService.reset();
         return GameMappings.REDIRECT_PLAY;
     }
