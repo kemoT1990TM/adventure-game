@@ -24,17 +24,17 @@ public class GameImplTest {
 
     @Test
     public void isGameOver() {
-        game.setLocationID(5L);
+        game.setLocationId(5L);
         assertEquals(false, game.isGameOver());
 
-        game.setLocationID(141L);
+        game.setLocationId(141L);
         assertEquals(true, game.isGameOver());
     }
 
     @Test
     public void reset() {
-        game.setLocationID(5L);
+        game.setLocationId(5L);
         game.reset();
-        assertEquals(Long.valueOf(1L), game.getLocationID());
+        assertEquals(Long.valueOf(1L), game.getLocationId());
     }
 }

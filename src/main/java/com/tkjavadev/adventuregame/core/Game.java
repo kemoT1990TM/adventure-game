@@ -15,4 +15,8 @@ public interface Game {
     Long changeDirection(String direction);
 
     void reset();
+
+    void setLocationId(Long locationId);
+
+    Long getLocationId();
 }

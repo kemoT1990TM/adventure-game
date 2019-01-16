@@ -6,7 +6,6 @@ import com.tkjavadev.adventuregame.repository.ExitRepository;
 import com.tkjavadev.adventuregame.repository.LocationRepository;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
-import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -15,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-@Component
+//@Component
 public class AdventureBootStrap implements ApplicationListener<ContextRefreshedEvent> {
 
         private final ExitRepository exitRepository;

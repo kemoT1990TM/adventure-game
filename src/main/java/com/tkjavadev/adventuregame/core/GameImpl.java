@@ -4,48 +4,47 @@ import com.tkjavadev.adventuregame.domain.Gate;
 import com.tkjavadev.adventuregame.service.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.annotation.SessionScope;
 
 import java.util.List;
 
-@SessionScope
 @Component
 public class GameImpl implements Game {
 
     // == fields ==
     private LocationService locationService;
-    private Long locationID = 1L;
+    private Long locationId;
 
     // == constructors ==
     @Autowired
-    public GameImpl(LocationService locationService) {
+    public GameImpl(@LocationId Long locationId,LocationService locationService) {
+        this.locationId = locationId;
         this.locationService = locationService;
     }
 
     // == methods ==
-//	public void setLocationID() {
-//		locationID = 1L;
+//	public void setLocationId() {
+//		locationId = 1L;
 //		// Random random=new Random();
-//		// locationID=random.nextInt(locations.size());
+//		// locationId=random.nextInt(locations.size());
 //	}
 
-    public void setLocationID(Long locationID) {
-        this.locationID = locationID;
+    public void setLocationId(Long locationId) {
+        this.locationId = locationId;
     }
 
     @Override
     public List<Gate> getAvaliableGates() {
-        return locationService.getLocationById(locationID).getGates();
+        return locationService.getLocationById(locationId).getGates();
     }
 
     @Override
     public String getDescription() {
-        return locationService.getLocationById(locationID).getDescription();
+        return locationService.getLocationById(locationId).getDescription();
     }
 
     @Override
     public boolean isGameOver() {
-        if (locationID == 141L) {
+        if (locationId == 141L) {
             return true;
         }
         return false;
@@ -54,22 +53,22 @@ public class GameImpl implements Game {
     @Override
     public Long changeDirection(String direction) {
 
-        for (Gate gate : locationService.getLocationById(locationID).getGates()) {
+        for (Gate gate : locationService.getLocationById(locationId).getGates()) {
             // System.out.println(gate.getDestId()+" "+gate.getDirection());
             if (gate.getDirection().contains(direction)) {
-                locationID = gate.getDestId();
+                locationId = gate.getDestId();
                 break;
             }
         }
-        return locationID;
+        return locationId;
     }
 
     @Override
     public void reset() {
-        setLocationID(1L);
+        setLocationId(1L);
     }
 
-    public Long getLocationID() {
-        return locationID;
+    public Long getLocationId() {
+        return locationId;
     }
 }
