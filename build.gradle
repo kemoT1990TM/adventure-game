@@ -34,7 +34,11 @@ dependencies {
 	compile 'jstl:jstl:1.2'
 
 //  --- My dependecies ---
-	compile 'mysql:mysql-connector-java:8.0.13'
+	runtime 'mysql:mysql-connector-java:8.0.13'
+	compile 'com.google.cloud.sql:mysql-socket-factory:1.0.11'
+//	compile group: 'com.google.api-client', name: 'google-api-client', version: '1.27.0'
+	compile group: 'org.springframework.cloud', name: 'spring-cloud-gcp-starter-sql-mysql', version: '1.0.0.RELEASE'
+
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -42,9 +46,11 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok'
 	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	compile 'com.google.cloud.sql:mysql-socket-factory:1.0.11'
 //  --- End of my dependecies ---
 
-//  compile 'com.google.cloud:google-cloud:+'   // Latest Cloud API's http://googlecloudplatform.github.io/google-cloud-java
+	compile 'com.google.cloud:google-cloud:+'   // Latest Cloud API's http://googlecloudplatform.github.io/google-cloud-java
 
 	testCompile 'junit:junit:4.12'
 	testCompile 'com.google.truth:truth:0.33'
