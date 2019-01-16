@@ -11,6 +11,7 @@ import static org.junit.Assert.assertEquals;
 public class GameImplTest {
 
     GameImpl game;
+    Long locationId=1L;
 
     @Mock
     LocationService locationService;
@@ -19,7 +20,7 @@ public class GameImplTest {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
 
-        game = new GameImpl(locationService);
+        game = new GameImpl(locationId,locationService);
     }
 
     @Test
