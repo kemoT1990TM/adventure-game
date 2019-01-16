@@ -1,14 +1,8 @@
 package com.tkjavadev.adventuregame.core;
 
-import org.springframework.beans.factory.annotation.Qualifier;
+public interface LocationId {
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+    void setLocationId(Long locationId);
 
-@Target({ElementType.FIELD,ElementType.PARAMETER,ElementType.METHOD})
-@Retention(RetentionPolicy.RUNTIME)
-@Qualifier
-public @interface LocationId {
+    Long getLocationId();
 }

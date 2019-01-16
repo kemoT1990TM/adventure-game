@@ -1,7 +1,6 @@
 package com.tkjavadev.adventuregame.service;
 
 import com.tkjavadev.adventuregame.core.Game;
-import com.tkjavadev.adventuregame.core.MessageGenerator;
 import com.tkjavadev.adventuregame.domain.Gate;
 import org.springframework.stereotype.Service;
 
@@ -12,17 +11,15 @@ public class GameServiceImpl implements GameService {
 
     // == fields ==
     private Game game;
-    private MessageGenerator messageGenerator;
 
     // == constructors ==
-    public GameServiceImpl(Game game, MessageGenerator messageGenerator) {
+    public GameServiceImpl(Game game) {
         this.game = game;
-        this.messageGenerator = messageGenerator;
     }
 
     // == methods ==
     public String getDescription() {
-        return messageGenerator.getDescription();
+        return game.getDescription();
     }
 
     public boolean isGameOver() {

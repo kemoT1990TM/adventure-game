@@ -12,6 +12,7 @@ import java.util.List;
 @Component
 public class Location {
 
+    // == fields ==
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -19,10 +20,10 @@ public class Location {
     private String description;
 
     @Fetch(FetchMode.JOIN)
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "locId",fetch = FetchType.LAZY)
-    // @JoinColumn(name="loc_id")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "locId", fetch = FetchType.LAZY)
     private List<Gate> gates = new ArrayList<>();
 
+    // == methods ==
     public Long getId() {
         return id;
     }

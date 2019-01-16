@@ -1,6 +1,6 @@
 package com.tkjavadev.adventuregame.config;
 
-import com.tkjavadev.adventuregame.core.LocationId;
+import com.tkjavadev.adventuregame.core.LocId;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,8 +17,8 @@ public class GameConfig {
 
     //== bean methods ==
     @Bean
-    @LocationId
-    public Long locationId(){
+    @LocId
+    public Long locationId() {
         return locationId;
     }
 }

@@ -11,6 +11,7 @@ import javax.persistence.Id;
 @Component
 public class Gate {
 
+    // == fields ==
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -19,6 +20,7 @@ public class Gate {
     private String direction;
     private Long destId;
 
+    // == methods ==
     public String getFullName() {
         String fullName =  null;
         if(direction!=null && !direction.isEmpty()){
@@ -61,14 +63,6 @@ public class Gate {
             fullName = "BAD EXIT";
         }
         return fullName;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public Long getLocId() {

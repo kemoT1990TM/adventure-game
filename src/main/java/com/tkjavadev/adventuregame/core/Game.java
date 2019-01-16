@@ -16,7 +16,4 @@ public interface Game {
 
     void reset();
 
-    void setLocationId(Long locationId);
-
-    Long getLocationId();
 }
