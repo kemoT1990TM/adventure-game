@@ -1,0 +1,2 @@
+create table location (id bigint not null auto_increment, description longtext, primary key (id)) engine=InnoDB;
+create table exit (id bigint not null auto_increment, dest_id bigint, direction varchar(255), loc_id bigint, primary key (id)) engine=InnoDB;

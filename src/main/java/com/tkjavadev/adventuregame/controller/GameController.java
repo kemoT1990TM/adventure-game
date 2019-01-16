@@ -25,7 +25,7 @@ public class GameController {
     @GetMapping(GameMappings.PLAY)
     public String play(Model model) {
         model.addAttribute(AttributeNames.DESCRIPTION, gameService.getDescription());
-        model.addAttribute(AttributeNames.EXITS, gameService.getAvaliableExits());
+        model.addAttribute(AttributeNames.GATES, gameService.getAvaliableGates());
 //        log.info("model = {}", model);
         if (gameService.isGameOver()) {
             return ViewNames.GAME_OVER;

@@ -5,7 +5,7 @@ public final class AttributeNames {
     // == fields ==
     public static final String DESCRIPTION="description";
     public static final String DIRECTIONS="directions";
-    public static final String EXITS="exits";
+    public static final String GATES ="gates";
 
     // == constructors ==
     public AttributeNames(){}

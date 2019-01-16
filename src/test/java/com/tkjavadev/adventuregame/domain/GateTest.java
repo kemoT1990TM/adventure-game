@@ -7,20 +7,20 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-public class ExitTest {
+public class GateTest {
 
-    Exit exit;
+    Gate gate;
 
     @Before
     public void setUp() {
-        exit=new Exit();
+        gate =new Gate();
     }
 
     @Test
     public void getFullName() {
-        assertNotNull(exit.getFullName());
-        assertEquals("BAD EXIT",exit.getFullName());
-        exit.setDirection("N");
-        assertEquals("NORTH",exit.getFullName());
+        assertNotNull(gate.getFullName());
+        assertEquals("BAD EXIT", gate.getFullName());
+        gate.setDirection("N");
+        assertEquals("NORTH", gate.getFullName());
     }
 }

@@ -21,7 +21,7 @@ public class Location {
     @Fetch(FetchMode.JOIN)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "locId",fetch = FetchType.LAZY)
     // @JoinColumn(name="loc_id")
-    private List<Exit> exits = new ArrayList<>();
+    private List<Gate> gates = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -31,12 +31,12 @@ public class Location {
         this.id = id;
     }
 
-    public List<Exit> getExits() {
-        return exits;
+    public List<Gate> getGates() {
+        return gates;
     }
 
-    public void setExits(List<Exit> exits) {
-        this.exits = exits;
+    public void setGates(List<Gate> gates) {
+        this.gates = gates;
     }
 
     public String getDescription() {

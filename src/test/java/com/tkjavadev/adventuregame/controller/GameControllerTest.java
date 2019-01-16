@@ -1,6 +1,6 @@
 package com.tkjavadev.adventuregame.controller;
 
-import com.tkjavadev.adventuregame.domain.Exit;
+import com.tkjavadev.adventuregame.domain.Gate;
 import com.tkjavadev.adventuregame.domain.Location;
 import com.tkjavadev.adventuregame.service.GameService;
 import com.tkjavadev.adventuregame.util.GameMappings;
@@ -56,11 +56,11 @@ public class GameControllerTest {
     public void processMessage() throws Exception {
         Location location=new Location();
         location.setDescription("Description");
-        List<Exit> exits=new ArrayList<>();
-        location.setExits(exits);
+        List<Gate> gates =new ArrayList<>();
+        location.setGates(gates);
 
         when(gameService.getDescription()).thenReturn(location.getDescription());
-        when(gameService.getAvaliableExits()).thenReturn(exits);
+        when(gameService.getAvaliableGates()).thenReturn(gates);
 
         mockMvc.perform(get("/" + GameMappings.PLAY))
                 .andExpect(status().isOk())
