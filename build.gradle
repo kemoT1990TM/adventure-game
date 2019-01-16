@@ -1,4 +1,5 @@
-buildscript {
+// [START gradle]
+buildscript {    // Configuration for building
 	ext {
 		springBootVersion = '2.1.2.RELEASE'
 	}
@@ -7,23 +8,12 @@ buildscript {
 		mavenCentral()
 	}
 	dependencies {
+		classpath 'com.google.cloud.tools:appengine-gradle-plugin:1.+'    // Latest 1.x.x release
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-		classpath 'com.google.cloud.tools:appengine-gradle-plugin:1.+'
 	}
 }
 
-apply plugin: 'java'
-apply plugin: 'org.springframework.boot'
-apply plugin: 'io.spring.dependency-management'
-apply plugin: 'war'
-apply plugin: 'com.google.cloud.tools.appengine'
-
-group = 'com.tkjavadev'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '1.8'
-targetCompatibility = '1.8'
-
-repositories {
+repositories {   // repositories for Jar's you access in your code
 	maven {
 		url 'https://oss.sonatype.org/content/repositories/snapshots' // SNAPSHOT repository (if needed)
 	}
@@ -31,25 +21,30 @@ repositories {
 	jcenter()
 }
 
+apply plugin: 'java'                              // standard Java tasks
+apply plugin: 'war'                               // standard Web Archive plugin
+apply plugin: 'com.google.cloud.tools.appengine'  // App Engine tasks
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
 dependencies {
 	compile 'com.google.appengine:appengine-api-1.0-sdk:+'  // Latest App Engine Api's
 	providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
 
 	compile 'jstl:jstl:1.2'
 
-	providedCompile group: 'javax.websocket', name: 'javax.websocket-api', version: '1.1'
-
+//  --- My dependecies ---
+	compile 'mysql:mysql-connector-java:8.0.13'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	runtimeOnly 'org.springframework.boot:spring-boot-devtools'
 	compileOnly 'org.projectlombok:lombok'
-	runtime 'org.springframework.boot:spring-boot-starter-tomcat'
+	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-//	runtime 'com.h2database:h2'
-	compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.13'
+//  --- End of my dependecies ---
 
-  	compile 'com.google.cloud:google-cloud:+'   // Latest Cloud API's http://googlecloudplatform.github.io/google-cloud-java
+//  compile 'com.google.cloud:google-cloud:+'   // Latest Cloud API's http://googlecloudplatform.github.io/google-cloud-java
 
 	testCompile 'junit:junit:4.12'
 	testCompile 'com.google.truth:truth:0.33'
@@ -67,8 +62,8 @@ appengineStage.dependsOn test
 // [START model]
 appengine {  // App Engine tasks configuration
 	deploy {   // deploy configuration
-		version = 'v1'
-		project = "adventure-game-228714"
+		version = '1'
+		project = 'adventure-game-228714'
 	}
 }
 
@@ -87,3 +82,10 @@ test {
 	}
 }
 // [END model]
+
+group = 'com.tkjavadev'
+version = '0.0.1-SNAPSHOT'
+
+sourceCompatibility = 1.8     // App Engine Flexible uses Java 8
+targetCompatibility = 1.8     // App Engine Flexible uses Java 8
+// [END gradle]
