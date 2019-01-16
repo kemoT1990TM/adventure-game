@@ -2,7 +2,7 @@ package com.tkjavadev.adventuregame.service;
 
 import com.tkjavadev.adventuregame.core.Game;
 import com.tkjavadev.adventuregame.core.MessageGenerator;
-import com.tkjavadev.adventuregame.domain.Exit;
+import com.tkjavadev.adventuregame.domain.Gate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,8 +33,8 @@ public class GameServiceImpl implements GameService {
         return game.changeDirection(direction);
     }
 
-    public List<Exit> getAvaliableExits() {
-        return game.getAvaliableExits();
+    public List<Gate> getAvaliableGates() {
+        return game.getAvaliableGates();
     }
 
     public void reset() {

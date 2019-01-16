@@ -15,10 +15,10 @@
             <tr>
                 <h3>AVALIABLE DIRECTIONS ARE:</h3>
             </tr>
-    <tr th:each="exit:${exits}">
+    <tr th:each="gate:${gates}">
         <form th:action="@{__${T(com.tkjavadev.adventuregame.util.GameMappings).PLAY}__}" method="post">
-            <input type="hidden" th:value="${exit.getDirection()}" id="direction" name="direction"/>
-            <button class="btn" type="submit" value="value" th:text="${exit.getFullName()}">Direction</button>
+            <input type="hidden" th:value="${gate.getDirection()}" id="direction" name="direction"/>
+            <button class="btn" type="submit" value="value" th:text="${gate.getFullName()}">Direction</button>
         </form>
     </tr>
         </table>

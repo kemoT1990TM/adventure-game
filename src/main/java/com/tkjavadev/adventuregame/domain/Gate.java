@@ -9,7 +9,7 @@ import javax.persistence.Id;
 
 @Entity
 @Component
-public class Exit {
+public class Gate {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

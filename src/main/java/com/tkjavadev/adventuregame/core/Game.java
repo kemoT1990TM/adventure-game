@@ -1,12 +1,12 @@
 package com.tkjavadev.adventuregame.core;
 
-import com.tkjavadev.adventuregame.domain.Exit;
+import com.tkjavadev.adventuregame.domain.Gate;
 
 import java.util.List;
 
 public interface Game {
 
-    List<Exit> getAvaliableExits();
+    List<Gate> getAvaliableGates();
 
     String getDescription();
 

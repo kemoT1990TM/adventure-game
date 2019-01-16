@@ -1,6 +1,6 @@
 package com.tkjavadev.adventuregame.service;
 
-import com.tkjavadev.adventuregame.domain.Exit;
+import com.tkjavadev.adventuregame.domain.Gate;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ public interface GameService {
 
     Long changeDirection(String direction);
 
-    List<Exit> getAvaliableExits();
+    List<Gate> getAvaliableGates();
 
     void reset();
 }

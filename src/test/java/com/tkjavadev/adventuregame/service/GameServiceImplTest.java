@@ -2,7 +2,7 @@ package com.tkjavadev.adventuregame.service;
 
 import com.tkjavadev.adventuregame.core.GameImpl;
 import com.tkjavadev.adventuregame.core.MessageGeneratorImpl;
-import com.tkjavadev.adventuregame.domain.Exit;
+import com.tkjavadev.adventuregame.domain.Gate;
 import com.tkjavadev.adventuregame.domain.Location;
 import org.junit.Before;
 import org.junit.Test;
@@ -42,23 +42,23 @@ public class GameServiceImplTest {
     @Test
     public void getAvaliableExits() {
         Location location=new Location();
-        List<Exit> exits=new ArrayList<>();
-        location.setExits(exits);
+        List<Gate> gates =new ArrayList<>();
+        location.setGates(gates);
 
-        when(gameService.getAvaliableExits()).thenReturn(exits);
+        when(gameService.getAvaliableGates()).thenReturn(gates);
     }
 
 //    @Test
 //    public void testChangeDirection() {
 //        Location location=new Location();
 //        location.setId(2L);
-//        Exit exit=new Exit();
+//        Gate exit=new Gate();
 //        exit.setLocId(2L);
 //        exit.setDirection("W");
 //        exit.setDestId(99L);
-//        List<Exit> exits=new ArrayList<>();
+//        List<Gate> exits=new ArrayList<>();
 //        exits.add(exit);
-//        location.setExits(exits);
+//        location.setGates(exits);
 //        assertEquals(Long.valueOf(99L),gameService.changeDirection("W"));
 //    }
 }

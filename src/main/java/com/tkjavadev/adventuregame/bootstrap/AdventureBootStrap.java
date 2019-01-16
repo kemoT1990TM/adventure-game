@@ -1,6 +1,6 @@
 package com.tkjavadev.adventuregame.bootstrap;
 
-import com.tkjavadev.adventuregame.domain.Exit;
+import com.tkjavadev.adventuregame.domain.Gate;
 import com.tkjavadev.adventuregame.domain.Location;
 import com.tkjavadev.adventuregame.repository.ExitRepository;
 import com.tkjavadev.adventuregame.repository.LocationRepository;
@@ -28,7 +28,7 @@ public class AdventureBootStrap implements ApplicationListener<ContextRefreshedE
 
     @Override
         public void onApplicationEvent(ContextRefreshedEvent arg0) {
-            readData();
+//            readData();
         }
 
         private void readData() {
@@ -66,23 +66,23 @@ public class AdventureBootStrap implements ApplicationListener<ContextRefreshedE
                     String direction = data[1];
                     long destination = Integer.parseInt(data[2]);
                     System.out.println(loc + ": " + direction + ": " + destination);
-                    List<Exit> exits = locationRepository.findById(loc).get().getExits();;
+                    List<Gate> gates = locationRepository.findById(loc).get().getGates();;
                     List<String> directions = new ArrayList<>();
-                    for (Exit ex : exits) {
+                    for (Gate ex : gates) {
                         directions.add(ex.getDirection());
                     }
                     if (!directions.contains("Q")) {
-                        Exit exitQuit = new Exit();
-                        exitQuit.setLocId(loc);
-                        exitQuit.setDirection("Q");
-                        exitQuit.setDestId(141L);
-                        exitRepository.save(exitQuit);
+                        Gate gateQuit = new Gate();
+                        gateQuit.setLocId(loc);
+                        gateQuit.setDirection("Q");
+                        gateQuit.setDestId(141L);
+                        exitRepository.save(gateQuit);
                     }
-                    Exit exit = new Exit();
-                    exit.setLocId(loc);
-                    exit.setDirection(direction);
-                    exit.setDestId(destination);
-                    exitRepository.save(exit);
+                    Gate gate = new Gate();
+                    gate.setLocId(loc);
+                    gate.setDirection(direction);
+                    gate.setDestId(destination);
+                    exitRepository.save(gate);
                 }
             } catch (IOException e) {
                 e.printStackTrace();

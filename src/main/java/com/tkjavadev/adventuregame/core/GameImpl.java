@@ -1,6 +1,6 @@
 package com.tkjavadev.adventuregame.core;
 
-import com.tkjavadev.adventuregame.domain.Exit;
+import com.tkjavadev.adventuregame.domain.Gate;
 import com.tkjavadev.adventuregame.service.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -34,8 +34,8 @@ public class GameImpl implements Game {
     }
 
     @Override
-    public List<Exit> getAvaliableExits() {
-        return locationService.getLocationById(locationID).getExits();
+    public List<Gate> getAvaliableGates() {
+        return locationService.getLocationById(locationID).getGates();
     }
 
     @Override
@@ -54,10 +54,10 @@ public class GameImpl implements Game {
     @Override
     public Long changeDirection(String direction) {
 
-        for (Exit exit : locationService.getLocationById(locationID).getExits()) {
-            // System.out.println(exit.getDestId()+" "+exit.getDirection());
-            if (exit.getDirection().contains(direction)) {
-                locationID = exit.getDestId();
+        for (Gate gate : locationService.getLocationById(locationID).getGates()) {
+            // System.out.println(gate.getDestId()+" "+gate.getDirection());
+            if (gate.getDirection().contains(direction)) {
+                locationID = gate.getDestId();
                 break;
             }
         }
