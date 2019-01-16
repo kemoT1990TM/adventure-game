@@ -1,7 +1,6 @@
 package com.tkjavadev.adventuregame.service;
 
 import com.tkjavadev.adventuregame.core.GameImpl;
-import com.tkjavadev.adventuregame.core.MessageGeneratorImpl;
 import com.tkjavadev.adventuregame.domain.Gate;
 import com.tkjavadev.adventuregame.domain.Location;
 import org.junit.Before;
@@ -21,14 +20,11 @@ public class GameServiceImplTest {
     @Mock
     GameImpl game;
 
-    @Mock
-    MessageGeneratorImpl messageGenerator;
-
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
 
-        gameService = new GameServiceImpl(game, messageGenerator);
+        gameService = new GameServiceImpl(game);
     }
 
     @Test
