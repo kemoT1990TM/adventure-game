@@ -52,6 +52,16 @@ public class GameController {
         return GameMappings.REDIRECT_PLAY;
     }
 
+    @GetMapping(GameMappings.HOME)
+    public String home() {
+        log.info("home() called");
+        if (gameService.isGameOver()) {
+            log.info("reset() called");
+            gameService.reset();
+        }
+        return ViewNames.HOME;
+    }
+
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(NotFoundException.class)
     public ModelAndView handleNotFound(Exception exception){
