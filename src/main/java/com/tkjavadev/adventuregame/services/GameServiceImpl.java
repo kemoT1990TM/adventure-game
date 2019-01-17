@@ -1,14 +1,14 @@
-package com.tkjavadev.adventuregame.core;
+package com.tkjavadev.adventuregame.services;
 
+import com.tkjavadev.adventuregame.core.LocationId;
 import com.tkjavadev.adventuregame.domain.Gate;
-import com.tkjavadev.adventuregame.service.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Component
-public class GameImpl implements Game {
+@Service
+public class GameServiceImpl implements GameService {
 
     // == fields ==
     private LocationService locationService;
@@ -16,7 +16,7 @@ public class GameImpl implements Game {
 
     // == constructors ==
     @Autowired
-    public GameImpl(LocationId locationId, LocationService locationService) {
+    public GameServiceImpl(LocationId locationId, LocationService locationService) {
         this.locationId = locationId;
         this.locationService = locationService;
     }
@@ -57,5 +57,4 @@ public class GameImpl implements Game {
     public void reset() {
         locationId.setLocationId(1L);
     }
-
 }

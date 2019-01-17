@@ -1,4 +1,4 @@
-package com.tkjavadev.adventuregame.service;
+package com.tkjavadev.adventuregame.services;
 
 import com.tkjavadev.adventuregame.domain.Location;
 

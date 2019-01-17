@@ -1,8 +1,8 @@
-package com.tkjavadev.adventuregame.controller;
+package com.tkjavadev.adventuregame.controllers;
 
 import com.tkjavadev.adventuregame.domain.Gate;
 import com.tkjavadev.adventuregame.domain.Location;
-import com.tkjavadev.adventuregame.service.GameService;
+import com.tkjavadev.adventuregame.services.GameService;
 import com.tkjavadev.adventuregame.util.GameMappings;
 import com.tkjavadev.adventuregame.util.ViewNames;
 import org.junit.Before;

@@ -1,10 +1,11 @@
-package com.tkjavadev.adventuregame.service;
+package com.tkjavadev.adventuregame.services;
 
 import com.tkjavadev.adventuregame.domain.Gate;
 
 import java.util.List;
 
 public interface GameService {
+
     String getDescription();
 
     boolean isGameOver();

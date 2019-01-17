@@ -12,7 +12,7 @@ import org.springframework.context.annotation.PropertySource;
 public class GameConfig {
 
     // == fields ==
-    @Value("${game.locationId:1}")
+    @Value("${game.locId:1}")
     private Long locationId;
 
     //== bean methods ==
