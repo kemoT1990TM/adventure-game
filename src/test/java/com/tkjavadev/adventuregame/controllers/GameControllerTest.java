@@ -62,14 +62,25 @@ public class GameControllerTest {
         when(gameService.getDescription()).thenReturn(location.getDescription());
         when(gameService.getAvaliableGates()).thenReturn(gates);
 
+        mockMvc.perform(post("/" + GameMappings.PLAY).param("direction", "Q"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name(GameMappings.REDIRECT_PLAY));
+
         mockMvc.perform(get("/" + GameMappings.PLAY))
                 .andExpect(status().isOk())
                 .andExpect(view().name(ViewNames.PLAY));
     }
 
     @Test
+    public void home() throws Exception {
+        mockMvc.perform(get(GameMappings.HOME))
+                .andExpect(status().isOk())
+                .andExpect(view().name(ViewNames.HOME));
+    }
+
+    @Test
     public void restart() throws Exception {
-        mockMvc.perform(post("/" + GameMappings.PLAY).param("direction", "Q"))
+        mockMvc.perform(get("/" + GameMappings.RESTART))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name(GameMappings.REDIRECT_PLAY));
     }
