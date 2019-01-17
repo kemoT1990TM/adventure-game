@@ -1,7 +1,7 @@
-package com.tkjavadev.adventuregame.service;
+package com.tkjavadev.adventuregame.services;
 
 import com.tkjavadev.adventuregame.domain.Location;
-import com.tkjavadev.adventuregame.repository.LocationRepository;
+import com.tkjavadev.adventuregame.repositories.LocationRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -29,11 +29,10 @@ public class LocationServiceImplTest {
     @Test
     public void getLocationById() {
         Location location=new Location();
-        location.setId(1L);
 
         Optional<Location> locationOptional = Optional.of(location);
 
-        when(locationRepository.findById(1L)).thenReturn(locationOptional);
+        when(locationRepository.findById(anyLong())).thenReturn(locationOptional);
 
         Location locationReturned=locationRepository.findById(1L).get();
 
@@ -47,7 +46,6 @@ public class LocationServiceImplTest {
         Location location=new Location();
 
         locationService.saveLocation(location);
-
         verify(locationRepository,times(1)).save(location);
     }
 

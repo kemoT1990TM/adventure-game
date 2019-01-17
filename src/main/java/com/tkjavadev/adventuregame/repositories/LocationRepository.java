@@ -1,4 +1,4 @@
-package com.tkjavadev.adventuregame.repository;
+package com.tkjavadev.adventuregame.repositories;
 
 import com.tkjavadev.adventuregame.domain.Location;
 import org.springframework.data.repository.CrudRepository;

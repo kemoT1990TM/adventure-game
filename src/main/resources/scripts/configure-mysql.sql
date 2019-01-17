@@ -5,7 +5,7 @@
 #Create Databases
 CREATE DATABASE adventure;
 
-#Create database service accounts
+#Create database services accounts
 CREATE USER 'kemot'@'%' IDENTIFIED BY 'kemot';
 
 

@@ -2,8 +2,8 @@ package com.tkjavadev.adventuregame.bootstrap;
 
 import com.tkjavadev.adventuregame.domain.Gate;
 import com.tkjavadev.adventuregame.domain.Location;
-import com.tkjavadev.adventuregame.repository.ExitRepository;
-import com.tkjavadev.adventuregame.repository.LocationRepository;
+import com.tkjavadev.adventuregame.repositories.GateRepository;
+import com.tkjavadev.adventuregame.repositories.LocationRepository;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 
@@ -17,11 +17,11 @@ import java.util.Scanner;
 //@Component
 public class AdventureBootStrap implements ApplicationListener<ContextRefreshedEvent> {
 
-    private final ExitRepository exitRepository;
+    private final GateRepository gateRepository;
     private final LocationRepository locationRepository;
 
-    public AdventureBootStrap(ExitRepository exitRepository, LocationRepository locationRepository) {
-        this.exitRepository = exitRepository;
+    public AdventureBootStrap(GateRepository gateRepository, LocationRepository locationRepository) {
+        this.gateRepository = gateRepository;
         this.locationRepository = locationRepository;
     }
 
@@ -76,13 +76,13 @@ public class AdventureBootStrap implements ApplicationListener<ContextRefreshedE
                     gateQuit.setLocId(loc);
                     gateQuit.setDirection("Q");
                     gateQuit.setDestId(141L);
-                    exitRepository.save(gateQuit);
+                    gateRepository.save(gateQuit);
                 }
                 Gate gate = new Gate();
                 gate.setLocId(loc);
                 gate.setDirection(direction);
                 gate.setDestId(destination);
-                exitRepository.save(gate);
+                gateRepository.save(gate);
             }
         } catch (IOException e) {
             e.printStackTrace();
