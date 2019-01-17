@@ -10,23 +10,26 @@
 </head>
 <body>
 <div class="row">
-    <h3 class="container" th:text="${__${T(com.tkjavadev.adventuregame.util.AttributeNames).DESCRIPTION}__}">Description</h3>
-        <table>
-            <tr>
-                <h3>AVALIABLE DIRECTIONS ARE:</h3>
-            </tr>
-    <tr th:each="gate:${gates}">
-        <form th:action="@{__${T(com.tkjavadev.adventuregame.util.GameMappings).PLAY}__}" method="post">
-            <input type="hidden" th:value="${gate.getDirection()}" id="direction" name="direction"/>
-            <button class="btn" type="submit" value="value" th:text="${gate.getFullName()}">Direction</button>
-        </form>
-    </tr>
-        </table>
-    </div>
-    <div>
-        <footer>
-            <p>Copyright &copy; 2018 Tomasz Kartasiński. All rights reserved.</p>
-        </footer>
-    </div>
+    <h3 class="container" th:text="${__${T(com.tkjavadev.adventuregame.util.AttributeNames).DESCRIPTION}__}">
+        Description</h3>
+    <table>
+        <tr>
+            <h3>AVALIABLE DIRECTIONS ARE:</h3>
+        </tr>
+        <tr th:each="gate:${gates}">
+            <form th:action="@{__${T(com.tkjavadev.adventuregame.util.GameMappings).PLAY}__}" method="post">
+                <input type="hidden" th:value="${gate.getDirection()}" id="direction" name="direction"/>
+                <button class="btn" type="submit" value="value" th:text="${gate.getFullName()}">Direction</button>
+            </form>
+        </tr>
+    </table>
+    <h3> You have visited <span th:text="${__${T(com.tkjavadev.adventuregame.util.AttributeNames).VISITED}__}"></span>
+        locations</h3>
+</div>
+<div>
+    <footer>
+        <p>Copyright &copy; 2019 Tomasz Kartasiński. All rights reserved.</p>
+    </footer>
+</div>
 </body>
 </html>

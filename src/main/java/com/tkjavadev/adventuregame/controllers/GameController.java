@@ -31,6 +31,7 @@ public class GameController {
     public String play(Model model) {
         model.addAttribute(AttributeNames.DESCRIPTION, gameService.getDescription());
         model.addAttribute(AttributeNames.GATES, gameService.getAvaliableGates());
+        model.addAttribute(AttributeNames.VISITED,gameService.getVisitedLocations());
         log.info("model = {}", model);
         if (gameService.isGameOver()) {
             return ViewNames.GAME_OVER;

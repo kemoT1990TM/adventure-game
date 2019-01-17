@@ -15,4 +15,6 @@ public interface GameService {
     List<Gate> getAvaliableGates();
 
     void reset();
+
+    Long getVisitedLocations();
 }
