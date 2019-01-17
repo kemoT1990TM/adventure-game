@@ -21,4 +21,5 @@ public class GameConfig {
     public Long locationId() {
         return locationId;
     }
+
 }

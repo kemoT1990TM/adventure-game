@@ -47,6 +47,7 @@ public class GameServiceImpl implements GameService {
             // System.out.println(gate.getDestId()+" "+gate.getDirection());
             if (gate.getDirection().contains(direction)) {
                 locationId.setLocationId(gate.getDestId());
+                locationId.addVisitedLocation(locationId.getLocationId());
                 break;
             }
         }
@@ -55,6 +56,10 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public void reset() {
-        locationId.setLocationId(1L);
+        locationId.reset();
+    }
+
+    public Long getVisitedLocations(){
+      return locationId.getVisitedLocations();
     }
 }
