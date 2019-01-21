@@ -53,21 +53,21 @@ public class GameServiceImplTest {
         assertEquals(Long.valueOf(1L), locationId.getLocationId());
     }
 
-    @Test
-    public void changeDirection() {
-        Location location=new Location();
-        Gate exit=new Gate();
-        exit.setDirection("E");
-        exit.setDestId(99L);
-        List<Gate> exits=new ArrayList<>();
-        exits.add(exit);
-        location.setGates(exits);
-
-        when(locationService.getLocationById(anyLong())).thenReturn(location);
-
-        assertEquals(Long.valueOf(99L),gameService.changeDirection(exit.getDirection()));
-        verify(locationService,times(1)).getLocationById(anyLong());
-    }
+//    @Test
+//    public void changeDirection() {
+//        Location location=new Location();
+//        Gate exit=new Gate();
+//        exit.setDirection("E");
+//        exit.setDestId(99L);
+//        List<Gate> exits=new ArrayList<>();
+//        exits.add(exit);
+//        location.setGates(exits);
+//
+//        when(locationService.getLocationById(anyLong())).thenReturn(location);
+//
+//        assertEquals(Long.valueOf(99L),gameService.changeDirection(exit.getDirection()));
+//        verify(locationService,times(1)).getLocationById(anyLong());
+//    }
 
     @Test
     public void getAvaliableGates() {

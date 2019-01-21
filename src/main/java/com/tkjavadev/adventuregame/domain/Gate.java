@@ -19,11 +19,12 @@ public class Gate {
     private Long locId;
     private String direction;
     private Long destId;
+    private String required;
 
     // == methods ==
     public String getFullName() {
-        String fullName =  null;
-        if(direction!=null && !direction.isEmpty()){
+        String fullName = null;
+        if (direction != null && !direction.isEmpty()) {
             switch (direction) {
                 case "Q":
                     fullName = "QUIT";
@@ -58,6 +59,11 @@ public class Gate {
                 case "SW":
                     fullName = "SOUTH WEST";
                     break;
+                case "X":
+                    fullName = "XYZZY";
+                    break;
+                case "O":
+                    fullName = "OPEN";
             }
         } else {
             fullName = "BAD EXIT";
@@ -87,5 +93,13 @@ public class Gate {
 
     public void setDestId(Long destId) {
         this.destId = destId;
+    }
+
+    public String getRequired() {
+        return required;
+    }
+
+    public void setRequired(String required) {
+        this.required = required;
     }
 }

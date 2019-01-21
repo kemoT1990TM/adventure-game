@@ -35,6 +35,7 @@ public class GameController {
         model.addAttribute(AttributeNames.ITEMS,gameService.getAvaliableItems());
         model.addAttribute(AttributeNames.INVENTORY,gameService.printInventory());
         model.addAttribute(AttributeNames.ITEM_MESSAGE,gameService.getItemMessage());
+        model.addAttribute(AttributeNames.GATE_MESSAGE,gameService.getGateMessage());
         log.info("model = {}", model);
         if (gameService.isGameOver()) {
             return ViewNames.GAME_OVER;
@@ -46,7 +47,7 @@ public class GameController {
     public String processMessage(@RequestParam String direction) {
         log.info("direction = {}", direction);
         gameService.changeDirection(direction);
-        gameService.resetItemMessage();
+        gameService.resetMessages();
         return GameMappings.REDIRECT_PLAY;
     }
 

@@ -27,5 +27,7 @@ public interface GameService {
 
     String getItemMessage();
 
-    void resetItemMessage();
+    String getGateMessage();
+
+    void resetMessages();
 }

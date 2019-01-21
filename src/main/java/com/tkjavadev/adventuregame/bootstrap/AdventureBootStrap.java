@@ -69,7 +69,8 @@ public class AdventureBootStrap implements ApplicationListener<ContextRefreshedE
                 long loc = Integer.parseInt(data[0]);
                 String direction = data[1];
                 long destination = Integer.parseInt(data[2]);
-                System.out.println(loc + ": " + direction + ": " + destination);
+                String required = data[3];
+                System.out.println(loc + ": " + direction + ": " + destination+": "+required);
                 List<Gate> gates = locationRepository.findById(loc).get().getGates();
                 ;
                 List<String> directions = new ArrayList<>();
@@ -81,12 +82,14 @@ public class AdventureBootStrap implements ApplicationListener<ContextRefreshedE
                     gateQuit.setLocId(loc);
                     gateQuit.setDirection("Q");
                     gateQuit.setDestId(80L);
+                    gateQuit.setRequired("NOT");
                     gateRepository.save(gateQuit);
                 }
                 Gate gate = new Gate();
                 gate.setLocId(loc);
                 gate.setDirection(direction);
                 gate.setDestId(destination);
+                gate.setRequired(required);
                 gateRepository.save(gate);
             }
         } catch (IOException e) {
