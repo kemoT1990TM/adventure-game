@@ -1,5 +1,7 @@
 package com.tkjavadev.adventuregame.core;
 
+import java.util.List;
+
 public interface LocationId {
 
     void setLocationId(Long locationId);
@@ -11,4 +13,12 @@ public interface LocationId {
     Long getVisitedLocations();
 
     void reset();
+
+    void addToInventory(String item);
+
+    boolean checkInventory(String item);
+
+    String printInventory();
+
+    List<String> getInventory();
 }

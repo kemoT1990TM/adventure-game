@@ -23,6 +23,9 @@ public class Location {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "locId", fetch = FetchType.LAZY)
     private List<Gate> gates = new ArrayList<>();
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "locId")
+    private List<Item> items = new ArrayList<>();
+
     // == methods ==
     public Long getId() {
         return id;
@@ -46,5 +49,9 @@ public class Location {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<Item> getItems() {
+        return items;
     }
 }

@@ -25,21 +25,24 @@ public class GameServiceImplTest {
     @Mock
     LocationService locationService;
 
+    @Mock
+    ItemService itemService;
+
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         locationId=new LocationIdImpl(1L);
-        gameService = new GameServiceImpl(locationId,locationService);
+        gameService = new GameServiceImpl(locationId,locationService,itemService);
     }
 
     @Test
     public void isGameOver() {
         assertFalse(gameService.isGameOver());
 
-        locationId.setLocationId(141L);
+        locationId.setLocationId(80L);
         assertTrue(gameService.isGameOver());
 
-        locationId.setLocationId(-141L);
+        locationId.setLocationId(-80L);
         assertFalse(gameService.isGameOver());
     }
 

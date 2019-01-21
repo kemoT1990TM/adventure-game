@@ -5,7 +5,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Component
@@ -13,13 +15,16 @@ import java.util.Set;
 public class LocationIdImpl implements LocationId, Serializable {
     // == fields ==
     private Long locationId;
-    private Set<Long> locIds=new HashSet<>();
+    private Set<Long> locIds;
+    private List<String> inventory;
 
     // == constructors ==
     @Autowired
     public LocationIdImpl(@LocId Long locationId) {
         this.locationId = locationId;
+        locIds=new HashSet<>();
         locIds.add(locationId);
+        this.inventory=new ArrayList<>();
     }
 
     // == methods ==
@@ -31,6 +36,7 @@ public class LocationIdImpl implements LocationId, Serializable {
         locationId=1L;
         locIds=new HashSet<>();
         locIds.add(locationId);
+        inventory=new ArrayList<>();
     }
 
     public Long getLocationId() {
@@ -43,5 +49,36 @@ public class LocationIdImpl implements LocationId, Serializable {
 
     public Long getVisitedLocations(){
         return (long) locIds.size();
+    }
+
+    public void addToInventory(String item){
+        inventory.add(item);
+    }
+
+    public boolean checkInventory(String item){
+        if (inventory.contains(item)){
+            return true;
+        }
+        return false;
+    }
+
+    public List<String> getInventory() {
+        return inventory;
+    }
+
+    public String printInventory(){
+        StringBuffer sb=new StringBuffer();
+        for(String item:inventory){
+            sb.append(item);
+            sb.append(", ");
+        }
+//        if(sb.length()>0) {
+//            sb.deleteCharAt(sb.length());
+//        }
+        String print=sb.toString();
+        if(print.length()>1) {
+            print.substring(0, print.length() - 2);
+        }
+        return print;
     }
 }

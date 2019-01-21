@@ -1,8 +1,10 @@
 package com.tkjavadev.adventuregame.bootstrap;
 
 import com.tkjavadev.adventuregame.domain.Gate;
+import com.tkjavadev.adventuregame.domain.Item;
 import com.tkjavadev.adventuregame.domain.Location;
 import com.tkjavadev.adventuregame.repositories.GateRepository;
+import com.tkjavadev.adventuregame.repositories.ItemRepository;
 import com.tkjavadev.adventuregame.repositories.LocationRepository;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -19,10 +21,13 @@ public class AdventureBootStrap implements ApplicationListener<ContextRefreshedE
 
     private final GateRepository gateRepository;
     private final LocationRepository locationRepository;
+    private final ItemRepository itemRepository;
 
-    public AdventureBootStrap(GateRepository gateRepository, LocationRepository locationRepository) {
+    public AdventureBootStrap(GateRepository gateRepository, LocationRepository locationRepository,
+                              ItemRepository itemRepository) {
         this.gateRepository = gateRepository;
         this.locationRepository = locationRepository;
+        this.itemRepository=itemRepository;
     }
 
     @Override
@@ -34,7 +39,7 @@ public class AdventureBootStrap implements ApplicationListener<ContextRefreshedE
         Scanner scanner = null;
         try {
             scanner = new Scanner(new FileReader(
-                    "src\\main\\resources\\locations_big.txt"));
+                    "src\\main\\resources\\locations_79.txt"));
             scanner.useDelimiter(",");
             while (scanner.hasNextLine()) {
                 long loc = scanner.nextInt();
@@ -56,7 +61,7 @@ public class AdventureBootStrap implements ApplicationListener<ContextRefreshedE
 
         try {
             scanner = new Scanner(new BufferedReader(new FileReader(
-                    "src\\main\\resources\\directions_big.txt")));
+                    "src\\main\\resources\\directions_79.txt")));
             scanner.useDelimiter(",");
             while (scanner.hasNextLine()) {
                 String input = scanner.nextLine();
@@ -75,7 +80,7 @@ public class AdventureBootStrap implements ApplicationListener<ContextRefreshedE
                     Gate gateQuit = new Gate();
                     gateQuit.setLocId(loc);
                     gateQuit.setDirection("Q");
-                    gateQuit.setDestId(141L);
+                    gateQuit.setDestId(80L);
                     gateRepository.save(gateQuit);
                 }
                 Gate gate = new Gate();
@@ -84,6 +89,34 @@ public class AdventureBootStrap implements ApplicationListener<ContextRefreshedE
                 gate.setDestId(destination);
                 gateRepository.save(gate);
             }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (scanner != null) {
+                scanner.close();
+            }
+        }
+
+        try {
+            scanner = new Scanner(new FileReader(
+                    "src\\main\\resources\\items_79.txt"));
+            scanner.useDelimiter(",");
+            while (scanner.hasNextLine()) {
+                String input = scanner.nextLine();
+                String[] data = input.split(",");
+                long loc = Integer.parseInt(data[0]);
+                String name = data[1];
+                String description=data[2];
+                String req=data[3];
+                System.out.println("Imported item: "+name+ ": " + description+": "+req);
+                Item item=new Item();
+                item.setLocId(loc);
+                item.setName(name);
+                item.setDescription(description);
+                item.setRequired(req);
+                itemRepository.save(item);
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
