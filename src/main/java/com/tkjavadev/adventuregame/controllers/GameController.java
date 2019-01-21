@@ -16,7 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 //@Slf4j
 public class GameController {
-    Logger log= LoggerFactory.getLogger(GameController.class);
+    private final Logger log= LoggerFactory.getLogger(GameController.class);
 
     // == fields ==
     private GameService gameService;
@@ -32,6 +32,9 @@ public class GameController {
         model.addAttribute(AttributeNames.DESCRIPTION, gameService.getDescription());
         model.addAttribute(AttributeNames.GATES, gameService.getAvaliableGates());
         model.addAttribute(AttributeNames.VISITED,gameService.getVisitedLocations());
+        model.addAttribute(AttributeNames.ITEMS,gameService.getAvaliableItems());
+        model.addAttribute(AttributeNames.INVENTORY,gameService.printInventory());
+        model.addAttribute(AttributeNames.ITEM_MESSAGE,gameService.getItemMessage());
         log.info("model = {}", model);
         if (gameService.isGameOver()) {
             return ViewNames.GAME_OVER;
@@ -39,10 +42,18 @@ public class GameController {
         return ViewNames.PLAY;
     }
 
-    @PostMapping(GameMappings.PLAY)
+    @PostMapping(GameMappings.CHANGE)
     public String processMessage(@RequestParam String direction) {
         log.info("direction = {}", direction);
         gameService.changeDirection(direction);
+        gameService.resetItemMessage();
+        return GameMappings.REDIRECT_PLAY;
+    }
+
+    @PostMapping(GameMappings.ADD)
+    public String addItemToInventory(@RequestParam String item) {
+        log.info("item = {}", item);
+        gameService.addItemToInventory(item);
         return GameMappings.REDIRECT_PLAY;
     }
 

@@ -62,7 +62,7 @@ public class GameControllerTest {
         when(gameService.getDescription()).thenReturn(location.getDescription());
         when(gameService.getAvaliableGates()).thenReturn(gates);
 
-        mockMvc.perform(post("/" + GameMappings.PLAY).param("direction", "Q"))
+        mockMvc.perform(post("/" + GameMappings.CHANGE).param("direction", "Q"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name(GameMappings.REDIRECT_PLAY));
 

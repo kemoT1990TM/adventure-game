@@ -10,6 +10,9 @@
 </head>
 <body>
 <div class="row">
+    <h3>INVENTORY: <span th:text="${__${T(com.tkjavadev.adventuregame.util.AttributeNames).INVENTORY}__}"></span></h3>
+</div>
+<div class="row">
     <h3 class="container" th:text="${__${T(com.tkjavadev.adventuregame.util.AttributeNames).DESCRIPTION}__}">
         Description</h3>
     <table>
@@ -17,14 +20,28 @@
             <h3>AVALIABLE DIRECTIONS ARE:</h3>
         </tr>
         <tr th:each="gate:${gates}">
-            <form th:action="@{__${T(com.tkjavadev.adventuregame.util.GameMappings).PLAY}__}" method="post">
+            <form th:action="@{__${T(com.tkjavadev.adventuregame.util.GameMappings).CHANGE}__}" method="post">
                 <input type="hidden" th:value="${gate.getDirection()}" id="direction" name="direction"/>
                 <button class="btn" type="submit" value="value" th:text="${gate.getFullName()}">Direction</button>
             </form>
         </tr>
     </table>
-    <h3> You have visited <span th:text="${__${T(com.tkjavadev.adventuregame.util.AttributeNames).VISITED}__}"></span>
-        locations</h3>
+    <!--<h3> You have visited <span th:text="${__${T(com.tkjavadev.adventuregame.util.AttributeNames).VISITED}__}"></span>-->
+        <!--locations</h3>-->
+</div>
+<div class="row">
+    <table>
+        <!--<tr>-->
+            <!--<h3>AVALIABLE ITEMS ARE:</h3>-->
+        <!--</tr>-->
+        <tr th:each="item:${items}">
+            <form th:action="@{__${T(com.tkjavadev.adventuregame.util.GameMappings).ADD}__}" method="post">
+                <input type="hidden" th:value="${item.getName()}" id="item" name="item"/>
+                <button class="btn" type="submit" value="value" th:text="${item.getName()}">ITEM</button>
+            </form>
+        </tr>
+    </table>
+    <h3 th:text="${__${T(com.tkjavadev.adventuregame.util.AttributeNames).ITEM_MESSAGE}__}">ITEM MESSAGE</h3>
 </div>
 <div>
     <footer>
