@@ -16,6 +16,7 @@ public class GameServiceImpl implements GameService {
     private ItemService itemService;
     private LocationId locationId;
     private String itemMessage;
+    private String gateMessage;
 
     // == constructors ==
     @Autowired
@@ -49,8 +50,8 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public void addItemToInventory(String name) {
-        Item item=itemService.getItemByLocIdAndName(locationId.getLocationId(),name);
-        if (item.getRequired().equals("NOT")) {
+        Item item = itemService.getItemByLocIdAndName(locationId.getLocationId(), name);
+        if (item.getRequired().equals("NOT") || locationId.checkInventory(item.getRequired())) {
             if (locationId.checkInventory(item.getName())) {
                 if (item.getName().equals("KEYS")) {
                     itemMessage = item.getName() + " ARE ALREADY IN INVENTORY";
@@ -80,32 +81,40 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public Long changeDirection(String direction) {
-
         for (Gate gate : locationService.getLocationById(locationId.getLocationId()).getGates()) {
-            // System.out.println(gate.getDestId()+" "+gate.getDirection());
-            if (gate.getDirection().contains(direction)) {
-                locationId.setLocationId(gate.getDestId());
-                locationId.addVisitedLocation(locationId.getLocationId());
-                break;
+            if (gate.getRequired().equals("NOT") || locationId.checkInventory(gate.getRequired())) {
+                if (gate.getDirection().contains(direction)) {
+                    locationId.setLocationId(gate.getDestId());
+                    locationId.addVisitedLocation(locationId.getLocationId());
+                    gateMessage=null;
+                    break;
+                }
+            } else {
+                gateMessage = "YOU NEED " + gate.getRequired() + " TO GO THERE";
             }
         }
         return locationId.getLocationId();
     }
 
-    @Override
-    public void reset() {
-        locationId.reset();
+
+        @Override
+        public void reset () {
+            locationId.reset();
+        }
+
+        public Long getVisitedLocations () {
+            return locationId.getVisitedLocations();
+        }
+
+        public String getItemMessage () {
+            return itemMessage;
+        }
+
+    public String getGateMessage () {
+        return gateMessage;
     }
 
-    public Long getVisitedLocations() {
-        return locationId.getVisitedLocations();
+        public void resetMessages () {
+            itemMessage = null;
+        }
     }
-
-    public String getItemMessage() {
-        return itemMessage;
-    }
-
-    public void resetItemMessage() {
-        itemMessage = null;
-    }
-}

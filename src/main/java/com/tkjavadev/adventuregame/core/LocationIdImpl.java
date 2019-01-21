@@ -66,18 +66,15 @@ public class LocationIdImpl implements LocationId, Serializable {
         return inventory;
     }
 
-    public String printInventory(){
+    public synchronized String printInventory(){
         StringBuffer sb=new StringBuffer();
         for(String item:inventory){
             sb.append(item);
             sb.append(", ");
         }
-//        if(sb.length()>0) {
-//            sb.deleteCharAt(sb.length());
-//        }
         String print=sb.toString();
         if(print.length()>1) {
-            print.substring(0, print.length() - 2);
+           print=print.substring(0, print.length() - 2);
         }
         return print;
     }
