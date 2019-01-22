@@ -9,32 +9,48 @@
     <title>ADVENTURE!</title>
 </head>
 <body>
-<div class="row">
-    <h3>INVENTORY: <span th:text="${__${T(com.tkjavadev.adventuregame.util.AttributeNames).INVENTORY}__}"></span></h3>
+<!--
+    <header>
+        <nav>
+        <div class="row">
+            <ul class="main-nav">
+                <li><a href="#">HOME</a></li>
+                <li><a href="#">EXIT</a></li>
+            </ul>
+            </div>
+        </nav>
+    </header>
+-->
+    
+<div class="row bordered inventory">
+    <h2 class="fieldtitle">INVENTORY</h2>
+    <h3 th:text="${__${T(com.tkjavadev.adventuregame.util.AttributeNames).INVENTORY}__}">Inventory</h3>
 </div>
-<div class="row">
+<div class="row bordered">
+    <h2 class="fieldtitle">LOCATION</h2>
     <h3 class="container" th:text="${__${T(com.tkjavadev.adventuregame.util.AttributeNames).DESCRIPTION}__}">
-        Description</h3>
-    <table>
-        <tr>
-            <h3>AVALIABLE DIRECTIONS ARE:</h3>
-        </tr>
+        He determined to drop his litigation with the monastry, and relinguish his claims to the wood-cuting and fishery rihgts at once. He was the more ready to do this becuase the rights had becom much less valuable, and he had indeed the vaguest idea where the wood and river in quedtion were.</h3>
+    </div>
+    <div class="row bordered">
+        <h2 class="fieldtitle">DIRECTIONS</h2>
+        <div>
+        <table>
         <tr th:each="gate:${gates}">
             <form th:action="@{__${T(com.tkjavadev.adventuregame.util.GameMappings).CHANGE}__}" method="post">
                 <input type="hidden" th:value="${gate.getDirection()}" id="direction" name="direction"/>
-                <button class="btn" type="submit" value="value" th:text="${gate.getFullName()}">Direction</button>
+                <button class="btn" type="submit" value="value" th:text="${gate.getFullName()}">DIRECTION</button>
             </form>
         </tr>
     </table>
-    <h3 th:text="${__${T(com.tkjavadev.adventuregame.util.AttributeNames).GATE_MESSAGE}__}">GATE MESSAGE</h3>
-    <!--<h3> You have visited <span th:text="${__${T(com.tkjavadev.adventuregame.util.AttributeNames).VISITED}__}"></span>-->
-        <!--locations</h3>-->
+        </div>
+        <div class="message">
+    <h3 class="messagetext" id="msgGate" th:text="${__${T(com.tkjavadev.adventuregame.util.AttributeNames).GATE_MESSAGE}__}">GATE MESSAGE GATE MESSAGE</h3>
+        </div>
 </div>
-<div class="row">
+<div class="row bordered" id="items">
+    <h2 class="fieldtitle">ITEMS</h2>
+    <div>
     <table>
-        <!--<tr>-->
-            <!--<h3>AVALIABLE ITEMS ARE:</h3>-->
-        <!--</tr>-->
         <tr th:each="item:${items}">
             <form th:action="@{__${T(com.tkjavadev.adventuregame.util.GameMappings).ADD}__}" method="post">
                 <input type="hidden" th:value="${item.getName()}" id="item" name="item"/>
@@ -42,12 +58,17 @@
             </form>
         </tr>
     </table>
-    <h3 th:text="${__${T(com.tkjavadev.adventuregame.util.AttributeNames).ITEM_MESSAGE}__}">ITEM MESSAGE</h3>
+        </div>
+        <div class="message">
+    <h3 class="messagetext" id="msgItem" th:text="${__${T(com.tkjavadev.adventuregame.util.AttributeNames).ITEM_MESSAGE}__}">ITEM MESSAGE ITEM MESSAGE</h3>
+    </div>
 </div>
 <div>
     <footer>
         <p>Copyright &copy; 2019 Tomasz Kartasiński. All rights reserved.</p>
     </footer>
 </div>
+    <script src="js/script.js"></script>
+    <script src="js/jquery.js"></script>
 </body>
 </html>
