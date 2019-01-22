@@ -2,6 +2,8 @@
 
 # Adventure-game
 
+You can play by clicking here: [PLAY!](http://adventure.tkjavadev.com)
+
 This repo is for my own project Adventure Game based on Collosal Cave Adventure.
 App is deployed on Google Cloud Platform. Database is running on MySQL instance.
 
