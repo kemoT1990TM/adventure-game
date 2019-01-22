@@ -51,6 +51,7 @@ public class GameServiceImpl implements GameService {
     @Override
     public void addItemToInventory(String name) {
         Item item = itemService.getItemByLocIdAndName(locationId.getLocationId(), name);
+        gateMessage=null;
         if (item.getRequired().equals("NOT") || locationId.checkInventory(item.getRequired())) {
             if (locationId.checkInventory(item.getName())) {
                 if (item.getName().equals("KEYS")) {

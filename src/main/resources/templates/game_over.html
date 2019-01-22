@@ -9,12 +9,12 @@
     <title>GAME FINISHED!</title>
 </head>
 <body>
-<div class="row">
-    <h1>YOUR ADVENTURE HAS COME TO AN END!</h1>
+<div class="row titlediv">
+    <h1 class="title">YOUR ADVENTURE HAS COME TO AN END!</h1>
     <h3 th:text="${__${T(com.tkjavadev.adventuregame.util.AttributeNames).DESCRIPTION}__}">Description</h3>
     <h3> You have visited <span th:text="${__${T(com.tkjavadev.adventuregame.util.AttributeNames).VISITED}__}"></span> locations</h3>
-    <h3><a class="btn" th:href="@{__${T(com.tkjavadev.adventuregame.util.GameMappings).RESTART}__}">PLAY AGAIN</a></h3>
-    <h3><a class="btn" th:href="@{__${T(com.tkjavadev.adventuregame.util.GameMappings).HOME}__}">HOME</a></h3>
+    <h4><a class="btn" th:href="@{__${T(com.tkjavadev.adventuregame.util.GameMappings).RESTART}__}">PLAY AGAIN</a></h4>
+    <h4><a class="btn" th:href="@{__${T(com.tkjavadev.adventuregame.util.GameMappings).HOME}__}">HOME</a></h4>
    </div>
      <div>
         <footer>
