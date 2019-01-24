@@ -214,7 +214,7 @@ public class GameServiceImpl implements GameService {
         locationId.reset();
     }
 
-    public Long getVisitedLocations() {
+    public Integer getVisitedLocations() {
         return locationId.getVisitedLocations();
     }
 
@@ -232,5 +232,28 @@ public class GameServiceImpl implements GameService {
 
     public void exit() {
         locationId.setLocationId(80L);
+    }
+
+    @Override
+    public Integer getScore() {
+        return locationId.getScore();
+    }
+
+    public String getRank(){
+        String rank="You are obviously a rank amateur.  Better luck next time.";
+        if(locationId.getScore()>=35 && locationId.getScore()<70){
+            rank="Your score qualifies you as a novice class adventurer.";
+        } else if(locationId.getScore()>=70 && locationId.getScore()<100){
+            rank="You have achieved the rating \"Experienced Adventurer\".";
+        } else if(locationId.getScore()>=100 &&locationId.getScore()<150){
+            rank="You may now consider yourself a \"Seasoned Adventurer\".";
+        } else if(locationId.getScore()>=150 &&locationId.getScore()<200){
+            rank="You have reached \"Junior Master\" status.";
+        } else if(locationId.getScore()>=200 && locationId.getScore()<240){
+            rank="Your score qualifies you as a Master Adventurer.";
+        } else if(locationId.getScore()>=240){
+            rank= "All of Adventuredom gives tribute to you, Adventure Grandmaster!";
+        }
+        return rank;
     }
 }

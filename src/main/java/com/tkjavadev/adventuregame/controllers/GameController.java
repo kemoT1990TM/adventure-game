@@ -36,6 +36,8 @@ public class GameController {
         model.addAttribute(AttributeNames.INVENTORY,gameService.printInventory());
         model.addAttribute(AttributeNames.ITEM_MESSAGE,gameService.getItemMessage());
         model.addAttribute(AttributeNames.GATE_MESSAGE,gameService.getGateMessage());
+        model.addAttribute(AttributeNames.SCORE,gameService.getScore());
+        model.addAttribute(AttributeNames.RANK,gameService.getRank());
         log.info("model = {}", model);
         if (gameService.isGameOver()) {
             return ViewNames.GAME_OVER;
@@ -81,6 +83,8 @@ public class GameController {
         gameService.exit();
         model.addAttribute(AttributeNames.DESCRIPTION, gameService.getDescription());
         model.addAttribute(AttributeNames.VISITED,gameService.getVisitedLocations());
+        model.addAttribute(AttributeNames.SCORE,gameService.getScore());
+        model.addAttribute(AttributeNames.RANK,gameService.getRank());
         return ViewNames.GAME_OVER;
     }
 

@@ -17,6 +17,7 @@ public class LocationIdImpl implements LocationId, Serializable {
     private Long locationId;
     private Set<Long> locIds;
     private List<String> inventory;
+    private Integer score;
 
     // == constructors ==
     @Autowired
@@ -25,6 +26,7 @@ public class LocationIdImpl implements LocationId, Serializable {
         locIds=new HashSet<>();
         locIds.add(locationId);
         this.inventory=new ArrayList<>();
+        score=0;
     }
 
     // == methods ==
@@ -47,8 +49,8 @@ public class LocationIdImpl implements LocationId, Serializable {
         locIds.add(locationId);
     }
 
-    public Long getVisitedLocations(){
-        return (long) locIds.size();
+    public Integer getVisitedLocations(){
+        return locIds.size()-1;
     }
 
     public void addToInventory(String item){
@@ -77,5 +79,17 @@ public class LocationIdImpl implements LocationId, Serializable {
            print=print.substring(0, print.length() - 2);
         }
         return print;
+    }
+
+    @Override
+    public Integer getScore() {
+        Integer itemPoints=0;
+        if(checkInventory("GOLD")) itemPoints += 32;
+        if(checkInventory("JEWELERY")) itemPoints += 40;
+        if(checkInventory("SILVER")) itemPoints += 28;
+        if(checkInventory("DIAMONDS")) itemPoints += 64;
+        if(checkInventory("COINS")) itemPoints += 20;
+        score=getVisitedLocations()+itemPoints;
+        return score;
     }
 }

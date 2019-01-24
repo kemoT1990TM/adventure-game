@@ -8,17 +8,7 @@
     <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&amp;subset=latin-ext" rel="stylesheet"/>
     <title>ADVENTURE!</title>
 </head>
-<body>
-    <header>
-        <nav>
-        <div class="row">
-            <ul class="main-nav">
-                <!--<li><a th:href="@{__${T(com.tkjavadev.adventuregame.util.GameMappings).HOME}__}">HOME</a></li>-->
-                <li><a th:href="@{__${T(com.tkjavadev.adventuregame.util.GameMappings).EXIT}__}">EXIT</a></li>
-            </ul>
-            </div>
-        </nav>
-    </header>
+<body>    
 <div class="row bordered inventory">
     <h2 class="fieldtitle">INVENTORY</h2>
     <h3 th:text="${__${T(com.tkjavadev.adventuregame.util.AttributeNames).INVENTORY}__}">Inventory</h3>
@@ -32,6 +22,7 @@
         <h2 class="fieldtitle">DIRECTIONS</h2>
         <div>
         <table>
+        <h4 class="inline"><a class="btn-solid" th:href="@{__${T(com.tkjavadev.adventuregame.util.GameMappings).EXIT}__}">QUIT</a></h4>
         <tr th:each="gate:${gates}">
             <form th:action="@{__${T(com.tkjavadev.adventuregame.util.GameMappings).CHANGE}__}" method="post">
                 <input type="hidden" th:value="${gate.getDirection()}" id="direction" name="direction"/>
@@ -51,7 +42,7 @@
         <tr th:each="item:${items}">
             <form th:action="@{__${T(com.tkjavadev.adventuregame.util.GameMappings).ADD}__}" method="post">
                 <input type="hidden" th:value="${item.getName()}" id="item" name="item"/>
-                <button class="btn" type="submit" value="value" th:text="'GET '+${item.getName()}">ITEM</button>
+                <button class="btn" type="submit" value="value" th:text="${item.getName()}">ITEM</button>
             </form>
         </tr>
     </table>

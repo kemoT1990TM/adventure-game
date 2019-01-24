@@ -21,8 +21,9 @@ html {
     padding: 5px;
     text-decoration: none;
     font-size: 80%;
-    margin: 5px;
+    margin-right: 5px;
     margin-bottom: 30px;
+    cursor: pointer;
 }
 
 .btn:link,
@@ -34,8 +35,9 @@ html {
     font-size: 80%;
     text-decoration: none;
     transition: background-color 0.2s,color 0.2s;
-    margin: 5px;
+    margin-right: 5px;
     margin-bottom: 30px;
+    cursor: pointer;
 }
 
 .btn:hover,
@@ -47,18 +49,21 @@ html {
     font-size: 80%;
     text-decoration: none;
     transition: background-color 0.2s,color 0.2s;
-    margin: 5px; 
+    margin-right: 5px;
     margin-bottom: 30px;
+    cursor: pointer;
 }
 
 .btn-solid {
+    display: inline-block;
     background-color: #fff;
     color: #000;
     border: 3px solid #fff;
     padding: 5px;
     text-decoration: none;
     font-size: 80%;
-    margin: 5px;
+    cursor: pointer;
+    margin-right: 5px;
 }
 
 .btn-solid:link,
@@ -70,7 +75,8 @@ html {
     font-size: 80%;
     text-decoration: none;
     transition: background-color 0.2s,color 0.2s;
-    margin: 5px;
+    cursor: pointer;
+    margin-right: 5px;
 }
 
 .btn-solid:hover,
@@ -82,62 +88,16 @@ html {
     font-size: 80%;
     text-decoration: none;
     transition: background-color 0.2s,color 0.2s;
-    margin: 5px; 
+    cursor: pointer;
+    margin-right: 5px;
 }
 
-
-.main-nav {
-    list-style: none;
-    float: left;
-    
-}
-
-.main-nav li {
-    display: inline-block;
-    margin-right: -20px;
-}
-
-.main-nav li a{
-    background-color: #fff;
-    color: #000;
-    border: 2px solid #fff;
-    padding: 5px;
-    font-size: 80%;
-    text-decoration: none;
-    transition: background-color 0.2s,color 0.2s;
-}
-
-
-.main-nav li a:link,
-.main-nav li a:visited {
-    background-color: #fff;
-    color: #000;
-    border: 2px solid #fff;
-    padding: 5px;
-    font-size: 80%;
-    text-decoration: none;
-    transition: background-color 0.2s,color 0.2s;
-}
-
-.main-nav li a:hover,
-.main-nav li a:active {
-    background-color: #000;
-    color: #fff;
-    border: 2px solid #fff;
-    padding: 5px;
-    font-size: 80%;
-    text-decoration: none;
-    transition: background-color 0.2s,color 0.2s; 
-}
-
-.left{
-    float: left;
-/*    transform: translate(0,50%);*/
-}
-
-.right{
-    float: right;
-/*    transform: translate(0,50%);*/
+.txt {
+    width: 75%;
+    text-align: center;
+    margin: 20px auto;
+    line-height: 1.2em;
+    font-size: 100%;
 }
 
 
@@ -152,21 +112,23 @@ html {
 }
 
 .bordered {
-    max-width: 1200px;
-    margin: 20px auto;
+/*    max-width: 1200px;*/
+    margin: 15px auto;
     border: 3px solid #fff;
+    padding-top: 0px;
 }
 
 .titlediv {
     margin-top: 40px;
     border: 5px solid #fff;
+    padding-bottom: 15px;
 }
 
 .container {
     height: 150px;
     text-align: center;
     width: auto;
-    line-height: 1.3em;
+    line-height: 1.2em;
     margin: auto 20px;
 }
 
@@ -200,17 +162,18 @@ h3 {
 
 h4 {
     font-size: 100%;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
 }
 
 p {
     margin-top: 50px;
+    font-size: 90%;
 }
 
 .fieldtitle {
-    border: 2px solid #fff;
+    border: 3px solid #fff;
     padding: 3px;
-    font-size: 100%;
+    font-size: 90%;
     color: #000;
     background-color: #fff;
     display: inline-block;
@@ -228,7 +191,7 @@ p {
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 20px;
-     margin-top: 0;
+    margin-top: 0;
 /*    transform: translate(0,-90%);*/
 }
 
@@ -250,4 +213,19 @@ p {
 
 .inventory {
     height: 70px;
+}
+
+.score {
+    width: 75%;
+    margin: 10px auto;
+/*    border-top: 3px solid #fff;*/
+/*    border-bottom:3px solid #fff;*/
+/*    border: 3px dashed #fff;*/
+    padding-top: 20px;
+    line-height: 1.2em;
+    margin-bottom: 20px;
+}
+
+.inline{
+    display: inline-block;
 }

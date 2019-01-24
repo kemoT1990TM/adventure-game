@@ -17,7 +17,7 @@ public interface GameService {
 
     void reset();
 
-    Long getVisitedLocations();
+    Integer getVisitedLocations();
 
     List<Item> getAvaliableItems();
 
@@ -32,4 +32,8 @@ public interface GameService {
     void resetMessages();
 
     void exit();
+
+    Integer getScore();
+
+    String getRank();
 }
