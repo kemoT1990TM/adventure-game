@@ -10,6 +10,7 @@ public final class AttributeNames {
     public static final String INVENTORY ="inventory";
     public static final String ITEM_MESSAGE="item_message";
     public static final String GATE_MESSAGE="gate_message";
+    public static final String HINT="hint";
 
     // == constructors ==
     public AttributeNames(){}

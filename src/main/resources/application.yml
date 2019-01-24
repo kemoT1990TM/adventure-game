@@ -1,12 +1,12 @@
-#spring:
-#  datasource:
-#    password: kemot
-#    platform: mysql
-#    url: "jdbc:mysql://35.241.170.212/adventure"
-#    username: kemot
-#  jpa:
-#    database: mysql
-#    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-#    hibernate:
-#      ddl-auto: create
-#      show-sql: true
+spring:
+  datasource:
+    password: kemot
+    platform: mysql
+    url: "jdbc:mysql://35.241.170.212/adventure"
+    username: kemot
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      ddl-auto: none
+      show-sql: true

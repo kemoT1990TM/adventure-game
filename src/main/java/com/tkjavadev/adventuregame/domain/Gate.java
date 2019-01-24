@@ -63,7 +63,38 @@ public class Gate {
                     fullName = "XYZZY";
                     break;
                 case "O":
-                    fullName = "OPEN";
+                    fullName = "OUT";
+                    break;
+                case "ENT":
+                    fullName = "ENTER";
+                    break;
+                case "DE":
+                    fullName = "DEPRE";
+                    break;
+                case "P":
+                    fullName = "PLUGH";
+                    break;
+                case "BU":
+                    fullName = "BUILDING";
+                    break;
+                case "DB":
+                    fullName = "DEBRIS";
+                    break;
+                case "C":
+                    fullName = "CROSS";
+                    break;
+                case "SEC":
+                    fullName = "SECRET";
+                    break;
+                case "B":
+                    fullName = "BACK";
+                    break;
+                case "SL":
+                    fullName = "SLAB";
+                    break;
+                case "Y2":
+                    fullName = "Y2";
+                    break;
             }
         } else {
             fullName = "BAD EXIT";

@@ -75,6 +75,15 @@ public class GameController {
         return ViewNames.HOME;
     }
 
+    @GetMapping(GameMappings.EXIT)
+    public String exit(Model model) {
+        log.info("exit() called");
+        gameService.exit();
+        model.addAttribute(AttributeNames.DESCRIPTION, gameService.getDescription());
+        model.addAttribute(AttributeNames.VISITED,gameService.getVisitedLocations());
+        return ViewNames.GAME_OVER;
+    }
+
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(NotFoundException.class)
     public ModelAndView handleNotFound(Exception exception){
