@@ -30,4 +30,6 @@ public interface GameService {
     String getGateMessage();
 
     void resetMessages();
+
+    void exit();
 }

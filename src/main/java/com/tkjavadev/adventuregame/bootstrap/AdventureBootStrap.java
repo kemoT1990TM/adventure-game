@@ -32,7 +32,7 @@ public class AdventureBootStrap implements ApplicationListener<ContextRefreshedE
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent arg0) {
-//            readData();
+//        readData();
     }
 
     private void readData() {
@@ -74,17 +74,17 @@ public class AdventureBootStrap implements ApplicationListener<ContextRefreshedE
                 List<Gate> gates = locationRepository.findById(loc).get().getGates();
                 ;
                 List<String> directions = new ArrayList<>();
-                for (Gate ex : gates) {
-                    directions.add(ex.getDirection());
-                }
-                if (!directions.contains("Q")) {
-                    Gate gateQuit = new Gate();
-                    gateQuit.setLocId(loc);
-                    gateQuit.setDirection("Q");
-                    gateQuit.setDestId(80L);
-                    gateQuit.setRequired("NOT");
-                    gateRepository.save(gateQuit);
-                }
+//                for (Gate ex : gates) {
+//                    directions.add(ex.getDirection());
+//                }
+//                if (!directions.contains("Q")) {
+//                    Gate gateQuit = new Gate();
+//                    gateQuit.setLocId(loc);
+//                    gateQuit.setDirection("Q");
+//                    gateQuit.setDestId(80L);
+//                    gateQuit.setRequired("NOT");
+//                    gateRepository.save(gateQuit);
+//                }
                 Gate gate = new Gate();
                 gate.setLocId(loc);
                 gate.setDirection(direction);
