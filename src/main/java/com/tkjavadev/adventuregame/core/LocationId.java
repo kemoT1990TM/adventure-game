@@ -10,7 +10,7 @@ public interface LocationId {
 
     void addVisitedLocation(Long locationId);
 
-    Long getVisitedLocations();
+    Integer getVisitedLocations();
 
     void reset();
 
@@ -21,4 +21,6 @@ public interface LocationId {
     String printInventory();
 
     List<String> getInventory();
+
+    Integer getScore();
 }
