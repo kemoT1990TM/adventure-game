@@ -1,4 +1,5 @@
 [![CircleCI](https://circleci.com/gh/kemoT1990TM/adventure-game.svg?style=svg)](https://circleci.com/gh/kemoT1990TM/adventure-game)
+[![codecov](https://codecov.io/gh/kemoT1990TM/adventure-game/branch/master/graph/badge.svg)](https://codecov.io/gh/kemoT1990TM/adventure-game)
 
 # Adventure-game
 
