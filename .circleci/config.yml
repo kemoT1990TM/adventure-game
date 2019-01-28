@@ -65,7 +65,7 @@ jobs:
           name: Save test results
           command: |
             mkdir -p ~/jacoco/
-            find . -type f -regex ".*/build/reports/jacoco/test/.*xml" -exec cp {} ~/jacoco/ \;
+            find . -type f -regex ".*/build/reports/jacoco/test/html/.*index.html" -exec cp {} ~/jacoco/ \;
           when: always
 
       - store_test_results:
