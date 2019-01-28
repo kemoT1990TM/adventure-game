@@ -76,7 +76,8 @@ jobs:
       - store_artifacts:
           path: ~/jacoco
 
-      - bash <(curl -s https://codecov.io/bash)
+      - codecov/upload:
+          file:{{build\reports\jacoco\test\jacocoTestReport.xml}}
 
 #    test:
 #      post:
