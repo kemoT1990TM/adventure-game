@@ -62,7 +62,6 @@ jobs:
       - store_artifacts:
           path: ~/jacoco
 
-      steps:
         - run:
             name: Save test results
             command: |
