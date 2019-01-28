@@ -49,32 +49,32 @@ jobs:
 
       - run: gradle jacocoTestReport
 
-      - run: bash <(curl -s https://codecov.io/bash)
+#      - run:
+#          name: Save test results
+#          command: |
+#            mkdir -p ~/junit/
+#            find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} ~/junit/ \;
+#          when: always
+#
+#      - store_test_results:
+#              path: ~/junit
+#
+#      - store_artifacts:
+#              path: ~/junit
 
       - run:
           name: Save test results
           command: |
-            mkdir -p ~/junit/
-            find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} ~/junit/ \;
+            mkdir -p ~/jacoco/
+            find . -type f -regex ".*/build/reports/jacoco/test/.*xml" -exec cp {} ~/jacoco/ \;
           when: always
 
       - store_test_results:
-              path: ~/junit
+          path: ~/jacoco
 
       - store_artifacts:
-              path: ~/junit
+          path: ~/jacoco
 
-#      - run:
-#          name: Save test results
-#          command: |
-#            mkdir -p ~/jacoco/
-#            find . -type f -regex ".*/build/reports/jacoco/test/.*xml" -exec cp {} ~/jacoco/ \;
-#          when: always
-#
-#      - store_test_results:
-#          path: ~/jacoco
-#
-#      - store_artifacts:
-#          path: ~/jacoco
+      - run: bash <(curl -s https://codecov.io/bash)
 
 
