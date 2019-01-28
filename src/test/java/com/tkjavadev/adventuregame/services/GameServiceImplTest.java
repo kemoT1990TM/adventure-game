@@ -77,7 +77,7 @@ public class GameServiceImplTest {
 
         when(locationService.getLocationById(anyLong())).thenReturn(location);
 
-        assertEquals(exits,gameService.getAvaliableGates());
+        assertEquals(exits,gameService.getAvailableGates());
         verify(locationService,times(1)).getLocationById(anyLong());
     }
 

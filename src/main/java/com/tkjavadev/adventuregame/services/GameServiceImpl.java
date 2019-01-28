@@ -34,7 +34,7 @@ public class GameServiceImpl implements GameService {
     Returns list of available directions for initVariables
      */
     @Override
-    public List<Gate> getAvaliableGates() {
+    public List<Gate> getAvailableGates() {
         return locationService.getLocationById(initVariables.getLocationId()).getGates();
     }
 
@@ -50,7 +50,7 @@ public class GameServiceImpl implements GameService {
     Returns available items for initVariables
      */
     @Override
-    public List<Item> getAvaliableItems() {
+    public List<Item> getAvailableItems() {
         return locationService.getLocationById(initVariables.getLocationId()).getItems();
     }
 
@@ -99,7 +99,10 @@ public class GameServiceImpl implements GameService {
      */
     @Override
     public boolean isGameOver() {
-        //todo add condition of finishing the game when all treasures are in inventory
+        if(initVariables.checkInventory("GOLD")&&initVariables.checkInventory("SILVER")&&
+                initVariables.checkInventory("DIAMONDS")&&initVariables.checkInventory("COINS")&&initVariables.checkInventory("JEWELRY")){
+            return true;
+        }
         if (initVariables.getLocationId() == 80L) {
             return true;
         }

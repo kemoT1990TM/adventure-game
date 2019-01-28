@@ -30,9 +30,9 @@ public class GameController {
     @GetMapping(GameMappings.PLAY)
     public String play(Model model) {
         model.addAttribute(AttributeNames.DESCRIPTION, gameService.getDescription());
-        model.addAttribute(AttributeNames.GATES, gameService.getAvaliableGates());
+        model.addAttribute(AttributeNames.GATES, gameService.getAvailableGates());
         model.addAttribute(AttributeNames.VISITED,gameService.getVisitedLocations());
-        model.addAttribute(AttributeNames.ITEMS,gameService.getAvaliableItems());
+        model.addAttribute(AttributeNames.ITEMS,gameService.getAvailableItems());
         model.addAttribute(AttributeNames.INVENTORY,gameService.printInventory());
         model.addAttribute(AttributeNames.ITEM_MESSAGE,gameService.getItemMessage());
         model.addAttribute(AttributeNames.GATE_MESSAGE,gameService.getGateMessage());

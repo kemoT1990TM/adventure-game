@@ -2,14 +2,12 @@ package com.tkjavadev.adventuregame.domain;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Component
 public class Location {
 
     // == fields ==
