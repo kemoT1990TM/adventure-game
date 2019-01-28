@@ -2,6 +2,7 @@ package com.tkjavadev.adventuregame.services;
 
 import com.tkjavadev.adventuregame.domain.Item;
 import com.tkjavadev.adventuregame.domain.Location;
+import com.tkjavadev.adventuregame.exceptions.NotFoundException;
 import com.tkjavadev.adventuregame.repositories.ItemRepository;
 import com.tkjavadev.adventuregame.repositories.LocationRepository;
 import org.slf4j.Logger;
@@ -23,22 +24,25 @@ public class ItemServiceImpl implements ItemService {
         this.locationRepository = locationRepository;
     }
 
+    /*
+    Returns Item searching by Location ID and name of Item
+    */
     @Override
     public Item getItemByLocIdAndName(Long id,String name) {
 
         Optional<Location> locationOptional = locationRepository.findById(id);
 
         if (!locationOptional.isPresent()){
-            //todo impl error handling
             log.error("Location id not found. Id: " + id);
+            throw new NotFoundException();
         }
 
         Location location = locationOptional.get();
         Optional<Item> itemOptional = location.getItems().stream()
                 .filter(item -> item.getName().equals(name)).findFirst();
         if(!itemOptional.isPresent()){
-            //todo impl error handling
             log.error("Item name not found: " + name);
+            throw new NotFoundException();
         }
         return itemOptional.get();
     }

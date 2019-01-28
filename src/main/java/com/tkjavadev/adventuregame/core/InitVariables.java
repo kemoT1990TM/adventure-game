@@ -2,7 +2,7 @@ package com.tkjavadev.adventuregame.core;
 
 import java.util.List;
 
-public interface LocationId {
+public interface InitVariables {
 
     void setLocationId(Long locationId);
 

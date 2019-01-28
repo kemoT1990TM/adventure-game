@@ -1,7 +1,7 @@
 package com.tkjavadev.adventuregame.services;
 
-import com.tkjavadev.adventuregame.core.LocationId;
-import com.tkjavadev.adventuregame.core.LocationIdImpl;
+import com.tkjavadev.adventuregame.core.InitVariables;
+import com.tkjavadev.adventuregame.core.InitVariablesImpl;
 import com.tkjavadev.adventuregame.domain.Gate;
 import com.tkjavadev.adventuregame.domain.Location;
 import org.junit.Before;
@@ -20,7 +20,7 @@ public class GameServiceImplTest {
     private GameServiceImpl gameService;
 
     @Mock
-    LocationId locationId;
+    InitVariables initVariables;
 
     @Mock
     LocationService locationService;
@@ -31,26 +31,26 @@ public class GameServiceImplTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        locationId=new LocationIdImpl(1L);
-        gameService = new GameServiceImpl(locationId,locationService,itemService);
+        initVariables =new InitVariablesImpl(1L);
+        gameService = new GameServiceImpl(initVariables,locationService,itemService);
     }
 
     @Test
     public void isGameOver() {
         assertFalse(gameService.isGameOver());
 
-        locationId.setLocationId(80L);
+        initVariables.setLocationId(80L);
         assertTrue(gameService.isGameOver());
 
-        locationId.setLocationId(-80L);
+        initVariables.setLocationId(-80L);
         assertFalse(gameService.isGameOver());
     }
 
     @Test
     public void reset() {
-        locationId.setLocationId(5L);
+        initVariables.setLocationId(5L);
         gameService.reset();
-        assertEquals(Long.valueOf(1L), locationId.getLocationId());
+        assertEquals(Long.valueOf(1L), initVariables.getLocationId());
     }
 
 //    @Test

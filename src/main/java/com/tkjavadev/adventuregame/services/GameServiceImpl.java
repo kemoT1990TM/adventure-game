@@ -1,6 +1,6 @@
 package com.tkjavadev.adventuregame.services;
 
-import com.tkjavadev.adventuregame.core.LocationId;
+import com.tkjavadev.adventuregame.core.InitVariables;
 import com.tkjavadev.adventuregame.domain.Gate;
 import com.tkjavadev.adventuregame.domain.Item;
 import org.slf4j.Logger;
@@ -17,53 +17,72 @@ public class GameServiceImpl implements GameService {
     // == fields ==
     private LocationService locationService;
     private ItemService itemService;
-    private LocationId locationId;
+    private InitVariables initVariables;
     private String itemMessage;
     private String gateMessage;
 
     // == constructors ==
     @Autowired
-    public GameServiceImpl(LocationId locationId, LocationService locationService, ItemService itemService) {
-        this.locationId = locationId;
+    public GameServiceImpl(InitVariables initVariables, LocationService locationService, ItemService itemService) {
+        this.initVariables = initVariables;
         this.locationService = locationService;
         this.itemService = itemService;
     }
 
     // == methods ==
+    /*
+    Returns list of available directions for initVariables
+     */
     @Override
     public List<Gate> getAvaliableGates() {
-        return locationService.getLocationById(locationId.getLocationId()).getGates();
+        return locationService.getLocationById(initVariables.getLocationId()).getGates();
     }
 
+    /*
+    Returns description for initVariables
+     */
     @Override
     public String getDescription() {
-        return locationService.getLocationById(locationId.getLocationId()).getDescription();
+        return locationService.getLocationById(initVariables.getLocationId()).getDescription();
     }
 
+    /*
+    Returns available items for initVariables
+     */
     @Override
     public List<Item> getAvaliableItems() {
-        return locationService.getLocationById(locationId.getLocationId()).getItems();
+        return locationService.getLocationById(initVariables.getLocationId()).getItems();
     }
 
+    /*
+    Returns items in inventory as a String
+     */
     @Override
     public String printInventory() {
-        return locationId.printInventory();
+        return initVariables.printInventory();
     }
 
 
+    /*
+    Adding item to inventory.
+    If item that is going to be added to inventory requires other item the it is checked
+    and proper message is printed
+    If item is alredy in inventory then message about that is also printed
+     */
     @Override
     public void addItemToInventory(String name) {
-        Item item = itemService.getItemByLocIdAndName(locationId.getLocationId(), name);
+        Item item = itemService.getItemByLocIdAndName(initVariables.getLocationId(), name);
+        //resetting gateMessage
         gateMessage = null;
-        if (item.getRequired().equals("NOT") || locationId.checkInventory(item.getRequired())) {
-            if (locationId.checkInventory(item.getName())) {
+        if (item.getRequired().equals("NOT") || initVariables.checkInventory(item.getRequired())) {
+            if (initVariables.checkInventory(item.getName())) {
                 if (item.getName().equals("KEYS")) {
                     itemMessage = item.getName() + " ARE ALREADY IN INVENTORY";
                 } else {
                     itemMessage = item.getName() + " IS ALREADY IN INVENTORY";
                 }
             } else {
-                locationId.addToInventory(item.getName());
+                initVariables.addToInventory(item.getName());
                 if (item.getName().equals("KEYS")) {
                     itemMessage = item.getName() + " HAVE BEEN ADDED TO INVENTORY";
                 } else {
@@ -75,14 +94,24 @@ public class GameServiceImpl implements GameService {
         }
     }
 
+    /*
+    Checks if game is over and returning boolean value
+     */
     @Override
     public boolean isGameOver() {
-        if (locationId.getLocationId() == 80L) {
+        //todo add condition of finishing the game when all treasures are in inventory
+        if (initVariables.getLocationId() == 80L) {
             return true;
         }
         return false;
     }
 
+    /*
+    Adding some randomisation for several directions(gates)
+    More complex logic is also implemented like:
+    Opening the grate while having the keys in inventory
+    Attacking a snake with a bird etc.
+     */
     public Long randomizer(Long destination, String requiredItem) {
         double random = Math.random();
         Long loc;
@@ -96,7 +125,7 @@ public class GameServiceImpl implements GameService {
                 break;
             case 301:
                 loc = 23L;
-                if (locationId.checkInventory(requiredItem)) {
+                if (initVariables.checkInventory(requiredItem)) {
                     loc = 9L;
                     gateMessage="THE GRATE IS OPEN.";
                 }
@@ -104,7 +133,7 @@ public class GameServiceImpl implements GameService {
                 break;
             case 302:
                 loc = 25L;
-                if (locationId.checkInventory(requiredItem)) {
+                if (initVariables.checkInventory(requiredItem)) {
                     loc = 8L;
                     gateMessage="THE GRATE IS OPEN.";
                 }
@@ -113,21 +142,21 @@ public class GameServiceImpl implements GameService {
                 break;
             case 303:
                 loc = 20L;
-                if (locationId.checkInventory(requiredItem)) {
+                if (initVariables.checkInventory(requiredItem)) {
                     loc = 15L;
                 }
                 gateMessage = "YOU NEED GOLD NUGGET TO GO THERE";
                 break;
             case 304:
                 loc = 22L;
-                if (locationId.checkInventory(requiredItem)) {
+                if (initVariables.checkInventory(requiredItem)) {
                     loc = 14L;
                 }
                 gateMessage = "YOU NEED GOLD NUGGET TO GO THERE";
                 break;
             case 306:
                 loc = 28L;
-                if (locationId.checkInventory(requiredItem)) {
+                if (initVariables.checkInventory(requiredItem)) {
                     loc = 32L;
                     gateMessage = "THE LITTLE BIRD ATTACKS THE GREEN SNAKE, AND IN AN ASTOUNDING FLURRY DRIVES THE SNAKE AWAY.";
                 }
@@ -135,7 +164,7 @@ public class GameServiceImpl implements GameService {
                 break;
             case 307:
                 loc = 29L;
-                if (locationId.checkInventory(requiredItem)) {
+                if (initVariables.checkInventory(requiredItem)) {
                     loc = 32L;
                     gateMessage = "THE LITTLE BIRD ATTACKS THE GREEN SNAKE, AND IN AN ASTOUNDING FLURRY DRIVES THE SNAKE AWAY.";
                 }
@@ -143,7 +172,7 @@ public class GameServiceImpl implements GameService {
                 break;
             case 308:
                 loc = 30L;
-                if (locationId.checkInventory(requiredItem)) {
+                if (initVariables.checkInventory(requiredItem)) {
                     loc = 32L;
                     gateMessage = "THE LITTLE BIRD ATTACKS THE GREEN SNAKE, AND IN AN ASTOUNDING FLURRY DRIVES THE SNAKE AWAY.";
                 }
@@ -151,7 +180,7 @@ public class GameServiceImpl implements GameService {
                 break;
             case 311:
                 loc = 9L;
-                if (locationId.checkInventory(requiredItem)) {
+                if (initVariables.checkInventory(requiredItem)) {
                     loc = 8L;
                     gateMessage="THE GRATE IS OPEN.";
                 }
@@ -184,18 +213,22 @@ public class GameServiceImpl implements GameService {
         return loc;
     }
 
+    /*
+    Changes direction and checking if item is required to use specified direction
+    Returns new ID of new location
+     */
     @Override
     public Long changeDirection(String direction) {
-        for (Gate gate : locationService.getLocationById(locationId.getLocationId()).getGates()) {
+        for (Gate gate : locationService.getLocationById(initVariables.getLocationId()).getGates()) {
             if (gate.getDirection().contains(direction)) {
                 if (gate.getDestId() >= 300) {
-                    locationId.setLocationId(randomizer(gate.getDestId(), gate.getRequired()));
-                    locationId.addVisitedLocation(locationId.getLocationId());
+                    initVariables.setLocationId(randomizer(gate.getDestId(), gate.getRequired()));
+                    initVariables.addVisitedLocation(initVariables.getLocationId());
                     break;
                 } else {
-                    if (gate.getRequired().equals("NOT") || locationId.checkInventory(gate.getRequired())) {
-                        locationId.setLocationId(gate.getDestId());
-                        locationId.addVisitedLocation(locationId.getLocationId());
+                    if (gate.getRequired().equals("NOT") || initVariables.checkInventory(gate.getRequired())) {
+                        initVariables.setLocationId(gate.getDestId());
+                        initVariables.addVisitedLocation(initVariables.getLocationId());
                         gateMessage = null;
                         break;
                     } else {
@@ -205,17 +238,23 @@ public class GameServiceImpl implements GameService {
                 }
             }
         }
-        return locationId.getLocationId();
+        return initVariables.getLocationId();
     }
 
 
+    /*
+    Resets the game
+     */
     @Override
     public void reset() {
-        locationId.reset();
+        initVariables.reset();
     }
 
+    /*
+    Returns number of visited locations.
+     */
     public Integer getVisitedLocations() {
-        return locationId.getVisitedLocations();
+        return initVariables.getVisitedLocations();
     }
 
     public String getItemMessage() {
@@ -231,27 +270,33 @@ public class GameServiceImpl implements GameService {
     }
 
     public void exit() {
-        locationId.setLocationId(80L);
+        initVariables.setLocationId(80L);
     }
 
+    /*
+    Returns score of a player
+     */
     @Override
     public Integer getScore() {
-        return locationId.getScore();
+        return initVariables.getScore();
     }
 
+    /*
+    Returns rank of a player considering gathered points
+     */
     public String getRank(){
         String rank="You are obviously a rank amateur.  Better luck next time.";
-        if(locationId.getScore()>=35 && locationId.getScore()<70){
+        if(initVariables.getScore()>=35 && initVariables.getScore()<70){
             rank="Your score qualifies you as a novice class adventurer.";
-        } else if(locationId.getScore()>=70 && locationId.getScore()<100){
+        } else if(initVariables.getScore()>=70 && initVariables.getScore()<100){
             rank="You have achieved the rating \"Experienced Adventurer\".";
-        } else if(locationId.getScore()>=100 &&locationId.getScore()<150){
+        } else if(initVariables.getScore()>=100 && initVariables.getScore()<150){
             rank="You may now consider yourself a \"Seasoned Adventurer\".";
-        } else if(locationId.getScore()>=150 &&locationId.getScore()<200){
+        } else if(initVariables.getScore()>=150 && initVariables.getScore()<200){
             rank="You have reached \"Junior Master\" status.";
-        } else if(locationId.getScore()>=200 && locationId.getScore()<240){
+        } else if(initVariables.getScore()>=200 && initVariables.getScore()<240){
             rank="Your score qualifies you as a Master Adventurer.";
-        } else if(locationId.getScore()>=240){
+        } else if(initVariables.getScore()>=240){
             rank= "All of Adventuredom gives tribute to you, Adventure Grandmaster!";
         }
         return rank;

@@ -19,7 +19,11 @@ public class LocationServiceImpl implements LocationService, Serializable {
         this.locationRepository = locationRepository;
     }
 
+
     // == methods ==
+    /*
+    Returns Location searching by ID
+     */
     @Override
     public Location getLocationById(Long id) {
                    Optional<Location> locationOptional = locationRepository.findById(id);
@@ -30,6 +34,9 @@ public class LocationServiceImpl implements LocationService, Serializable {
         return locationOptional.get();
     }
 
+    /*
+    Saving Location to DB
+    */
     @Override
     public void saveLocation(Location location) {
         locationRepository.save(location);

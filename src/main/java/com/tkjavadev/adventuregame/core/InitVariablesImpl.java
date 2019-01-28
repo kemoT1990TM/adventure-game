@@ -12,7 +12,7 @@ import java.util.Set;
 
 @Component
 @SessionScope
-public class LocationIdImpl implements LocationId, Serializable {
+public class InitVariablesImpl implements InitVariables, Serializable {
     // == fields ==
     private Long locationId;
     private Set<Long> locIds;
@@ -21,7 +21,7 @@ public class LocationIdImpl implements LocationId, Serializable {
 
     // == constructors ==
     @Autowired
-    public LocationIdImpl(@LocId Long locationId) {
+    public InitVariablesImpl(@LocId Long locationId) {
         this.locationId = locationId;
         locIds=new HashSet<>();
         locIds.add(locationId);
@@ -34,7 +34,11 @@ public class LocationIdImpl implements LocationId, Serializable {
         this.locationId = locationId;
     }
 
+    /*
+    Resetting game variables to default
+     */
     public void reset(){
+        //todo check if value of locationId can be obtained from LocId
         locationId=1L;
         locIds=new HashSet<>();
         locIds.add(locationId);
@@ -49,6 +53,9 @@ public class LocationIdImpl implements LocationId, Serializable {
         locIds.add(locationId);
     }
 
+    /*
+    Returns number of visited locations
+     */
     public Integer getVisitedLocations(){
         return locIds.size()-1;
     }
@@ -57,6 +64,9 @@ public class LocationIdImpl implements LocationId, Serializable {
         inventory.add(item);
     }
 
+    /*
+    Checking if inventory is containing specified item
+     */
     public boolean checkInventory(String item){
         if (inventory.contains(item)){
             return true;
@@ -68,7 +78,10 @@ public class LocationIdImpl implements LocationId, Serializable {
         return inventory;
     }
 
-    public synchronized String printInventory(){
+    /*
+    Returns items in inventory as a String
+     */
+    public String printInventory(){
         StringBuffer sb=new StringBuffer();
         for(String item:inventory){
             sb.append(item);
@@ -81,6 +94,9 @@ public class LocationIdImpl implements LocationId, Serializable {
         return print;
     }
 
+    /*
+    Calculates final score
+     */
     @Override
     public Integer getScore() {
         Integer itemPoints=0;
