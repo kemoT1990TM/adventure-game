@@ -49,6 +49,8 @@ jobs:
 
       - run: gradle jacocoTestReport
 
+      - run: bash <(curl -s https://codecov.io/bash)
+
       - run:
           name: Save test results
           command: |
