@@ -74,10 +74,7 @@ jobs:
       - store_artifacts:
           path: ~/jacoco
 
-#    test:
-#      override:
-#        - gradle check jacocoTestReport
-#      post:
-#       - if [ -e ./gradlew ]; then ./gradlew jacocoTestReport;else gradle jacocoTestReport;fi
-#       - bash <(curl -s https://codecov.io/bash)
-#       - cp -R build/reports/* $CIRCLE_ARTIFACTS
+    test:
+      post:
+       - if [ -e ./gradlew ]; then ./gradlew jacocoTestReport;else gradle jacocoTestReport;fi
+       - bash <(curl -s https://codecov.io/bash)
