@@ -19,6 +19,9 @@ public class Gate {
     private String required;
 
     // == methods ==
+    /*
+    Returns full name of direction as a String
+     */
     public String getFullName() {
         String fullName = null;
         if (direction != null && !direction.isEmpty()) {

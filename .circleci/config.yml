@@ -8,6 +8,7 @@ jobs:
     docker:
       # specify the version you desire here
       - image: circleci/openjdk:8-jdk
+      - image: circleci/php:7.1.9-browsers
 
       # Specify services dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -20,6 +21,7 @@ jobs:
       # Customize the JVM maximum heap limit
       JVM_OPTS: -Xmx3200m
       TERM: dumb
+      CC_TEST_REPORTER_ID: YOUR_REPO_CC_TEST_REPORTER_ID
 
     steps:
       - checkout
@@ -40,6 +42,29 @@ jobs:
 
       # run tests!
       - run: gradle test
+
+      - run:
+        name: Setup dependencies
+          command: |
+            sudo composer self-update
+            composer install -n --prefer-dist
+      - run:
+        name: Setup Code Climate test-reporter
+          command: |
+            # download test reporter as a static binary
+            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+            chmod +x ./cc-test-reporter
+      - run:
+        name: Run tests
+          command: |
+            sudo docker-php-ext-enable xdebug
+            # notify Code Climate of a pending test report using `before-build`
+            ./cc-test-reporter before-build
+            sudo vendor/bin/phpunit --coverage-clover clover.xml
+            # upload test report to Code Climate using `after-build`
+            ./cc-test-reporter after-build --coverage-input-type clover --exit-code $?
+
+
 
 
 
