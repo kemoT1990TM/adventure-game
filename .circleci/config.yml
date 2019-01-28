@@ -21,6 +21,11 @@ jobs:
       JVM_OPTS: -Xmx3200m
       TERM: dumb
 
+    test:
+        post:
+          - if [ -e ./gradlew ]; then ./gradlew jacocoTestReport;else gradle jacocoTestReport;fi
+          - bash <(curl -s https://codecov.io/bash)
+
     steps:
       - checkout
 
@@ -47,8 +52,3 @@ jobs:
 
       - store_test_results:
           path: test-results
-
-      test:
-        post:
-          - if [ -e ./gradlew ]; then ./gradlew jacocoTestReport;else gradle jacocoTestReport;fi
-          - bash <(curl -s https://codecov.io/bash)
