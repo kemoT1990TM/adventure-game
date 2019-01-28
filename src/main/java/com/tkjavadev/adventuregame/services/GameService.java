@@ -13,13 +13,13 @@ public interface GameService {
 
     Long changeDirection(String direction);
 
-    List<Gate> getAvaliableGates();
+    List<Gate> getAvailableGates();
 
     void reset();
 
     Integer getVisitedLocations();
 
-    List<Item> getAvaliableItems();
+    List<Item> getAvailableItems();
 
     String printInventory();
 

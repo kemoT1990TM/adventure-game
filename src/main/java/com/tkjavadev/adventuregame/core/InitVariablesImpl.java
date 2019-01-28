@@ -100,6 +100,8 @@ public class InitVariablesImpl implements InitVariables, Serializable {
     @Override
     public Integer getScore() {
         Integer itemPoints=0;
+        if(checkInventory("FOOD")) itemPoints += 5;
+        if(checkInventory("BOOTLE")) itemPoints += 5;
         if(checkInventory("GOLD")) itemPoints += 32;
         if(checkInventory("JEWELERY")) itemPoints += 40;
         if(checkInventory("SILVER")) itemPoints += 28;
