@@ -45,10 +45,20 @@ jobs:
       # run tests!
       - run: gradle test
 
-    test:
-      override:
-        - gradle check jacocoTestReport
-      post:
-       - if [ -e ./gradlew ]; then ./gradlew jacocoTestReport;else gradle jacocoTestReport;fi
-       - bash <(curl -s https://codecov.io/bash)
-       - cp -R build/reports/* $CIRCLE_ARTIFACTS
+      - run: gradle jacocoTestReport
+
+      - run: mkdir test-reports
+
+      - store_artifacts:
+          path: test-reports/
+          destination: jacoco
+      - store_test_results:
+          path: test-reports/
+
+#    test:
+#      override:
+#        - gradle check jacocoTestReport
+#      post:
+#       - if [ -e ./gradlew ]; then ./gradlew jacocoTestReport;else gradle jacocoTestReport;fi
+#       - bash <(curl -s https://codecov.io/bash)
+#       - cp -R build/reports/* $CIRCLE_ARTIFACTS
