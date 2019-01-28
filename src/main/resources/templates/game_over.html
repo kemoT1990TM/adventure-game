@@ -14,7 +14,6 @@
     <div class="score">
         <h3> You scored <span th:text="${__${T(com.tkjavadev.adventuregame.util.AttributeNames).SCORE}__}"></span> point's out of a possible 258 and visited <span th:text="${__${T(com.tkjavadev.adventuregame.util.AttributeNames).VISITED}__}"></span> locations</h3>
         <h3 th:text="${__${T(com.tkjavadev.adventuregame.util.AttributeNames).RANK}__}">RATING</h3>
-        <h3>CONGRATULATIONS!</h3>
     </div>
 
     <h4><a class="btn-solid" th:href="@{__${T(com.tkjavadev.adventuregame.util.GameMappings).RESTART}__}">PLAY AGAIN</a></h4>

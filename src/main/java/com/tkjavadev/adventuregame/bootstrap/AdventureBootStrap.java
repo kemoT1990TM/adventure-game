@@ -35,6 +35,9 @@ public class AdventureBootStrap implements ApplicationListener<ContextRefreshedE
 //        readData();
     }
 
+    /*
+    Reads data from txt files and adding to Databasa
+     */
     private void readData() {
         Scanner scanner = null;
         try {
