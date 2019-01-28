@@ -3,8 +3,6 @@
 # Check https://circleci.com/docs/2.0/language-java/ for more details
 #
 version: 2
-#orb:
-#  codecov: codecov/codecov@1.0.3
 jobs:
   build:
     docker:
@@ -49,31 +47,31 @@ jobs:
 
       - run: gradle jacocoTestReport
 
-#      - run:
-#          name: Save test results
-#          command: |
-#            mkdir -p ~/junit/
-#            find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} ~/junit/ \;
-#          when: always
-#
-#      - store_test_results:
-#              path: ~/junit
-#
-#      - store_artifacts:
-#              path: ~/junit
-
       - run:
           name: Save test results
           command: |
-            mkdir -p ~/jacoco/
-            find . -type f -regex ".*/build/reports/jacoco/test/.*xml" -exec cp {} ~/jacoco/ \;
+            mkdir -p ~/junit/
+            find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} ~/junit/ \;
           when: always
 
       - store_test_results:
-          path: ~/jacoco
+              path: ~/junit
 
       - store_artifacts:
-          path: ~/jacoco
+              path: ~/junit
+
+#      - run:
+#          name: Save test results
+#          command: |
+#            mkdir -p ~/jacoco/
+#            find . -type f -regex ".*/build/reports/jacoco/test/.*xml" -exec cp {} ~/jacoco/ \;
+#          when: always
+#
+#      - store_test_results:
+#          path: ~/jacoco
+#
+#      - store_artifacts:
+#          path: ~/jacoco
 
       - run: bash <(curl -s https://codecov.io/bash)
 
