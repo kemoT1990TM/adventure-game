@@ -4,7 +4,7 @@
 #
 version: 2.1
 orb:
-  codecov: codecov/codecov@1.0.1
+  codecov: codecov/codecov@1.0.3
 jobs:
   build:
     docker:
@@ -63,6 +63,9 @@ jobs:
 
       - run: gradle jacocoTestReport
 
+      - codecov/upload:
+          file: jacoco/*.xml
+
       - run:
           name: Save test results
           command: |
@@ -76,10 +79,5 @@ jobs:
       - store_artifacts:
           path: ~/jacoco
 
-      - codecov/upload:
-          file:{{build\reports\jacoco\test\jacocoTestReport.xml}}
-
-#    test:
-#      post:
-#       - if [ -e ./gradlew ]; then ./gradlew jacocoTestReport;else gradle jacocoTestReport;fi
-#       - bash <(curl -s https://codecov.io/bash)
+#      - codecov/upload:
+#          file:{{ build\reports\jacoco\test\jacocoTestReport.xml }}
