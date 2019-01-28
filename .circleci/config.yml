@@ -63,8 +63,8 @@ jobs:
 
       - run: gradle jacocoTestReport
 
-      - codecov/upload:
-          file: jacoco/*.xml
+#      - codecov/upload:
+#          file: jacoco/*.xml
 
       - run:
           name: Save test results
