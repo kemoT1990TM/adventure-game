@@ -62,13 +62,6 @@ dependencies {
 	testCompile 'com.google.appengine:appengine-tools-sdk:+'
 }
 
-jacocoTestReport {
-	reports {
-		xml.enabled true
-		html.enabled false
-	}
-}
-
 // Always run unit tests
 appengineDeploy.dependsOn test
 appengineStage.dependsOn test
@@ -95,6 +88,18 @@ test {
 		logger.lifecycle("test: " + descriptor + ": " + result )
 	}
 }
+
+jacoco {
+	toolVersion = "0.8.2"
+}
+
+jacocoTestReport {
+	reports {
+		xml.enabled true
+		html.enabled true
+	}
+}
+
 // [END model]
 
 group = 'com.tkjavadev'
