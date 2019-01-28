@@ -49,6 +49,17 @@ jobs:
 
       - run: gradle jacocoTestReport
 
+      - run:
+          name: Save test results
+          command: |
+            mkdir -p ~/junit/
+            find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} ~/junit/ \;
+          when: always
+          - store_test_results:
+              path: ~/junit
+          - store_artifacts:
+              path: ~/junit
+
 #      - run:
 #          name: Save test results
 #          command: |
@@ -62,13 +73,4 @@ jobs:
 #      - store_artifacts:
 #          path: ~/jacoco
 
-        - run:
-            name: Save test results
-            command: |
-              mkdir -p ~/junit/
-              find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} ~/junit/ \;
-            when: always
-        - store_test_results:
-            path: ~/junit
-        - store_artifacts:
-            path: ~/junit
+
