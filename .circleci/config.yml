@@ -2,9 +2,9 @@
 #
 # Check https://circleci.com/docs/2.0/language-java/ for more details
 #
-version: 2.1
-orb:
-  codecov: codecov/codecov@1.0.3
+version: 2
+#orb:
+#  codecov: codecov/codecov@1.0.3
 jobs:
   build:
     docker:
