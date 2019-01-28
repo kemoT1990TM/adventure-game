@@ -49,11 +49,12 @@ jobs:
 
       - run: mkdir test-reports
 
+      - store_test_results:
+          path: test-reports/
+
       - store_artifacts:
           path: test-reports/
           destination: jacoco
-      - store_test_results:
-          path: test-reports/
 
 #    test:
 #      override:
