@@ -107,4 +107,6 @@ version = '0.0.1-SNAPSHOT'
 
 sourceCompatibility = 1.8     // App Engine Flexible uses Java 8
 targetCompatibility = 1.8     // App Engine Flexible uses Java 8
+
+check.dependsOn jacocoTestReport
 // [END gradle]
