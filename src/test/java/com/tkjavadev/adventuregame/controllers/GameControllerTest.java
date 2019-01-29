@@ -1,7 +1,7 @@
 package com.tkjavadev.adventuregame.controllers;
 
+import com.tkjavadev.adventuregame.exceptions.NotFoundException;
 import com.tkjavadev.adventuregame.services.GameService;
-import com.tkjavadev.adventuregame.services.ItemService;
 import com.tkjavadev.adventuregame.util.GameMappings;
 import com.tkjavadev.adventuregame.util.ViewNames;
 import org.junit.Before;
@@ -12,6 +12,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -21,9 +23,6 @@ public class GameControllerTest {
 
     @Mock
     GameService gameService;
-
-    @Mock
-    ItemService itemService;
 
     GameController gameController;
 
@@ -45,9 +44,15 @@ public class GameControllerTest {
 
     @Test
     public void play() throws Exception {
-        mockMvc.perform(get("/" + GameMappings.RESTART))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/" + ViewNames.PLAY));
+        mockMvc.perform(get("/" + GameMappings.PLAY))
+                .andExpect(status().isOk())
+                .andExpect(view().name(ViewNames.PLAY));
+
+        when(gameService.isGameOver()).thenReturn(true);
+
+        mockMvc.perform(get("/" + GameMappings.PLAY))
+                .andExpect(status().isOk())
+                .andExpect(view().name(ViewNames.GAME_OVER));
     }
 
     @Test
@@ -55,10 +60,6 @@ public class GameControllerTest {
         mockMvc.perform(post("/" + GameMappings.CHANGE).param("direction", "Q"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name(GameMappings.REDIRECT_PLAY));
-
-        mockMvc.perform(get("/" + GameMappings.PLAY))
-                .andExpect(status().isOk())
-                .andExpect(view().name(ViewNames.PLAY));
     }
 
     @Test
@@ -88,4 +89,15 @@ public class GameControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name(ViewNames.GAME_OVER));
     }
+
+    @Test
+    public void changeDirectionNotFound() throws Exception {
+
+        when(gameService.changeDirection(anyString())).thenThrow(NotFoundException.class);
+
+        mockMvc.perform(post("/" + GameMappings.CHANGE).param("direction", "Q"))
+                .andExpect(status().isNotFound())
+                .andExpect(view().name("404error"));
+    }
+
 }

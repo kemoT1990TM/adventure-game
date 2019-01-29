@@ -1,5 +1,6 @@
 package com.tkjavadev.adventuregame.services;
 
+import com.tkjavadev.adventuregame.domain.Item;
 import com.tkjavadev.adventuregame.domain.Location;
 import com.tkjavadev.adventuregame.repositories.LocationRepository;
 import org.junit.Before;
@@ -7,9 +8,11 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 public class LocationServiceImplTest {
@@ -47,6 +50,28 @@ public class LocationServiceImplTest {
 
         locationService.saveLocation(location);
         verify(locationRepository,times(1)).save(location);
+    }
+
+    @Test
+    public void getItemByLocIdAndName() {
+        Location location=new Location();
+        location.setId(1L);
+        Item item=new Item();
+        item.setName("item");
+        item.setLocId(1L);
+        List<Item> items=new ArrayList<>();
+        items.add(item);
+        location.setItems(items);
+
+        Optional<Location> locationOptional = Optional.of(location);
+        when(locationRepository.findById(anyLong())).thenReturn(locationOptional);
+
+        Item itemReturned=locationService.getItemByLocIdAndName(1L,"item");
+
+        assertNotNull("Null item returned",itemReturned);
+        assertEquals(Long.valueOf(1L),itemReturned.getLocId());
+        assertEquals("item",itemReturned.getName());
+        verify(locationRepository,times(1)).findById(anyLong());
     }
 
 }
