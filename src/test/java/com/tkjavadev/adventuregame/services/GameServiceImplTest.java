@@ -60,21 +60,36 @@ public class GameServiceImplTest {
         assertEquals(Long.valueOf(1L), initVariables.getLocationId());
     }
 
-//    @Test
-//    public void changeDirection() {
-//        Location location=new Location();
-//        Gate exit=new Gate();
-//        exit.setDirection("E");
-//        exit.setDestId(99L);
-//        List<Gate> exits=new ArrayList<>();
-//        exits.add(exit);
-//        location.setGates(exits);
-//
-//        when(locationService.getLocationById(anyLong())).thenReturn(location);
-//
-//        assertEquals(Long.valueOf(99L),gameService.changeDirection(exit.getDirection()));
-//        verify(locationService,times(1)).getLocationById(anyLong());
-//    }
+    @Test
+    public void changeDirection() {
+        Location location=new Location();
+        location.setId(1L);
+        Gate gate=new Gate();
+        gate.setLocId(1L);
+        gate.setDirection("E");
+        gate.setDestId(99L);
+        gate.setRequired("NOT");
+        List<Gate> gates=new ArrayList<>();
+        gates.add(gate);
+        location.setGates(gates);
+
+        when(locationService.getLocationById(anyLong())).thenReturn(location);
+
+        assertEquals(Long.valueOf(99L),gameService.changeDirection(gate.getDirection()));
+        verify(locationService,times(1)).getLocationById(anyLong());
+
+        initVariables.setLocationId(1L);
+        gate.setRequired("KEYS");
+        assertEquals(Long.valueOf(1L),gameService.changeDirection(gate.getDirection()));
+        assertEquals("YOU NEED " + gate.getRequired() + " TO GO THERE", gameService.getGateMessage());
+
+        gate.setDestId(301L);
+        assertEquals(Long.valueOf(23L),gameService.changeDirection(gate.getDirection()));
+        gate.setDestId(302L);
+        assertEquals(Long.valueOf(25L),gameService.changeDirection(gate.getDirection()));
+        gate.setDestId(303L);
+        assertEquals(Long.valueOf(20L),gameService.changeDirection(gate.getDirection()));
+    }
 
     @Test
     public void getAvailableGates() {
@@ -148,6 +163,12 @@ public class GameServiceImplTest {
         initVariables.addVisitedLocation(1L);
         initVariables.addVisitedLocation(2L);
         assertEquals(Integer.valueOf(1), gameService.getVisitedLocations());
+    }
+
+    @Test
+    public void resetMessage() {
+        gameService.resetMessages();
+        assertNull(gameService.getItemMessage());
     }
 
     @Test

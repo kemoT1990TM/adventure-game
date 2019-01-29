@@ -105,10 +105,9 @@ public class GameServiceImpl implements GameService {
     Opening the grate while having the keys in inventory
     Attacking a snake with a bird etc.
      */
-    public Long randomizer(Long destination, String requiredItem) {
+    private Long randomizer(Long destination, String requiredItem) {
         double random = Math.random();
         Long loc;
-        log.info("random ={}",random);
         switch (destination.intValue()) {
             case 300:
                 loc = 6L;
