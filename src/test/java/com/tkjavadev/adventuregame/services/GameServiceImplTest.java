@@ -29,8 +29,8 @@ public class GameServiceImplTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        initVariables =new InitVariablesImpl(1L);
-        gameService = new GameServiceImpl(initVariables,locationService);
+        initVariables = new InitVariablesImpl(1L);
+        gameService = new GameServiceImpl(initVariables, locationService);
     }
 
     @Test
@@ -78,69 +78,116 @@ public class GameServiceImplTest {
 
     @Test
     public void getAvailableGates() {
-        Location location=new Location();
-        List<Gate> exits=new ArrayList<>();
+        Location location = new Location();
+        List<Gate> exits = new ArrayList<>();
         location.setGates(exits);
 
         when(locationService.getLocationById(anyLong())).thenReturn(location);
 
-        assertEquals(exits,gameService.getAvailableGates());
-        verify(locationService,times(1)).getLocationById(anyLong());
+        assertEquals(exits, gameService.getAvailableGates());
+        verify(locationService, times(1)).getLocationById(anyLong());
     }
 
     @Test
     public void getDescription() {
-        Location location=new Location();
+        Location location = new Location();
         location.setDescription("Description");
 
         when(locationService.getLocationById(anyLong())).thenReturn(location);
 
-        assertEquals("Description",gameService.getDescription());
-        verify(locationService,times(1)).getLocationById(anyLong());
+        assertEquals("Description", gameService.getDescription());
+        verify(locationService, times(1)).getLocationById(anyLong());
     }
 
     @Test
     public void getAvailableItems() {
-        Location location=new Location();
-        List<Item> items=new ArrayList<>();
+        Location location = new Location();
+        List<Item> items = new ArrayList<>();
         location.setItems(items);
 
         when(locationService.getLocationById(anyLong())).thenReturn(location);
 
-        assertEquals(items,gameService.getAvailableItems());
-        verify(locationService,times(1)).getLocationById(anyLong());
+        assertEquals(items, gameService.getAvailableItems());
+        verify(locationService, times(1)).getLocationById(anyLong());
     }
 
     @Test
     public void addItemToInventory() {
-        Item item1=new Item();
+        Item item1 = new Item();
         item1.setName("item1");
         item1.setRequired("NOT");
 
-        when(locationService.getItemByLocIdAndName(anyLong(),anyString())).thenReturn(item1);
+        when(locationService.getItemByLocIdAndName(anyLong(), anyString())).thenReturn(item1);
 
 
         assertNull(gameService.getItemMessage());
         gameService.addItemToInventory("item1");
         assertNotNull(gameService.getItemMessage());
         assertNull(gameService.getGateMessage());
-        assertEquals("item1",gameService.printInventory());
-        assertEquals(item1.getName() + " -> ADDED TO INVENTORY",gameService.getItemMessage());
+        assertEquals("item1", gameService.printInventory());
+        assertEquals(item1.getName() + " -> ADDED TO INVENTORY", gameService.getItemMessage());
         gameService.addItemToInventory("item1");
-        assertEquals("item1",gameService.printInventory());
-        assertEquals(item1.getName() + " -> ALREADY IN INVENTORY",gameService.getItemMessage());
+        assertEquals("item1", gameService.printInventory());
+        assertEquals(item1.getName() + " -> ALREADY IN INVENTORY", gameService.getItemMessage());
 
 
-        Item item2=new Item();
+        Item item2 = new Item();
         item2.setName("item2");
         item2.setRequired("item3");
-        when(locationService.getItemByLocIdAndName(anyLong(),anyString())).thenReturn(item2);
+        when(locationService.getItemByLocIdAndName(anyLong(), anyString())).thenReturn(item2);
         gameService.addItemToInventory("item2");
-        assertEquals("YOU NEED " + item2.getRequired() + " TO GET " + item2.getName(),gameService.getItemMessage());
+        assertEquals("YOU NEED " + item2.getRequired() + " TO GET " + item2.getName(), gameService.getItemMessage());
 
         item2.setRequired("item1");
         gameService.addItemToInventory("item2");
-        assertEquals(item2.getName() + " -> ADDED TO INVENTORY",gameService.getItemMessage());
+        assertEquals(item2.getName() + " -> ADDED TO INVENTORY", gameService.getItemMessage());
     }
 
+    @Test
+    public void getVisitedLocations() {
+        initVariables.addVisitedLocation(1L);
+        initVariables.addVisitedLocation(2L);
+        assertEquals(Integer.valueOf(1), gameService.getVisitedLocations());
+    }
+
+    @Test
+    public void exit() {
+        initVariables.setLocationId(5L);
+        gameService.exit();
+        assertEquals(Long.valueOf(80L), initVariables.getLocationId());
+    }
+
+    @Test
+    public void getScore() {
+        initVariables.addVisitedLocation(1L);
+        assertEquals(Integer.valueOf(0), gameService.getScore());
+
+        initVariables.addToInventory("FOOD");
+        assertEquals(Integer.valueOf(5), gameService.getScore());
+    }
+
+    @Test
+    public void getRank() {
+        String rank = "You are obviously a rank amateur.  Better luck next time.";
+        assertEquals(rank, gameService.getRank());
+
+//        when(initVariables.getScore()).thenReturn(50);
+//        rank = "Your score qualifies you as a novice class adventurer.";
+//        assertEquals(rank, gameService.getRank());
+//        when(initVariables.getScore()).thenReturn(80);
+//        rank = "You have achieved the rating \"Experienced Adventurer\".";
+//        assertEquals(rank, gameService.getRank());
+//        when(initVariables.getScore()).thenReturn(125);
+//        rank = "You may now consider yourself a \"Seasoned Adventurer\".";
+//        assertEquals(rank, gameService.getRank());
+//        when(initVariables.getScore()).thenReturn(180);
+//        rank = "You have reached \"Junior Master\" status.";
+//        assertEquals(rank, gameService.getRank());
+//        when(initVariables.getScore()).thenReturn(222);
+//        rank = "Your score qualifies you as a Master Adventurer.";
+//        assertEquals(rank, gameService.getRank());
+//        when(initVariables.getScore()).thenReturn(1000);
+//        rank = "All of Adventuredom gives tribute to you, Adventure Grandmaster!";
+//        assertEquals(rank, gameService.getRank());
+    }
 }
