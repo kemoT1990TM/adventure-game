@@ -83,12 +83,8 @@ public class GameServiceImplTest {
         assertEquals(Long.valueOf(1L),gameService.changeDirection(gate.getDirection()));
         assertEquals("YOU NEED " + gate.getRequired() + " TO GO THERE", gameService.getGateMessage());
 
-        gate.setDestId(301L);
-        assertEquals(Long.valueOf(23L),gameService.changeDirection(gate.getDirection()));
         gate.setDestId(302L);
         assertEquals(Long.valueOf(25L),gameService.changeDirection(gate.getDirection()));
-        gate.setDestId(303L);
-        assertEquals(Long.valueOf(20L),gameService.changeDirection(gate.getDirection()));
     }
 
     @Test
@@ -185,6 +181,18 @@ public class GameServiceImplTest {
 
         initVariables.addToInventory("FOOD");
         assertEquals(Integer.valueOf(5), gameService.getScore());
+        initVariables.addToInventory("BOOTLE");
+        assertEquals(Integer.valueOf(10), gameService.getScore());
+        initVariables.addToInventory("GOLD");
+        assertEquals(Integer.valueOf(42), gameService.getScore());
+        initVariables.addToInventory("JEWELERY");
+        assertEquals(Integer.valueOf(82), gameService.getScore());
+        initVariables.addToInventory("SILVER");
+        assertEquals(Integer.valueOf(110), gameService.getScore());
+        initVariables.addToInventory("DIAMONDS");
+        assertEquals(Integer.valueOf(174), gameService.getScore());
+        initVariables.addToInventory("COINS");
+        assertEquals(Integer.valueOf(194), gameService.getScore());
     }
 
     @Test
