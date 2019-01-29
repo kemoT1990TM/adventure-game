@@ -53,4 +53,7 @@ public class Location {
         return items;
     }
 
+    public void setItems(List<Item> items) {
+        this.items = items;
+    }
 }

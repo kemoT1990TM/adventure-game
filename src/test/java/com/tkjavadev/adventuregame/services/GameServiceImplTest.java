@@ -3,6 +3,7 @@ package com.tkjavadev.adventuregame.services;
 import com.tkjavadev.adventuregame.core.InitVariables;
 import com.tkjavadev.adventuregame.core.InitVariablesImpl;
 import com.tkjavadev.adventuregame.domain.Gate;
+import com.tkjavadev.adventuregame.domain.Item;
 import com.tkjavadev.adventuregame.domain.Location;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,14 +26,11 @@ public class GameServiceImplTest {
     @Mock
     LocationService locationService;
 
-    @Mock
-    ItemService itemService;
-
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         initVariables =new InitVariablesImpl(1L);
-        gameService = new GameServiceImpl(initVariables,locationService,itemService);
+        gameService = new GameServiceImpl(initVariables,locationService);
     }
 
     @Test
@@ -44,6 +42,15 @@ public class GameServiceImplTest {
 
         initVariables.setLocationId(-80L);
         assertFalse(gameService.isGameOver());
+
+        initVariables.setLocationId(10L);
+        initVariables.addToInventory("GOLD");
+        initVariables.addToInventory("DIAMONDS");
+        initVariables.addToInventory("COINS");
+        initVariables.addToInventory("SILVER");
+        assertFalse(gameService.isGameOver());
+        initVariables.addToInventory("JEWELRY");
+        assertTrue(gameService.isGameOver());
     }
 
     @Test
@@ -70,7 +77,7 @@ public class GameServiceImplTest {
 //    }
 
     @Test
-    public void getAvaliableGates() {
+    public void getAvailableGates() {
         Location location=new Location();
         List<Gate> exits=new ArrayList<>();
         location.setGates(exits);
@@ -91,4 +98,49 @@ public class GameServiceImplTest {
         assertEquals("Description",gameService.getDescription());
         verify(locationService,times(1)).getLocationById(anyLong());
     }
+
+    @Test
+    public void getAvailableItems() {
+        Location location=new Location();
+        List<Item> items=new ArrayList<>();
+        location.setItems(items);
+
+        when(locationService.getLocationById(anyLong())).thenReturn(location);
+
+        assertEquals(items,gameService.getAvailableItems());
+        verify(locationService,times(1)).getLocationById(anyLong());
+    }
+
+    @Test
+    public void addItemToInventory() {
+        Item item1=new Item();
+        item1.setName("item1");
+        item1.setRequired("NOT");
+
+        when(locationService.getItemByLocIdAndName(anyLong(),anyString())).thenReturn(item1);
+
+
+        assertNull(gameService.getItemMessage());
+        gameService.addItemToInventory("item1");
+        assertNotNull(gameService.getItemMessage());
+        assertNull(gameService.getGateMessage());
+        assertEquals("item1",gameService.printInventory());
+        assertEquals(item1.getName() + " -> ADDED TO INVENTORY",gameService.getItemMessage());
+        gameService.addItemToInventory("item1");
+        assertEquals("item1",gameService.printInventory());
+        assertEquals(item1.getName() + " -> ALREADY IN INVENTORY",gameService.getItemMessage());
+
+
+        Item item2=new Item();
+        item2.setName("item2");
+        item2.setRequired("item3");
+        when(locationService.getItemByLocIdAndName(anyLong(),anyString())).thenReturn(item2);
+        gameService.addItemToInventory("item2");
+        assertEquals("YOU NEED " + item2.getRequired() + " TO GET " + item2.getName(),gameService.getItemMessage());
+
+        item2.setRequired("item1");
+        gameService.addItemToInventory("item2");
+        assertEquals(item2.getName() + " -> ADDED TO INVENTORY",gameService.getItemMessage());
+    }
+
 }

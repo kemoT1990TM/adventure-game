@@ -16,17 +16,15 @@ public class GameServiceImpl implements GameService {
 
     // == fields ==
     private LocationService locationService;
-    private ItemService itemService;
     private InitVariables initVariables;
     private String itemMessage;
     private String gateMessage;
 
     // == constructors ==
     @Autowired
-    public GameServiceImpl(InitVariables initVariables, LocationService locationService, ItemService itemService) {
+    public GameServiceImpl(InitVariables initVariables, LocationService locationService) {
         this.initVariables = initVariables;
         this.locationService = locationService;
-        this.itemService = itemService;
     }
 
     // == methods ==
@@ -71,23 +69,15 @@ public class GameServiceImpl implements GameService {
      */
     @Override
     public void addItemToInventory(String name) {
-        Item item = itemService.getItemByLocIdAndName(initVariables.getLocationId(), name);
-        //resetting gateMessage
+        Item item = locationService.getItemByLocIdAndName(initVariables.getLocationId(), name);
+        //resets gateMessage
         gateMessage = null;
         if (item.getRequired().equals("NOT") || initVariables.checkInventory(item.getRequired())) {
             if (initVariables.checkInventory(item.getName())) {
-                if (item.getName().equals("KEYS")) {
-                    itemMessage = item.getName() + " ARE ALREADY IN INVENTORY";
-                } else {
-                    itemMessage = item.getName() + " IS ALREADY IN INVENTORY";
-                }
+                    itemMessage = item.getName() + " -> ALREADY IN INVENTORY";
             } else {
                 initVariables.addToInventory(item.getName());
-                if (item.getName().equals("KEYS")) {
-                    itemMessage = item.getName() + " HAVE BEEN ADDED TO INVENTORY";
-                } else {
-                    itemMessage = item.getName() + " HAS BEEN ADDED TO INVENTORY";
-                }
+                    itemMessage = item.getName() + " -> ADDED TO INVENTORY";
             }
         } else {
             itemMessage = "YOU NEED " + item.getRequired() + " TO GET " + item.getName();
