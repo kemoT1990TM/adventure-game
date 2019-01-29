@@ -2,6 +2,7 @@ package com.tkjavadev.adventuregame.services;
 
 import com.tkjavadev.adventuregame.domain.Item;
 import com.tkjavadev.adventuregame.domain.Location;
+import com.tkjavadev.adventuregame.exceptions.NotFoundException;
 import com.tkjavadev.adventuregame.repositories.LocationRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -72,6 +73,21 @@ public class LocationServiceImplTest {
         assertEquals(Long.valueOf(1L),itemReturned.getLocId());
         assertEquals("item",itemReturned.getName());
         verify(locationRepository,times(1)).findById(anyLong());
+    }
+
+    @Test(expected = NotFoundException.class)
+    public void getItemByLocIdAndNameNotFound() {
+
+        Optional<Location> locationOptional=Optional.empty();
+        when(locationRepository.findById(anyLong())).thenReturn(locationOptional);
+        locationService.getItemByLocIdAndName(1L,"item");
+    }
+
+    @Test(expected = NotFoundException.class)
+    public void getLocationByIdNotFound() {
+        Optional<Location> locationOptional=Optional.empty();
+        when(locationRepository.findById(anyLong())).thenReturn(locationOptional);
+        locationService.getLocationById(1L);
     }
 
 }
