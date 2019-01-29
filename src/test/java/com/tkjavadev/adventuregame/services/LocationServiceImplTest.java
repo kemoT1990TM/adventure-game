@@ -38,9 +38,10 @@ public class LocationServiceImplTest {
 
         when(locationRepository.findById(anyLong())).thenReturn(locationOptional);
 
-        Location locationReturned=locationRepository.findById(1L).get();
+        Location locationReturned=locationService.getLocationById(1L);
 
         assertNotNull("Null location returned",locationReturned);
+        assertEquals(location,locationReturned);
         verify(locationRepository,times(1)).findById(anyLong());
         verify(locationRepository,never()).findAll();
     }
@@ -78,8 +79,16 @@ public class LocationServiceImplTest {
     @Test(expected = NotFoundException.class)
     public void getItemByLocIdAndNameNotFound() {
 
-        Optional<Location> locationOptional=Optional.empty();
+        Optional<Location> locationOptional = Optional.empty();
         when(locationRepository.findById(anyLong())).thenReturn(locationOptional);
+        locationService.getItemByLocIdAndName(1L, "item");
+    }
+
+        @Test(expected = NotFoundException.class)
+        public void getItemByLocIdAndNameItemNotFound() {
+        Location location=new Location();
+        Optional<Location> locationOptional2=Optional.of(location);
+        when(locationRepository.findById(anyLong())).thenReturn(locationOptional2);
         locationService.getItemByLocIdAndName(1L,"item");
     }
 

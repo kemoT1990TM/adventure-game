@@ -56,16 +56,14 @@ public class LocationServiceImpl implements LocationService, Serializable {
         Optional<Location> locationOptional = locationRepository.findById(id);
 
         if (!locationOptional.isPresent()){
-            log.error("Location id not found. Id: " + id);
-            throw new NotFoundException();
+            throw new NotFoundException("Location id not found. Id: " + id);
         }
 
         Location location = locationOptional.get();
         Optional<Item> itemOptional = location.getItems().stream()
                 .filter(item -> item.getName().equals(name)).findFirst();
         if(!itemOptional.isPresent()){
-            log.error("Item name not found: " + name);
-            throw new NotFoundException();
+            throw new NotFoundException("Item name not found: " + name);
         }
         return itemOptional.get();
     }
