@@ -105,7 +105,7 @@ public class GameServiceImpl implements GameService {
     Opening the grate while having the keys in inventory
     Attacking a snake with a bird etc.
      */
-    private Long randomizer(Long destination, String requiredItem) {
+    public Long randomizer(Long destination, String requiredItem) {
         double random = Math.random();
         Long loc;
         switch (destination.intValue()) {
@@ -120,6 +120,7 @@ public class GameServiceImpl implements GameService {
                 if (initVariables.checkInventory(requiredItem)) {
                     loc = 9L;
                     gateMessage="THE GRATE IS OPEN.";
+                    break;
                 }
                 gateMessage = "THE GRATE IS LOCKED.";
                 break;
@@ -128,6 +129,7 @@ public class GameServiceImpl implements GameService {
                 if (initVariables.checkInventory(requiredItem)) {
                     loc = 8L;
                     gateMessage="THE GRATE IS OPEN.";
+                    break;
                 }
                 gateMessage = "THE GRATE IS LOCKED.";
                 log.info("random = {}",random);
@@ -136,21 +138,24 @@ public class GameServiceImpl implements GameService {
                 loc = 20L;
                 if (initVariables.checkInventory(requiredItem)) {
                     loc = 15L;
+                    break;
                 }
-                gateMessage = "YOU NEED GOLD NUGGET TO GO THERE";
+                gateMessage = "YOU NEED ROD TO GO THERE";
                 break;
             case 304:
                 loc = 22L;
                 if (initVariables.checkInventory(requiredItem)) {
                     loc = 14L;
+                    break;
                 }
-                gateMessage = "YOU NEED GOLD NUGGET TO GO THERE";
+                gateMessage = "YOU NEED ROD TO GO THERE";
                 break;
             case 306:
                 loc = 28L;
                 if (initVariables.checkInventory(requiredItem)) {
                     loc = 32L;
                     gateMessage = "THE LITTLE BIRD ATTACKS THE GREEN SNAKE, AND IN AN ASTOUNDING FLURRY DRIVES THE SNAKE AWAY.";
+                    break;
                 }
                 gateMessage = "YOU NEED A BIRD TO KILL THE SNAKE";
                 break;
@@ -159,6 +164,7 @@ public class GameServiceImpl implements GameService {
                 if (initVariables.checkInventory(requiredItem)) {
                     loc = 32L;
                     gateMessage = "THE LITTLE BIRD ATTACKS THE GREEN SNAKE, AND IN AN ASTOUNDING FLURRY DRIVES THE SNAKE AWAY.";
+                    break;
                 }
                 gateMessage = "YOU NEED A BIRD TO KILL THE SNAKE";
                 break;
@@ -167,6 +173,7 @@ public class GameServiceImpl implements GameService {
                 if (initVariables.checkInventory(requiredItem)) {
                     loc = 32L;
                     gateMessage = "THE LITTLE BIRD ATTACKS THE GREEN SNAKE, AND IN AN ASTOUNDING FLURRY DRIVES THE SNAKE AWAY.";
+                    break;
                 }
                 gateMessage = "YOU NEED A BIRD TO KILL THE SNAKE";
                 break;
@@ -175,6 +182,7 @@ public class GameServiceImpl implements GameService {
                 if (initVariables.checkInventory(requiredItem)) {
                     loc = 8L;
                     gateMessage="THE GRATE IS OPEN.";
+                    break;
                 }
                 gateMessage = "THE GRATE IS LOCKED.";
                 break;
@@ -202,6 +210,7 @@ public class GameServiceImpl implements GameService {
             default:
                 loc = 80L;
         }
+        log.info("location from randomizer = {}",loc);
         return loc;
     }
 
@@ -212,7 +221,7 @@ public class GameServiceImpl implements GameService {
     @Override
     public Long changeDirection(String direction) {
         for (Gate gate : locationService.getLocationById(initVariables.getLocationId()).getGates()) {
-            if (gate.getDirection().contains(direction)) {
+            if (gate.getDirection().equals(direction)) {
                 if (gate.getDestId() >= 300) {
                     initVariables.setLocationId(randomizer(gate.getDestId(), gate.getRequired()));
                     initVariables.addVisitedLocation(initVariables.getLocationId());
