@@ -1,16 +1,13 @@
 package com.tkjavadev.adventuregame.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
+@Document
 public class Item {
 
     // == fields ==
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
 
     private Long locId;
