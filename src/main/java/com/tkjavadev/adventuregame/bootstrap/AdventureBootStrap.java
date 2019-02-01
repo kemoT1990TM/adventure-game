@@ -12,7 +12,6 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -69,14 +68,13 @@ public class AdventureBootStrap implements ApplicationListener<ContextRefreshedE
             while (scanner.hasNextLine()) {
                 String input = scanner.nextLine();
                 String[] data = input.split(",");
-                long loc = Integer.parseInt(data[0]);
+                long loc = Long.parseLong(data[0]);
                 String direction = data[1];
                 long destination = Integer.parseInt(data[2]);
                 String required = data[3];
                 System.out.println(loc + ": " + direction + ": " + destination+": "+required);
-                List<Gate> gates = locationRepository.findById(loc).get().getGates();
-                ;
-                List<String> directions = new ArrayList<>();
+                List<Gate> gates = locationRepository.findById(String.valueOf(loc)).get().getGates();
+//                List<String> directions = new ArrayList<>();
 //                for (Gate ex : gates) {
 //                    directions.add(ex.getDirection());
 //                }
@@ -110,7 +108,7 @@ public class AdventureBootStrap implements ApplicationListener<ContextRefreshedE
             while (scanner.hasNextLine()) {
                 String input = scanner.nextLine();
                 String[] data = input.split(",");
-                long loc = Integer.parseInt(data[0]);
+                long loc = Long.parseLong(data[0]);
                 String name = data[1];
                 String description=data[2];
                 String req=data[3];
