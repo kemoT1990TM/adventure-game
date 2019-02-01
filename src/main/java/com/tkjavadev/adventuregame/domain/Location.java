@@ -13,7 +13,7 @@ public class Location {
     // == fields ==
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
     @Lob
     private String description;
 
@@ -25,11 +25,11 @@ public class Location {
     private List<Item> items = new ArrayList<>();
 
     // == methods ==
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
