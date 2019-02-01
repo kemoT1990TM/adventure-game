@@ -12,7 +12,6 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.List;
 import java.util.Scanner;
 
 //@Component
@@ -49,6 +48,7 @@ public class AdventureBootStrap implements ApplicationListener<ContextRefreshedE
                 String description = scanner.nextLine();
                 System.out.println("Imported loc: " + loc + ": " + description);
                 Location location = new Location();
+                location.setLocId(loc);
                 location.setDescription(description);
                 locationRepository.save(location);
             }
@@ -73,7 +73,7 @@ public class AdventureBootStrap implements ApplicationListener<ContextRefreshedE
                 long destination = Integer.parseInt(data[2]);
                 String required = data[3];
                 System.out.println(loc + ": " + direction + ": " + destination+": "+required);
-                List<Gate> gates = locationRepository.findById(String.valueOf(loc)).get().getGates();
+//                List<Gate> gates = locationRepository.findById(String.valueOf(loc)).get().getGates();
 //                List<String> directions = new ArrayList<>();
 //                for (Gate ex : gates) {
 //                    directions.add(ex.getDirection());

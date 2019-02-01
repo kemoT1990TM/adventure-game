@@ -5,10 +5,10 @@ import com.tkjavadev.adventuregame.domain.Location;
 
 public interface LocationService {
 
-    Location getLocationById(Long id);
+    Location getLocationByLocId(Long locId);
 
     void saveLocation(Location location);
 
-    Item getItemByLocIdAndName(Long id, String name);
+    Item getItemByLocIdAndName(Long locId, String name);
 
 }

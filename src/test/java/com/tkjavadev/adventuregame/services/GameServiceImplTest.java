@@ -63,7 +63,7 @@ public class GameServiceImplTest {
     @Test
     public void changeDirection() {
         Location location=new Location();
-        location.setId(1L);
+        location.setLocId(1L);
         Gate gate=new Gate();
         gate.setLocId(1L);
         gate.setDirection("E");
@@ -73,10 +73,10 @@ public class GameServiceImplTest {
         gates.add(gate);
         location.setGates(gates);
 
-        when(locationService.getLocationById(anyLong())).thenReturn(location);
+        when(locationService.getLocationByLocId(anyLong())).thenReturn(location);
 
         assertEquals(Long.valueOf(99L),gameService.changeDirection(gate.getDirection()));
-        verify(locationService,times(1)).getLocationById(anyLong());
+        verify(locationService,times(1)).getLocationByLocId(anyLong());
 
         initVariables.setLocationId(1L);
         gate.setRequired("KEYS");
@@ -93,10 +93,10 @@ public class GameServiceImplTest {
         List<Gate> exits = new ArrayList<>();
         location.setGates(exits);
 
-        when(locationService.getLocationById(anyLong())).thenReturn(location);
+        when(locationService.getLocationByLocId(anyLong())).thenReturn(location);
 
         assertEquals(exits, gameService.getAvailableGates());
-        verify(locationService, times(1)).getLocationById(anyLong());
+        verify(locationService, times(1)).getLocationByLocId(anyLong());
     }
 
     @Test
@@ -104,10 +104,10 @@ public class GameServiceImplTest {
         Location location = new Location();
         location.setDescription("Description");
 
-        when(locationService.getLocationById(anyLong())).thenReturn(location);
+        when(locationService.getLocationByLocId(anyLong())).thenReturn(location);
 
         assertEquals("Description", gameService.getDescription());
-        verify(locationService, times(1)).getLocationById(anyLong());
+        verify(locationService, times(1)).getLocationByLocId(anyLong());
     }
 
     @Test
@@ -116,10 +116,10 @@ public class GameServiceImplTest {
         List<Item> items = new ArrayList<>();
         location.setItems(items);
 
-        when(locationService.getLocationById(anyLong())).thenReturn(location);
+        when(locationService.getLocationByLocId(anyLong())).thenReturn(location);
 
         assertEquals(items, gameService.getAvailableItems());
-        verify(locationService, times(1)).getLocationById(anyLong());
+        verify(locationService, times(1)).getLocationByLocId(anyLong());
     }
 
     @Test

@@ -26,16 +26,29 @@ public class LocationServiceImpl implements LocationService, Serializable {
 
 
     // == methods ==
+//    /*
+//    Returns Location searching by ID
+//     */
+//    @Override
+//    public Location getLocationById(String id) {
+//                   Optional<Location> locationOptional = locationRepository.findById(id);
+//            if (!locationOptional.isPresent()) {
+//            throw new NotFoundException("Location Not Found. For ID value: "+id.toString());
+////                System.out.println("Location Not Found. For ID value: " + id.toString());
+//            }
+//        return locationOptional.get();
+//    }
+
     /*
-    Returns Location searching by ID
+    Returns Location searching by locID
      */
     @Override
-    public Location getLocationById(Long id) {
-                   Optional<Location> locationOptional = locationRepository.findById(id);
-            if (!locationOptional.isPresent()) {
-            throw new NotFoundException("Location Not Found. For ID value: "+id.toString());
+    public Location getLocationByLocId(Long locId) {
+        Optional<Location> locationOptional = locationRepository.findByLocId(locId);
+        if (!locationOptional.isPresent()) {
+            throw new NotFoundException("Location Not Found. For ID value: "+locId.toString());
 //                System.out.println("Location Not Found. For ID value: " + id.toString());
-            }
+        }
         return locationOptional.get();
     }
 
@@ -51,12 +64,12 @@ public class LocationServiceImpl implements LocationService, Serializable {
     Returns Item searching by Location ID and name of Item
     */
     @Override
-    public Item getItemByLocIdAndName(Long id, String name) {
+    public Item getItemByLocIdAndName(Long locId, String name) {
 
-        Optional<Location> locationOptional = locationRepository.findById(id);
+        Optional<Location> locationOptional = locationRepository.findByLocId(locId);
 
         if (!locationOptional.isPresent()){
-            throw new NotFoundException("Location id not found. Id: " + id);
+            throw new NotFoundException("Location id not found. Id: " + locId);
         }
 
         Location location = locationOptional.get();
