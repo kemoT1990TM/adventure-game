@@ -33,7 +33,7 @@ public class GameServiceImpl implements GameService {
      */
     @Override
     public List<Gate> getAvailableGates() {
-        return locationService.getLocationById(initVariables.getLocationId()).getGates();
+        return locationService.getLocationByLocId(initVariables.getLocationId()).getGates();
     }
 
     /*
@@ -41,7 +41,7 @@ public class GameServiceImpl implements GameService {
      */
     @Override
     public String getDescription() {
-        return locationService.getLocationById(initVariables.getLocationId()).getDescription();
+        return locationService.getLocationByLocId(initVariables.getLocationId()).getDescription();
     }
 
     /*
@@ -49,7 +49,7 @@ public class GameServiceImpl implements GameService {
      */
     @Override
     public List<Item> getAvailableItems() {
-        return locationService.getLocationById(initVariables.getLocationId()).getItems();
+        return locationService.getLocationByLocId(initVariables.getLocationId()).getItems();
     }
 
     /*
@@ -220,7 +220,7 @@ public class GameServiceImpl implements GameService {
      */
     @Override
     public Long changeDirection(String direction) {
-        for (Gate gate : locationService.getLocationById(initVariables.getLocationId()).getGates()) {
+        for (Gate gate : locationService.getLocationByLocId(initVariables.getLocationId()).getGates()) {
             if (gate.getDirection().equals(direction)) {
                 if (gate.getDestId() >= 300) {
                     initVariables.setLocationId(randomizer(gate.getDestId(), gate.getRequired()));

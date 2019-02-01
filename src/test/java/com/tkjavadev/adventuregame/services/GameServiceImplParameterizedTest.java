@@ -65,7 +65,7 @@ public class GameServiceImplParameterizedTest {
     @Test
     public void changeDirection() {
         Location location=new Location();
-        location.setId(1L);
+        location.setLocId(1L);
         Gate gate=new Gate();
         gate.setLocId(1L);
         gate.setDirection("E");
@@ -75,7 +75,7 @@ public class GameServiceImplParameterizedTest {
         gates.add(gate);
         location.setGates(gates);
 
-        when(locationService.getLocationById(anyLong())).thenReturn(location);
+        when(locationService.getLocationByLocId(anyLong())).thenReturn(location);
 
         initVariables.setLocationId(1L);
         gate.setRequired("KEYS");
