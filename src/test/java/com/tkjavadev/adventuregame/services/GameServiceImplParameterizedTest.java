@@ -10,6 +10,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -75,7 +76,7 @@ public class GameServiceImplParameterizedTest {
         gates.add(gate);
         location.setGates(gates);
 
-        when(locationService.getLocationByLocId(anyLong())).thenReturn(location);
+        when(locationService.getLocationByLocId(anyLong())).thenReturn(Mono.just(location));
 
         initVariables.setLocationId(1L);
         gate.setRequired("KEYS");

@@ -33,7 +33,7 @@ public class GameServiceImpl implements GameService {
      */
     @Override
     public List<Gate> getAvailableGates() {
-        return locationService.getLocationByLocId(initVariables.getLocationId()).getGates();
+        return locationService.getLocationByLocId(initVariables.getLocationId()).block().getGates();
     }
 
     /*
@@ -41,7 +41,7 @@ public class GameServiceImpl implements GameService {
      */
     @Override
     public String getDescription() {
-        return locationService.getLocationByLocId(initVariables.getLocationId()).getDescription();
+        return locationService.getLocationByLocId(initVariables.getLocationId()).block().getDescription();
     }
 
     /*
@@ -49,7 +49,7 @@ public class GameServiceImpl implements GameService {
      */
     @Override
     public List<Item> getAvailableItems() {
-        return locationService.getLocationByLocId(initVariables.getLocationId()).getItems();
+        return locationService.getLocationByLocId(initVariables.getLocationId()).block().getItems();
     }
 
     /*
@@ -69,7 +69,7 @@ public class GameServiceImpl implements GameService {
      */
     @Override
     public void addItemToInventory(String name) {
-        Item item = locationService.getItemByLocIdAndName(initVariables.getLocationId(), name);
+        Item item = locationService.getItemByLocIdAndName(initVariables.getLocationId(), name).block();
         //resets gateMessage
         gateMessage = null;
         if (item.getRequired().equals("NOT") || initVariables.checkInventory(item.getRequired())) {
@@ -220,7 +220,7 @@ public class GameServiceImpl implements GameService {
      */
     @Override
     public Long changeDirection(String direction) {
-        for (Gate gate : locationService.getLocationByLocId(initVariables.getLocationId()).getGates()) {
+        for (Gate gate : locationService.getLocationByLocId(initVariables.getLocationId()).block().getGates()) {
             if (gate.getDirection().equals(direction)) {
                 if (gate.getDestId() >= 300) {
                     initVariables.setLocationId(randomizer(gate.getDestId(), gate.getRequired()));
