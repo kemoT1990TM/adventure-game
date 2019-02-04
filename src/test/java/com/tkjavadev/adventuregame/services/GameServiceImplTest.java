@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,7 +74,7 @@ public class GameServiceImplTest {
         gates.add(gate);
         location.setGates(gates);
 
-        when(locationService.getLocationByLocId(anyLong())).thenReturn(location);
+        when(locationService.getLocationByLocId(anyLong())).thenReturn(Mono.just(location));
 
         assertEquals(Long.valueOf(99L),gameService.changeDirection(gate.getDirection()));
         verify(locationService,times(1)).getLocationByLocId(anyLong());
@@ -93,7 +94,7 @@ public class GameServiceImplTest {
         List<Gate> exits = new ArrayList<>();
         location.setGates(exits);
 
-        when(locationService.getLocationByLocId(anyLong())).thenReturn(location);
+        when(locationService.getLocationByLocId(anyLong())).thenReturn(Mono.just(location));
 
         assertEquals(exits, gameService.getAvailableGates());
         verify(locationService, times(1)).getLocationByLocId(anyLong());
@@ -104,7 +105,7 @@ public class GameServiceImplTest {
         Location location = new Location();
         location.setDescription("Description");
 
-        when(locationService.getLocationByLocId(anyLong())).thenReturn(location);
+        when(locationService.getLocationByLocId(anyLong())).thenReturn(Mono.just(location));
 
         assertEquals("Description", gameService.getDescription());
         verify(locationService, times(1)).getLocationByLocId(anyLong());
@@ -116,7 +117,7 @@ public class GameServiceImplTest {
         List<Item> items = new ArrayList<>();
         location.setItems(items);
 
-        when(locationService.getLocationByLocId(anyLong())).thenReturn(location);
+        when(locationService.getLocationByLocId(anyLong())).thenReturn(Mono.just(location));
 
         assertEquals(items, gameService.getAvailableItems());
         verify(locationService, times(1)).getLocationByLocId(anyLong());
@@ -128,7 +129,7 @@ public class GameServiceImplTest {
         item1.setName("item1");
         item1.setRequired("NOT");
 
-        when(locationService.getItemByLocIdAndName(anyLong(), anyString())).thenReturn(item1);
+        when(locationService.getItemByLocIdAndName(anyLong(), anyString())).thenReturn(Mono.just(item1));
 
 
         assertNull(gameService.getItemMessage());
@@ -145,7 +146,7 @@ public class GameServiceImplTest {
         Item item2 = new Item();
         item2.setName("item2");
         item2.setRequired("item3");
-        when(locationService.getItemByLocIdAndName(anyLong(), anyString())).thenReturn(item2);
+        when(locationService.getItemByLocIdAndName(anyLong(), anyString())).thenReturn(Mono.just(item2));
         gameService.addItemToInventory("item2");
         assertEquals("YOU NEED " + item2.getRequired() + " TO GET " + item2.getName(), gameService.getItemMessage());
 
