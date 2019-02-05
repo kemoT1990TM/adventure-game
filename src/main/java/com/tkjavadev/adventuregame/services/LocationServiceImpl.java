@@ -1,11 +1,13 @@
 package com.tkjavadev.adventuregame.services;
 
+import com.tkjavadev.adventuregame.domain.Gate;
 import com.tkjavadev.adventuregame.domain.Item;
 import com.tkjavadev.adventuregame.domain.Location;
 import com.tkjavadev.adventuregame.repositories.reactive.LocationReactiveRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.io.Serializable;
@@ -80,5 +82,17 @@ public class LocationServiceImpl implements LocationService, Serializable {
 //        }
         return locationReactiveRepository.findByLocId(locId)
                 .flatMapIterable(Location::getItems).filter(item -> item.getName().equals(name)).singleOrEmpty();
+    }
+
+    public Flux<Gate> getGatesByLocId(Long locId) {
+        return locationReactiveRepository.findByLocId(locId).flatMapIterable(Location::getGates);
+    }
+
+    public Flux<Item> getItemsByLocId(Long locId) {
+        return locationReactiveRepository.findByLocId(locId).flatMapIterable(Location::getItems);
+    }
+
+    public Mono<String> getDescriptionByLocId(Long locId) {
+        return locationReactiveRepository.findByLocId(locId).map(Location::getDescription);
     }
 }

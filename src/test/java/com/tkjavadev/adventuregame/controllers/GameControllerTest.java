@@ -22,11 +22,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class GameControllerTest {
 
     @Mock
-    GameService gameService;
+    private GameService gameService;
 
-    GameController gameController;
+    private GameController gameController;
 
-    MockMvc mockMvc;
+    private MockMvc mockMvc;
 
     @Before
     public void setUp() {

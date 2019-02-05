@@ -7,8 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @Service
 public class GameServiceImpl implements GameService {
@@ -32,24 +32,24 @@ public class GameServiceImpl implements GameService {
     Returns list of available directions for initVariables
      */
     @Override
-    public List<Gate> getAvailableGates() {
-        return locationService.getLocationByLocId(initVariables.getLocationId()).block().getGates();
+    public Flux<Gate> getAvailableGates() {
+        return locationService.getGatesByLocId(initVariables.getLocationId());
     }
 
     /*
     Returns description for initVariables
      */
     @Override
-    public String getDescription() {
-        return locationService.getLocationByLocId(initVariables.getLocationId()).block().getDescription();
+    public Mono<String> getDescription() {
+        return locationService.getDescriptionByLocId(initVariables.getLocationId());
     }
 
     /*
     Returns available items for initVariables
      */
     @Override
-    public List<Item> getAvailableItems() {
-        return locationService.getLocationByLocId(initVariables.getLocationId()).block().getItems();
+    public Flux<Item> getAvailableItems() {
+        return locationService.getItemsByLocId(initVariables.getLocationId());
     }
 
     /*
@@ -220,7 +220,7 @@ public class GameServiceImpl implements GameService {
      */
     @Override
     public Long changeDirection(String direction) {
-        for (Gate gate : locationService.getLocationByLocId(initVariables.getLocationId()).block().getGates()) {
+        for (Gate gate : getAvailableGates().toIterable()) {
             if (gate.getDirection().equals(direction)) {
                 if (gate.getDestId() >= 300) {
                     initVariables.setLocationId(randomizer(gate.getDestId(), gate.getRequired()));
