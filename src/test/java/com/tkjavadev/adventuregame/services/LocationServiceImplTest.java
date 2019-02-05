@@ -1,5 +1,6 @@
 package com.tkjavadev.adventuregame.services;
 
+import com.tkjavadev.adventuregame.domain.Gate;
 import com.tkjavadev.adventuregame.domain.Item;
 import com.tkjavadev.adventuregame.domain.Location;
 import com.tkjavadev.adventuregame.repositories.reactive.LocationReactiveRepository;
@@ -18,10 +19,10 @@ import static org.mockito.Mockito.*;
 
 public class LocationServiceImplTest {
 
-    LocationServiceImpl locationService;
+    private LocationServiceImpl locationService;
 
     @Mock
-    LocationReactiveRepository locationReactiveRepository;
+    private LocationReactiveRepository locationReactiveRepository;
 
     @Before
     public void setUp(){
@@ -33,8 +34,6 @@ public class LocationServiceImplTest {
     @Test
     public void getLocationById() {
         Location location=new Location();
-
-//        Optional<Location> locationOptional = Optional.of(location);
 
         when(locationReactiveRepository.findByLocId(anyLong())).thenReturn(Mono.just(location));
 
@@ -65,7 +64,6 @@ public class LocationServiceImplTest {
         items.add(item);
         location.setItems(items);
 
-//        Optional<Location> locationOptional = Optional.of(location);
         when(locationReactiveRepository.findByLocId(anyLong())).thenReturn(Mono.just(location));
 
         Item itemReturned=locationService.getItemByLocIdAndName(1L,"item").block();
@@ -76,27 +74,54 @@ public class LocationServiceImplTest {
         verify(locationReactiveRepository,times(1)).findByLocId(anyLong());
     }
 
-//    @Test(expected = NotFoundException.class)
-//    public void getItemByLocIdAndNameNotFound() {
-//
-////        Optional<Location> locationOptional = Optional.empty();
-//        when(locationReactiveRepository.findByLocId(anyLong())).thenReturn(Mono.empty());
-//        locationService.getItemByLocIdAndName(1L, "item");
-//    }
-//
-//        @Test(expected = NotFoundException.class)
-//        public void getItemByLocIdAndNameItemNotFound() {
-//        Location location=new Location();
-////        Optional<Location> locationOptional2=Optional.of(location);
-//        when(locationReactiveRepository.findByLocId(anyLong())).thenReturn(Mono.just(location));
-//        locationService.getItemByLocIdAndName(1L,"item");
-//    }
-//
-//    @Test(expected = NotFoundException.class)
-//    public void getLocationByIdNotFound() {
-////        Optional<Location> locationOptional=Optional.empty();
-//        when(locationReactiveRepository.findByLocId(anyLong())).thenReturn(Mono.empty());
-//        locationService.getLocationByLocId(1L);
-//    }
+    @Test
+    public void getItemsByLocId() {
+        Location location=new Location();
+        location.setLocId(1L);
+        Item item=new Item();
+        item.setName("item");
+        item.setLocId(1L);
+        List<Item> items=new ArrayList<>();
+        items.add(item);
+        location.setItems(items);
 
+        when(locationReactiveRepository.findByLocId(anyLong())).thenReturn(Mono.just(location));
+
+        List<Item> itemsReturned=locationService.getItemsByLocId(1L).collectList().block();
+
+        assertNotNull("Null list of items returned",itemsReturned);
+        assertEquals(items,itemsReturned);
+        verify(locationReactiveRepository,times(1)).findByLocId(anyLong());
+    }
+
+    @Test
+    public void getGatesByLocId() {
+        Location location=new Location();
+        location.setLocId(1L);
+        Gate gate=new Gate();
+        List<Gate> gates=new ArrayList<>();
+        gates.add(gate);
+        location.setGates(gates);
+
+        when(locationReactiveRepository.findByLocId(anyLong())).thenReturn(Mono.just(location));
+
+        List<Gate> gatesReturned=locationService.getGatesByLocId(1L).collectList().block();
+
+        assertNotNull("Null list of gates returned",gatesReturned);
+        assertEquals(gates,gatesReturned);
+        verify(locationReactiveRepository,times(1)).findByLocId(anyLong());
+    }
+
+    @Test
+    public void getDescriptionByLocId() {
+        Location location=new Location();
+        location.setLocId(1L);
+        location.setDescription("Description");
+
+        when(locationReactiveRepository.findByLocId(anyLong())).thenReturn(Mono.just(location));
+
+        assertNotNull("Null description returned",locationService.getDescriptionByLocId(1L).block());
+        assertEquals("Description",locationService.getDescriptionByLocId(1L).block());
+        verify(locationReactiveRepository,times(2)).findByLocId(anyLong());
+    }
 }

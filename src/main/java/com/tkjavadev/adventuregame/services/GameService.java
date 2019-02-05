@@ -2,24 +2,24 @@ package com.tkjavadev.adventuregame.services;
 
 import com.tkjavadev.adventuregame.domain.Gate;
 import com.tkjavadev.adventuregame.domain.Item;
-
-import java.util.List;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 public interface GameService {
 
-    String getDescription();
+    Mono<String> getDescription();
 
     boolean isGameOver();
 
     Long changeDirection(String direction);
 
-    List<Gate> getAvailableGates();
+    Flux<Gate> getAvailableGates();
 
     void reset();
 
     Integer getVisitedLocations();
 
-    List<Item> getAvailableItems();
+    Flux<Item> getAvailableItems();
 
     String printInventory();
 
