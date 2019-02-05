@@ -1,7 +1,6 @@
 package com.tkjavadev.adventuregame.domain;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
@@ -15,11 +14,7 @@ public class Location {
     private String id;
     private Long locId;
     private String description;
-
-    @DBRef
     private List<Gate> gates = new ArrayList<>();
-
-    @DBRef
     private List<Item> items = new ArrayList<>();
 
     // == methods ==

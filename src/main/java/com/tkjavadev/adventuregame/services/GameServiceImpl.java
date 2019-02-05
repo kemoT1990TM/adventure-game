@@ -220,7 +220,7 @@ public class GameServiceImpl implements GameService {
      */
     @Override
     public Long changeDirection(String direction) {
-        for (Gate gate : getAvailableGates().toIterable()) {
+        for (Gate gate : getAvailableGates().collectList().block()) {
             if (gate.getDirection().equals(direction)) {
                 if (gate.getDestId() >= 300) {
                     initVariables.setLocationId(randomizer(gate.getDestId(), gate.getRequired()));

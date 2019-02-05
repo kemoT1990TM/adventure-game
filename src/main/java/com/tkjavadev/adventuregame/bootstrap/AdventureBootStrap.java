@@ -3,9 +3,9 @@ package com.tkjavadev.adventuregame.bootstrap;
 import com.tkjavadev.adventuregame.domain.Gate;
 import com.tkjavadev.adventuregame.domain.Item;
 import com.tkjavadev.adventuregame.domain.Location;
-import com.tkjavadev.adventuregame.repositories.GateRepository;
-import com.tkjavadev.adventuregame.repositories.ItemRepository;
-import com.tkjavadev.adventuregame.repositories.LocationRepository;
+import com.tkjavadev.adventuregame.repositories.reactive.GateReactiveRepository;
+import com.tkjavadev.adventuregame.repositories.reactive.ItemReactiveRepository;
+import com.tkjavadev.adventuregame.repositories.reactive.LocationReactiveRepository;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
@@ -18,49 +18,26 @@ import java.util.Scanner;
 @Component
 public class AdventureBootStrap implements ApplicationListener<ContextRefreshedEvent> {
 
-    private final GateRepository gateRepository;
-    private final LocationRepository locationRepository;
-    private final ItemRepository itemRepository;
+    private final GateReactiveRepository gateReactiveRepository;
+    private final LocationReactiveRepository locationReactiveRepository;
+    private final ItemReactiveRepository itemReactiveRepository;
 
-    public AdventureBootStrap(GateRepository gateRepository, LocationRepository locationRepository,
-                              ItemRepository itemRepository) {
-        this.gateRepository = gateRepository;
-        this.locationRepository = locationRepository;
-        this.itemRepository=itemRepository;
+    private AdventureBootStrap(GateReactiveRepository gateReactiveRepository, LocationReactiveRepository locationReactiveRepository, ItemReactiveRepository itemReactiveRepository) {
+        this.gateReactiveRepository = gateReactiveRepository;
+        this.locationReactiveRepository = locationReactiveRepository;
+        this.itemReactiveRepository = itemReactiveRepository;
     }
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent arg0) {
-        readData();
+        loadData();
     }
 
     /*
     Reads data from txt files and adding to Databasa
      */
-    private void readData() {
+    private void loadData() {
         Scanner scanner = null;
-        try {
-            scanner = new Scanner(new FileReader(
-                    "src\\main\\resources\\locations_79.txt"));
-            scanner.useDelimiter(",");
-            while (scanner.hasNextLine()) {
-                long loc = scanner.nextInt();
-                scanner.skip(scanner.delimiter());
-                String description = scanner.nextLine();
-                System.out.println("Imported loc: " + loc + ": " + description);
-                Location location = new Location();
-                location.setLocId(loc);
-                location.setDescription(description);
-                locationRepository.save(location);
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (scanner != null) {
-                scanner.close();
-            }
-        }
 
         try {
             scanner = new Scanner(new BufferedReader(new FileReader(
@@ -73,26 +50,13 @@ public class AdventureBootStrap implements ApplicationListener<ContextRefreshedE
                 String direction = data[1];
                 long destination = Integer.parseInt(data[2]);
                 String required = data[3];
-                System.out.println(loc + ": " + direction + ": " + destination+": "+required);
-//                List<Gate> gates = locationRepository.findById(String.valueOf(loc)).get().getGates();
-//                List<String> directions = new ArrayList<>();
-//                for (Gate ex : gates) {
-//                    directions.add(ex.getDirection());
-//                }
-//                if (!directions.contains("Q")) {
-//                    Gate gateQuit = new Gate();
-//                    gateQuit.setLocId(loc);
-//                    gateQuit.setDirection("Q");
-//                    gateQuit.setDestId(80L);
-//                    gateQuit.setRequired("NOT");
-//                    gateRepository.save(gateQuit);
-//                }
+                System.out.println(loc + ": " + direction + ": " + destination + ": " + required);
                 Gate gate = new Gate();
                 gate.setLocId(loc);
                 gate.setDirection(direction);
                 gate.setDestId(destination);
                 gate.setRequired(required);
-                gateRepository.save(gate);
+                gateReactiveRepository.save(gate).block();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -111,15 +75,15 @@ public class AdventureBootStrap implements ApplicationListener<ContextRefreshedE
                 String[] data = input.split(",");
                 long loc = Long.parseLong(data[0]);
                 String name = data[1];
-                String description=data[2];
-                String req=data[3];
-                System.out.println("Imported item: "+name+ ": " + description+": "+req);
-                Item item=new Item();
+                String description = data[2];
+                String req = data[3];
+                System.out.println("Imported item: " + name + ": " + description + ": " + req);
+                Item item = new Item();
                 item.setLocId(loc);
                 item.setName(name);
                 item.setDescription(description);
                 item.setRequired(req);
-                itemRepository.save(item);
+                itemReactiveRepository.save(item).block();
             }
 
         } catch (IOException e) {
@@ -129,6 +93,31 @@ public class AdventureBootStrap implements ApplicationListener<ContextRefreshedE
                 scanner.close();
             }
         }
+        try {
+            scanner = new Scanner(new FileReader(
+                    "src\\main\\resources\\locations_79.txt"));
+            scanner.useDelimiter(",");
+            while (scanner.hasNextLine()) {
+                long loc = scanner.nextInt();
+                scanner.skip(scanner.delimiter());
+                String description = scanner.nextLine();
+                System.out.println("Imported loc: " + loc + ": " + description);
+                Location location = new Location();
+                location.setLocId(loc);
+                location.setDescription(description);
+                location.setGates(gateReactiveRepository.findByLocId(loc).collectList().block());
+                location.setItems(itemReactiveRepository.findByLocId(loc).collectList().block());
+                locationReactiveRepository.save(location).block();
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (scanner != null) {
+                scanner.close();
+            }
+        }
+
         System.out.println("Files read and data has been saved into db!");
     }
 }
