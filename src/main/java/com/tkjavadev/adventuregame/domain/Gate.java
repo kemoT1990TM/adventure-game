@@ -14,6 +14,10 @@ public class Gate {
     private Long destId;
     private String required;
 
+
+    public Gate() {
+    }
+
     // == methods ==
     /*
     Returns full name of direction as a String
@@ -128,5 +132,17 @@ public class Gate {
 
     public void setRequired(String required) {
         this.required = required;
+    }
+
+    public Gate getInstance(){
+        return this;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

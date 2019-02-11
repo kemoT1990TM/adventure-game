@@ -31,7 +31,7 @@ public class GameServiceImplTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        initVariables = new InitVariablesImpl(1L);
+        initVariables = new InitVariablesImpl();
         gameService = new GameServiceImpl(initVariables, locationService);
     }
 
@@ -76,18 +76,15 @@ public class GameServiceImplTest {
         location.setGates(gates);
 
 
-        when(locationService.getGatesByLocId(anyLong())).thenReturn(Flux.fromIterable(gates));
-
-        assertEquals(Long.valueOf(99L),gameService.changeDirection(gate.getDirection()));
-        verify(locationService,times(1)).getGatesByLocId(anyLong());
+        assertEquals(Long.valueOf(99L),gameService.changeDirection(gate));
 
         initVariables.setLocationId(1L);
         gate.setRequired("KEYS");
-        assertEquals(Long.valueOf(1L),gameService.changeDirection(gate.getDirection()));
+        assertEquals(Long.valueOf(1L),gameService.changeDirection(gate));
         assertEquals("YOU NEED " + gate.getRequired() + " TO GO THERE", gameService.getGateMessage());
 
         gate.setDestId(302L);
-        assertEquals(Long.valueOf(25L),gameService.changeDirection(gate.getDirection()));
+        assertEquals(Long.valueOf(25L),gameService.changeDirection(gate));
     }
 
     @Test
@@ -140,12 +137,12 @@ public class GameServiceImplTest {
 
 
         assertNull(gameService.getItemMessage());
-        gameService.addItemToInventory("item1");
+        gameService.addItemToInventory(item1);
         assertNotNull(gameService.getItemMessage());
         assertNull(gameService.getGateMessage());
         assertEquals("item1", gameService.printInventory());
         assertEquals(item1.getName() + " -> ADDED TO INVENTORY", gameService.getItemMessage());
-        gameService.addItemToInventory("item1");
+        gameService.addItemToInventory(item1);
         assertEquals("item1", gameService.printInventory());
         assertEquals(item1.getName() + " -> ALREADY IN INVENTORY", gameService.getItemMessage());
 
@@ -154,11 +151,11 @@ public class GameServiceImplTest {
         item2.setName("item2");
         item2.setRequired("item3");
         when(locationService.getItemByLocIdAndName(anyLong(), anyString())).thenReturn(Mono.just(item2));
-        gameService.addItemToInventory("item2");
+        gameService.addItemToInventory(item2);
         assertEquals("YOU NEED " + item2.getRequired() + " TO GET " + item2.getName(), gameService.getItemMessage());
 
         item2.setRequired("item1");
-        gameService.addItemToInventory("item2");
+        gameService.addItemToInventory(item2);
         assertEquals(item2.getName() + " -> ADDED TO INVENTORY", gameService.getItemMessage());
     }
 
@@ -193,7 +190,7 @@ public class GameServiceImplTest {
         assertEquals(Integer.valueOf(10), gameService.getScore());
         initVariables.addToInventory("GOLD");
         assertEquals(Integer.valueOf(42), gameService.getScore());
-        initVariables.addToInventory("JEWELERY");
+        initVariables.addToInventory("JEWELRY");
         assertEquals(Integer.valueOf(82), gameService.getScore());
         initVariables.addToInventory("SILVER");
         assertEquals(Integer.valueOf(110), gameService.getScore());

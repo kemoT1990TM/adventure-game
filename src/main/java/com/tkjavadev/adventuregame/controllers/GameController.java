@@ -1,17 +1,18 @@
 package com.tkjavadev.adventuregame.controllers;
 
-import com.tkjavadev.adventuregame.exceptions.NotFoundException;
+import com.tkjavadev.adventuregame.domain.Gate;
+import com.tkjavadev.adventuregame.domain.Item;
 import com.tkjavadev.adventuregame.services.GameService;
 import com.tkjavadev.adventuregame.util.AttributeNames;
 import com.tkjavadev.adventuregame.util.GameMappings;
 import com.tkjavadev.adventuregame.util.ViewNames;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 //@Slf4j
@@ -21,12 +22,25 @@ public class GameController {
     // == fields ==
     private GameService gameService;
 
+    private WebDataBinder webDataBinder;
+
     // == constructors ==
     public GameController(GameService gameService) {
         this.gameService = gameService;
     }
 
     // == methods ==
+    @InitBinder
+    public void initBinder(WebDataBinder webDataBinder){
+        this.webDataBinder=webDataBinder;
+    }
+
+    @GetMapping({"","/","/index"})
+    public String start() {
+        log.info("Homepage");
+        return ViewNames.HOME;
+    }
+
     @GetMapping(GameMappings.PLAY)
     public String play(Model model) {
         model.addAttribute(AttributeNames.DESCRIPTION, gameService.getDescription());
@@ -46,16 +60,25 @@ public class GameController {
     }
 
     @PostMapping(GameMappings.CHANGE)
-    public String processMessage(@RequestParam String direction) {
-        log.info("direction = {}", direction);
-        gameService.changeDirection(direction);
+    public String processMessage(@ModelAttribute("nextGate") Gate gate) {
+
+        webDataBinder.validate();
+
+        BindingResult bindingResult=webDataBinder.getBindingResult();
+        if(bindingResult.hasErrors()) {
+            bindingResult.getAllErrors().forEach(objectError -> log.info(objectError.toString()));
+            return ViewNames.E404;
+        }
+        log.info("destination = {}", gate.getDestId());
+        log.info("required = {}", gate.getRequired());
+        gameService.changeDirection(gate);
         gameService.resetMessages();
         return GameMappings.REDIRECT_PLAY;
     }
 
     @PostMapping(GameMappings.ADD)
-    public String addItemToInventory(@RequestParam String item) {
-        log.info("item = {}", item);
+    public String addItemToInventory(@ModelAttribute("invItem") Item item) {
+        log.info("item = {}", item.getName());
         gameService.addItemToInventory(item);
         return GameMappings.REDIRECT_PLAY;
     }
@@ -88,16 +111,34 @@ public class GameController {
         return ViewNames.GAME_OVER;
     }
 
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler(NotFoundException.class)
-    public ModelAndView handleNotFound(Exception exception){
-        log.error("Handling not found exception");
-        log.error(exception.getMessage());
-
-        ModelAndView modelAndView=new ModelAndView();
-        modelAndView.setViewName(ViewNames.E404);
-        modelAndView.addObject("exception",exception);
-
-        return modelAndView;
+    @ModelAttribute("nextGate")
+    public Gate nextGateInstance() {
+        Gate nextGate = new Gate();
+        return nextGate;
     }
+
+    @ModelAttribute("invItem")
+    public Item invItemInstance() {
+        Item invItem = new Item();
+        return invItem;
+    }
+
+//    @ModelAttribute("gate")
+//    public Gate defaultGateInstance() {
+//        Gate gate = new Gate();
+//        return gate.getInstance();
+//    }
+
+//    @ResponseStatus(HttpStatus.NOT_FOUND)
+//    @ExceptionHandler(NotFoundException.class)
+//    public ModelAndView handleNotFound(Exception exception){
+//        log.error("Handling not found exception");
+//        log.error(exception.getMessage());
+//
+//        ModelAndView modelAndView=new ModelAndView();
+//        modelAndView.setViewName(ViewNames.E404);
+//        modelAndView.addObject("exception",exception);
+//
+//        return modelAndView;
+//    }
 }

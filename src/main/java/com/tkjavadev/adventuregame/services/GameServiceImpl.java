@@ -68,8 +68,7 @@ public class GameServiceImpl implements GameService {
     If item is alredy in inventory then message about that is also printed
      */
     @Override
-    public void addItemToInventory(String name) {
-        Item item = locationService.getItemByLocIdAndName(initVariables.getLocationId(), name).block();
+    public void addItemToInventory(Item item) {
         //resets gateMessage
         gateMessage = null;
         if (item.getRequired().equals("NOT") || initVariables.checkInventory(item.getRequired())) {
@@ -219,26 +218,22 @@ public class GameServiceImpl implements GameService {
     Returns new ID of new location
      */
     @Override
-    public Long changeDirection(String direction) {
-        for (Gate gate : getAvailableGates().collectList().block()) {
-            if (gate.getDirection().equals(direction)) {
-                if (gate.getDestId() >= 300) {
+    public Long changeDirection(Gate gate) {
+       log.error("Dest = {}",gate.getDestId());
+                if (gate.getDestId()>=300L) {
                     initVariables.setLocationId(randomizer(gate.getDestId(), gate.getRequired()));
                     initVariables.addVisitedLocation(initVariables.getLocationId());
-                    break;
                 } else {
                     if (gate.getRequired().equals("NOT") || initVariables.checkInventory(gate.getRequired())) {
                         initVariables.setLocationId(gate.getDestId());
                         initVariables.addVisitedLocation(initVariables.getLocationId());
                         gateMessage = null;
-                        break;
                     } else {
                         gateMessage = "YOU NEED " + gate.getRequired() + " TO GO THERE";
-                        break;
                     }
                 }
-            }
-        }
+//        initVariables.setLocationId(gate.getDestId());
+//        initVariables.addVisitedLocation(initVariables.getLocationId());
         return initVariables.getLocationId();
     }
 

@@ -42,7 +42,7 @@ public class GameServiceImplParameterizedTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        initVariables = new InitVariablesImpl(1L);
+        initVariables = new InitVariablesImpl();
         gameService = new GameServiceImpl(initVariables, locationService);
     }
 
@@ -82,6 +82,6 @@ public class GameServiceImplParameterizedTest {
         gate.setRequired("KEYS");
 
         gate.setDestId(input);
-        assertEquals(Long.valueOf(output),gameService.changeDirection(gate.getDirection()));
+        assertEquals(Long.valueOf(output),gameService.changeDirection(gate));
     }
 }
