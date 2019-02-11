@@ -11,7 +11,7 @@ public interface GameService {
 
     boolean isGameOver();
 
-    Long changeDirection(String direction);
+    Long changeDirection(Gate gate);
 
     Flux<Gate> getAvailableGates();
 
@@ -23,7 +23,7 @@ public interface GameService {
 
     String printInventory();
 
-    void addItemToInventory(String name);
+    void addItemToInventory(Item item);
 
     String getItemMessage();
 

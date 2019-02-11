@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&amp;subset=latin-ext" rel="stylesheet"/>
     <title>ADVENTURE!</title>
 </head>
-<body>    
+<body>
 <div class="row bordered inventory">
     <h2 class="fieldtitle">INVENTORY</h2>
     <h3 th:text="${__${T(com.tkjavadev.adventuregame.util.AttributeNames).INVENTORY}__}">Inventory</h3>
@@ -24,9 +24,13 @@
         <table>
         <h4 class="inline"><a class="btn-solid" th:href="@{__${T(com.tkjavadev.adventuregame.util.GameMappings).EXIT}__}">QUIT</a></h4>
         <tr th:each="gate:${gates}">
-            <form th:action="@{__${T(com.tkjavadev.adventuregame.util.GameMappings).CHANGE}__}" method="post">
-                <input type="hidden" th:value="${gate.getDirection()}" id="direction" name="direction"/>
-                <button class="btn" type="submit" value="value" th:text="${gate.getFullName()}">DIRECTION</button>
+            <form th:object="${nextGate}" th:action="@{__${T(com.tkjavadev.adventuregame.util.GameMappings).CHANGE}__}" method="post">
+                <input type="hidden" th:id="destId" th:name="destId" th:value="${gate.getDestId()}"/>
+                <input type="hidden" th:id="id" th:name="id" th:value="${gate.getId()}"/>
+                <input type="hidden" th:id="locId" th:name="locId" th:value="${gate.getLocId()}"/>
+                <input type="hidden" th:id="direction" th:name="direction" th:value="${gate.getDirection()}"/>
+                <input type="hidden" th:id="required" th:name="required" th:value="${gate.getRequired()}"/>
+                <button class="btn" type="submit" th:text="${gate.getFullName()}">DIRECTION</button>
             </form>
         </tr>
     </table>
@@ -34,15 +38,22 @@
         <div class="message">
     <h3 class="messagetext" id="msgGate" th:text="${__${T(com.tkjavadev.adventuregame.util.AttributeNames).GATE_MESSAGE}__}">GATE MESSAGE GATE MESSAGE</h3>
         </div>
+        <!--<div>-->
+            <!--<form th:object="${destination}" th:action="@{__${T(com.tkjavadev.adventuregame.util.GameMappings).CHANGE}__}" method="post">-->
+                <!--<input type="text" th:field="*{destId}"/>-->
+                <!--<button class="btn" type="submit">GO!</button>-->
+            <!--</form>-->
+        <!--</div>-->
 </div>
 <div class="row bordered" id="items">
     <h2 class="fieldtitle">ITEMS</h2>
     <div>
     <table>
         <tr th:each="item:${items}">
-            <form th:action="@{__${T(com.tkjavadev.adventuregame.util.GameMappings).ADD}__}" method="post">
-                <input type="hidden" th:value="${item.getName()}" id="item" name="item"/>
-                <button class="btn" type="submit" value="value" th:text="${item.getName()}">ITEM</button>
+            <form th:object="${invItem}" th:action="@{__${T(com.tkjavadev.adventuregame.util.GameMappings).ADD}__}" method="post">
+                <input type="hidden" th:value="${item.getName()}" th:id="name" th:name="name"/>
+                <input type="hidden" th:value="${item.getRequired()}" th:id="required" th:name="required"/>
+                <button class="btn" type="submit" th:text="${item.getName()}" id="item">ITEM</button>
             </form>
         </tr>
     </table>

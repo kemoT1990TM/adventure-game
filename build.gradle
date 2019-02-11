@@ -1,11 +1,14 @@
 // [START gradle]
 buildscript {
 	ext {
-		springBootVersion = '2.1.2.RELEASE'
+//		springBootVersion = '2.1.2.RELEASE'
+		springBootVersion = '2.2.0.BUILD-SNAPSHOT'
 	}
 	repositories {
 		jcenter()    // Bintray's repositories - a fast Maven Central mirror & more
 		mavenCentral()
+		maven { url 'https://repo.spring.io/snapshot' }
+		maven { url 'https://repo.spring.io/milestone' }
 	}
 	dependencies {
 		classpath 'com.google.cloud.tools:appengine-gradle-plugin:1.+'    // Latest 1.x.x release
@@ -14,9 +17,9 @@ buildscript {
 }
 
 repositories {
-	maven {
-		url 'https://oss.sonatype.org/content/repositories/snapshots' // SNAPSHOT repositories (if needed)
-	}
+	maven { url 'https://repo.spring.io/snapshot' }
+	maven { url 'https://repo.spring.io/milestone' }
+	maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
 	mavenCentral()
 	jcenter()
 }
@@ -42,15 +45,15 @@ dependencies {
 	
 //	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 	testCompile 'org.springframework.boot:spring-boot-starter-tomcat'
-
+	testRuntime group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
 	compile('org.springframework.boot:spring-boot-starter-data-mongodb')
 	compile('org.springframework.boot:spring-boot-starter-data-mongodb-reactive')
 	compile('org.springframework.boot:spring-boot-starter-thymeleaf')
-	compile('org.springframework.boot:spring-boot-starter-web')
+//	compile('org.springframework.boot:spring-boot-starter-web')
+	compile('org.springframework.boot:spring-boot-starter-webflux')
 	runtime('org.springframework.boot:spring-boot-devtools')
-//	compile('de.flapdoodle.embed:de.flapdoodle.embed.mongo')
-//	compile group: 'cz.jirutka.spring', name: 'embedmongo-spring', version: '1.3.1'
 	testCompile('org.springframework.boot:spring-boot-starter-test')
+	testCompile('io.projectreactor:reactor-test')
 	//  --- End of my dependecies ---
 
 	compile 'com.google.cloud:google-cloud:+'   // Latest Cloud API's http://googlecloudplatform.github.io/google-cloud-java
