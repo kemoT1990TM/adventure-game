@@ -1,5 +1,6 @@
 package com.tkjavadev.adventuregame.controllers;
 
+import com.tkjavadev.adventuregame.core.InitVariables;
 import com.tkjavadev.adventuregame.domain.Gate;
 import com.tkjavadev.adventuregame.domain.Item;
 import com.tkjavadev.adventuregame.services.GameService;
@@ -12,7 +13,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.server.WebSession;
 
 @Controller
 //@Slf4j
@@ -23,6 +28,21 @@ public class GameController {
     private GameService gameService;
 
     private WebDataBinder webDataBinder;
+
+     private synchronized void loadInitVariables(WebSession webSession) {
+        if(!webSession.getAttributes().isEmpty()) {
+            gameService.setInitVariables((InitVariables) webSession.getAttributes().get(webSession.getId()));
+            log.info("loaded variables for = {}",webSession.getId());
+        } else {
+            this.gameService.reset();
+            webSession.getAttributes().put(webSession.getId(), gameService.getInitVariables());
+            log.info("new variables for = {}",webSession.getId());
+        }
+    }
+
+    private synchronized void replace(WebSession webSession){
+        webSession.getAttributes().replace(webSession.getId(),gameService.getInitVariables());
+    }
 
     // == constructors ==
     public GameController(GameService gameService) {
@@ -42,7 +62,9 @@ public class GameController {
     }
 
     @GetMapping(GameMappings.PLAY)
-    public String play(Model model) {
+    public String play(Model model,WebSession webSession) {
+        loadInitVariables(webSession);
+        replace(webSession);
         model.addAttribute(AttributeNames.DESCRIPTION, gameService.getDescription());
         model.addAttribute(AttributeNames.GATES, gameService.getAvailableGates());
         model.addAttribute(AttributeNames.ITEMS,gameService.getAvailableItems());
@@ -50,7 +72,9 @@ public class GameController {
         model.addAttribute(AttributeNames.ITEM_MESSAGE,gameService.getItemMessage());
         model.addAttribute(AttributeNames.GATE_MESSAGE,gameService.getGateMessage());
         log.info("model = {}", model);
+        log.info("play = {}",webSession.getId());
         if (gameService.isGameOver()) {
+            log.info("game over = {}",webSession.getId());
             model.addAttribute(AttributeNames.VISITED,gameService.getVisitedLocations());
             model.addAttribute(AttributeNames.SCORE,gameService.getScore());
             model.addAttribute(AttributeNames.RANK,gameService.getRank());
@@ -60,8 +84,8 @@ public class GameController {
     }
 
     @PostMapping(GameMappings.CHANGE)
-    public String processMessage(@ModelAttribute("nextGate") Gate gate) {
-
+    public String processMessage(@ModelAttribute("nextGate") Gate gate,WebSession webSession) {
+        loadInitVariables(webSession);
         webDataBinder.validate();
 
         BindingResult bindingResult=webDataBinder.getBindingResult();
@@ -69,46 +93,52 @@ public class GameController {
             bindingResult.getAllErrors().forEach(objectError -> log.info(objectError.toString()));
             return ViewNames.E404;
         }
-        log.info("destination = {}", gate.getDestId());
-        log.info("required = {}", gate.getRequired());
+//        log.info("destination = {}", gate.getDestId());
+//        log.info("required = {}", gate.getRequired());
         gameService.changeDirection(gate);
         gameService.resetMessages();
+        replace(webSession);
+        log.info("process = {}",webSession.getId());
         return GameMappings.REDIRECT_PLAY;
     }
 
     @PostMapping(GameMappings.ADD)
-    public String addItemToInventory(@ModelAttribute("invItem") Item item) {
+    public String addItemToInventory(@ModelAttribute("invItem") Item item,WebSession webSession) {
+        loadInitVariables(webSession);
         log.info("item = {}", item.getName());
         gameService.addItemToInventory(item);
+        replace(webSession);
         return GameMappings.REDIRECT_PLAY;
     }
 
     @GetMapping(GameMappings.RESTART)
-    public String restart() {
-        log.info("reset() called");
+    public String restart(WebSession webSession) {
+        loadInitVariables(webSession);
+        log.info("reset() called for = {}", webSession.getId());
         gameService.reset();
+        replace(webSession);
         return GameMappings.REDIRECT_PLAY;
     }
 
     @GetMapping(GameMappings.HOME)
-    public String home() {
-        log.info("home() called");
+    public String home(WebSession webSession) {
+        loadInitVariables(webSession);
+        log.info("home() called for = {}", webSession.getId());
         if (gameService.isGameOver()) {
-            log.info("reset() called");
+            log.info("reset() called for = {}", webSession.getId());
             gameService.reset();
+            replace(webSession);
         }
         return ViewNames.HOME;
     }
 
     @GetMapping(GameMappings.EXIT)
-    public String exit(Model model) {
-        log.info("exit() called");
+    public String exit(Model model,WebSession webSession) {
+        loadInitVariables(webSession);
+        log.info("exit() called for = {}",webSession.getId());
         gameService.exit();
-        model.addAttribute(AttributeNames.DESCRIPTION, gameService.getDescription());
-        model.addAttribute(AttributeNames.VISITED,gameService.getVisitedLocations());
-        model.addAttribute(AttributeNames.SCORE,gameService.getScore());
-        model.addAttribute(AttributeNames.RANK,gameService.getRank());
-        return ViewNames.GAME_OVER;
+        replace(webSession);
+        return GameMappings.REDIRECT_PLAY;
     }
 
     @ModelAttribute("nextGate")
@@ -122,12 +152,6 @@ public class GameController {
         Item invItem = new Item();
         return invItem;
     }
-
-//    @ModelAttribute("gate")
-//    public Gate defaultGateInstance() {
-//        Gate gate = new Gate();
-//        return gate.getInstance();
-//    }
 
 //    @ResponseStatus(HttpStatus.NOT_FOUND)
 //    @ExceptionHandler(NotFoundException.class)
