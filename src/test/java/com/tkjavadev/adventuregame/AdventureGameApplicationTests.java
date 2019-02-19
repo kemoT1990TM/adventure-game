@@ -1,12 +1,12 @@
 package com.tkjavadev.adventuregame;
 
 //@RunWith(SpringRunner.class)
-//@SpringBootTest
+//@WebFluxTest
 public class AdventureGameApplicationTests {
 
 //	@Test
-//	public void contextLoads() {
-//	}
+	public void contextLoads() {
+	}
 
 }
 

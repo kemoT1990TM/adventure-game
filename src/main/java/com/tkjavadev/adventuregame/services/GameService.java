@@ -1,5 +1,6 @@
 package com.tkjavadev.adventuregame.services;
 
+import com.tkjavadev.adventuregame.core.InitVariables;
 import com.tkjavadev.adventuregame.domain.Gate;
 import com.tkjavadev.adventuregame.domain.Item;
 import reactor.core.publisher.Flux;
@@ -36,4 +37,8 @@ public interface GameService {
     Integer getScore();
 
     String getRank();
+
+    InitVariables getInitVariables();
+
+    void setInitVariables(InitVariables initVariables);
 }

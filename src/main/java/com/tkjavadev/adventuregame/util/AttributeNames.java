@@ -13,6 +13,10 @@ public final class AttributeNames {
     public static final String SCORE="score";
     public static final String RANK="rank";
 
+    public static final String HAZELCAST_INSTANCE_NAME = "hazelcast_instance";
+    public static final String GROUP_CONFIG_NAME = "session_replication_group";
+    public static final String MAP_CONFIG_NAME = "session_replication_map";
+
     // == constructors ==
     public AttributeNames(){}
 }

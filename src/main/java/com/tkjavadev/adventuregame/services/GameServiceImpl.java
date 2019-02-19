@@ -27,6 +27,14 @@ public class GameServiceImpl implements GameService {
         this.locationService = locationService;
     }
 
+    public InitVariables getInitVariables() {
+        return initVariables;
+    }
+
+    public void setInitVariables(InitVariables initVariables) {
+        this.initVariables = initVariables;
+    }
+
     // == methods ==
     /*
     Returns list of available directions for initVariables
@@ -232,8 +240,6 @@ public class GameServiceImpl implements GameService {
                         gateMessage = "YOU NEED " + gate.getRequired() + " TO GO THERE";
                     }
                 }
-//        initVariables.setLocationId(gate.getDestId());
-//        initVariables.addVisitedLocation(initVariables.getLocationId());
         return initVariables.getLocationId();
     }
 

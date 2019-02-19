@@ -37,23 +37,21 @@ dependencies {
 
 	compile 'jstl:jstl:1.2'
 
-	//  --- My dependecies ---
-//	runtime 'mysql:mysql-connector-java:8.0.13'
-//	compile 'com.google.cloud.sql:mysql-socket-factory:1.0.11'
-//
-//	compile 'org.springframework.cloud:spring-cloud-gcp-starter-sql-mysql:1.0.0.RELEASE'
-	
+	//  --- My dependecies ---	
 //	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 	testCompile 'org.springframework.boot:spring-boot-starter-tomcat'
-	testRuntime group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
+
 	compile('org.springframework.boot:spring-boot-starter-data-mongodb')
 	compile('org.springframework.boot:spring-boot-starter-data-mongodb-reactive')
 	compile('org.springframework.boot:spring-boot-starter-thymeleaf')
-//	compile('org.springframework.boot:spring-boot-starter-web')
 	compile('org.springframework.boot:spring-boot-starter-webflux')
 	runtime('org.springframework.boot:spring-boot-devtools')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	testCompile('io.projectreactor:reactor-test')
+	testCompile group: 'org.mockito', name: 'mockito-all', version: '2.0.2-beta'
+	//session dependencies
+	compile('org.springframework.session:spring-session-core')
+	compile('com.hazelcast:hazelcast')
 	//  --- End of my dependecies ---
 
 	compile 'com.google.cloud:google-cloud:+'   // Latest Cloud API's http://googlecloudplatform.github.io/google-cloud-java
