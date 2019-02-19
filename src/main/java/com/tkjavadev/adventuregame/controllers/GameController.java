@@ -72,9 +72,9 @@ public class GameController {
         model.addAttribute(AttributeNames.ITEM_MESSAGE,gameService.getItemMessage());
         model.addAttribute(AttributeNames.GATE_MESSAGE,gameService.getGateMessage());
         log.info("model = {}", model);
-        log.info("play = {}",webSession.getId());
+//        log.info("play = {}",webSession.getId());
         if (gameService.isGameOver()) {
-            log.info("game over = {}",webSession.getId());
+//            log.info("game over = {}",webSession.getId());
             model.addAttribute(AttributeNames.VISITED,gameService.getVisitedLocations());
             model.addAttribute(AttributeNames.SCORE,gameService.getScore());
             model.addAttribute(AttributeNames.RANK,gameService.getRank());
@@ -93,19 +93,16 @@ public class GameController {
             bindingResult.getAllErrors().forEach(objectError -> log.info(objectError.toString()));
             return ViewNames.E404;
         }
-//        log.info("destination = {}", gate.getDestId());
-//        log.info("required = {}", gate.getRequired());
         gameService.changeDirection(gate);
         gameService.resetMessages();
         replace(webSession);
-        log.info("process = {}",webSession.getId());
+//        log.info("process = {}",webSession.getId());
         return GameMappings.REDIRECT_PLAY;
     }
 
     @PostMapping(GameMappings.ADD)
     public String addItemToInventory(@ModelAttribute("invItem") Item item,WebSession webSession) {
         loadInitVariables(webSession);
-        log.info("item = {}", item.getName());
         gameService.addItemToInventory(item);
         replace(webSession);
         return GameMappings.REDIRECT_PLAY;
@@ -114,7 +111,7 @@ public class GameController {
     @GetMapping(GameMappings.RESTART)
     public String restart(WebSession webSession) {
         loadInitVariables(webSession);
-        log.info("reset() called for = {}", webSession.getId());
+//        log.info("reset() called for = {}", webSession.getId());
         gameService.reset();
         replace(webSession);
         return GameMappings.REDIRECT_PLAY;
@@ -123,9 +120,9 @@ public class GameController {
     @GetMapping(GameMappings.HOME)
     public String home(WebSession webSession) {
         loadInitVariables(webSession);
-        log.info("home() called for = {}", webSession.getId());
+//        log.info("home() called for = {}", webSession.getId());
         if (gameService.isGameOver()) {
-            log.info("reset() called for = {}", webSession.getId());
+//            log.info("reset() called for = {}", webSession.getId());
             gameService.reset();
             replace(webSession);
         }
@@ -135,7 +132,7 @@ public class GameController {
     @GetMapping(GameMappings.EXIT)
     public String exit(Model model,WebSession webSession) {
         loadInitVariables(webSession);
-        log.info("exit() called for = {}",webSession.getId());
+//        log.info("exit() called for = {}",webSession.getId());
         gameService.exit();
         replace(webSession);
         return GameMappings.REDIRECT_PLAY;
