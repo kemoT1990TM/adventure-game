@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: adventure-game
+  labels:
+    app: adventure-game
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: adventure-game
+  template:
+    metadata:
+      labels:
+        app: adventure-game
+    spec:
+      containers:
+      - name: adventure-game
+        image: kemot1990tm/adventure-game:latest
+        ports:
+        - containerPort: 8080
