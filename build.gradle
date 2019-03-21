@@ -12,9 +12,7 @@ buildscript {
 		maven { url "https://plugins.gradle.org/m2/" }
 	}
 	dependencies {
-		classpath 'com.google.cloud.tools:appengine-gradle-plugin:1.+'    // Latest 1.x.x release
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-		classpath('gradle.plugin.com.palantir.gradle.docker:gradle-docker:0.21.0')
 	}
 }
 
@@ -28,16 +26,12 @@ repositories {
 
 apply plugin: 'java'
 apply plugin: 'war'
-apply plugin: 'com.google.cloud.tools.appengine'  // App Engine tasks
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'jacoco'
-apply plugin: 'com.palantir.docker'
 
 dependencies {
-	compile 'com.google.appengine:appengine-api-1.0-sdk:+'  // Latest App Engine Api's
 	providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
-
 	compile 'jstl:jstl:1.2'
 
 	//  --- My dependecies ---	
@@ -57,44 +51,13 @@ dependencies {
 	compile('org.springframework.session:spring-session-core')
 	compile('com.hazelcast:hazelcast')
 	//  --- End of my dependecies ---
-
-	compile 'com.google.cloud:google-cloud:+'   // Latest Cloud API's http://googlecloudplatform.github.io/google-cloud-java
-
 	testCompile 'junit:junit:4.12'
-	testCompile 'com.google.truth:truth:0.33'
 	testCompile 'org.mockito:mockito-all:1.10.19'
-
-	testCompile 'com.google.appengine:appengine-testing:+'
-	testCompile 'com.google.appengine:appengine-api-stubs:+'
-	testCompile 'com.google.appengine:appengine-tools-sdk:+'
 }
 
 bootJar {
 	baseName = 'adventure-game-reactive'
 	version = '0.1.0'
-}
-
-task unpack(type: Copy) {
-	dependsOn bootJar
-	from(zipTree(tasks.bootJar.outputs.files.singleFile))
-	into("build/dependency")
-}
-docker {
-	name "${project.group}/${bootJar.baseName}"
-	copySpec.from(tasks.unpack.outputs).into("dependency")
-	buildArgs(['DEPENDENCY': "dependency"])
-}
-
-// Always run unit tests
-appengineDeploy.dependsOn test
-appengineStage.dependsOn test
-
-// [START model]
-appengine {  // App Engine tasks configuration
-	deploy {   // deploy configuration
-		version = '1'
-		project = 'adventure-game-228714'
-	}
 }
 
 test {
@@ -123,8 +86,6 @@ jacocoTestReport {
 		html.enabled false
 	}
 }
-
-// [END model]
 
 group = 'com.tkjavadev'
 version = '0.0.1-SNAPSHOT'
