@@ -58,10 +58,13 @@ public class InitVariablesImpl implements InitVariables, Serializable {
         return locIds.size()-1;
     }
 
-    public void addToInventory(String item){
+    public void addItem(String item){
         inventory.add(item);
     }
 
+    public void dropItem(String item){
+        inventory.remove(item);
+    }
     /*
     Checking if inventory is containing specified item
      */

@@ -11,7 +11,17 @@
 <body>
 <div class="row bordered inventory">
     <h2 class="fieldtitle">INVENTORY</h2>
-    <h3 th:text="${__${T(com.tkjavadev.adventuregame.util.AttributeNames).INVENTORY}__}">Inventory</h3>
+    <!--<h3 th:text="${__${T(com.tkjavadev.adventuregame.util.AttributeNames).INVENTORY}__}">Inventory</h3>-->
+    <div>
+        <table>
+            <tr th:each="item:${get_inventory}">
+                <form th:object="${dropItem}" th:action="@{__${T(com.tkjavadev.adventuregame.util.GameMappings).DROP}__}" method="post">
+                    <input type="hidden" th:value="${item}" th:id="name" th:name="name"/>
+                    <button class="btn" type="submit" th:text="${item}" id="dropButton">ITEM</button>
+                </form>
+            </tr>
+        </table>
+    </div>
 </div>
 <div class="row bordered">
     <h2 class="fieldtitle">LOCATION</h2>

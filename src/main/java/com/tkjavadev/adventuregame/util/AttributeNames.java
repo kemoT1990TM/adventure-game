@@ -8,6 +8,7 @@ public final class AttributeNames {
     public static final String VISITED ="visited";
     public static final String ITEMS ="items";
     public static final String INVENTORY ="inventory";
+    public static final String GET_INVENTORY ="get_inventory";
     public static final String ITEM_MESSAGE="item_message";
     public static final String GATE_MESSAGE="gate_message";
     public static final String SCORE="score";

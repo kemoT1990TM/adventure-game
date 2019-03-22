@@ -6,6 +6,8 @@ import com.tkjavadev.adventuregame.domain.Item;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
+
 public interface GameService {
 
     Mono<String> getDescription();
@@ -24,7 +26,11 @@ public interface GameService {
 
     String printInventory();
 
+    List<String> getInventory();
+
     void addItemToInventory(Item item);
+
+    void dropItem(Item item);
 
     String getItemMessage();
 
