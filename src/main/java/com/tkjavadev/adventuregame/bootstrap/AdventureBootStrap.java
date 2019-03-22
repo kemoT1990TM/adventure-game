@@ -29,6 +29,7 @@ public class AdventureBootStrap implements ApplicationListener<ContextRefreshedE
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent arg0) {
+
 //        loadData();
     }
 

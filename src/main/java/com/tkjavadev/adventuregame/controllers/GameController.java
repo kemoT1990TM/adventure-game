@@ -13,10 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.WebSession;
 
 @Controller
@@ -69,6 +66,7 @@ public class GameController {
         model.addAttribute(AttributeNames.GATES, gameService.getAvailableGates());
         model.addAttribute(AttributeNames.ITEMS,gameService.getAvailableItems());
         model.addAttribute(AttributeNames.INVENTORY,gameService.printInventory());
+        model.addAttribute(AttributeNames.GET_INVENTORY,gameService.getInventory());
         model.addAttribute(AttributeNames.ITEM_MESSAGE,gameService.getItemMessage());
         model.addAttribute(AttributeNames.GATE_MESSAGE,gameService.getGateMessage());
         log.info("model = {}", model);
@@ -104,6 +102,14 @@ public class GameController {
     public String addItemToInventory(@ModelAttribute("invItem") Item item,WebSession webSession) {
         loadInitVariables(webSession);
         gameService.addItemToInventory(item);
+        replace(webSession);
+        return GameMappings.REDIRECT_PLAY;
+    }
+
+    @PostMapping(GameMappings.DROP)
+    public String dropItem(@ModelAttribute("dropItem") Item item, WebSession webSession) {
+        loadInitVariables(webSession);
+        gameService.dropItem(item);
         replace(webSession);
         return GameMappings.REDIRECT_PLAY;
     }
@@ -148,6 +154,12 @@ public class GameController {
     public Item invItemInstance() {
         Item invItem = new Item();
         return invItem;
+    }
+
+    @ModelAttribute("dropItem")
+    public Item dropItemInstance() {
+        Item dropItem = new Item();
+        return dropItem;
     }
 
 //    @ResponseStatus(HttpStatus.NOT_FOUND)

@@ -46,12 +46,12 @@ public class GameServiceImplTest {
         assertFalse(gameService.isGameOver());
 
         initVariables.setLocationId(10L);
-        initVariables.addToInventory("GOLD");
-        initVariables.addToInventory("DIAMONDS");
-        initVariables.addToInventory("COINS");
-        initVariables.addToInventory("SILVER");
+        initVariables.addItem("GOLD");
+        initVariables.addItem("DIAMONDS");
+        initVariables.addItem("COINS");
+        initVariables.addItem("SILVER");
         assertFalse(gameService.isGameOver());
-        initVariables.addToInventory("JEWELRY");
+        initVariables.addItem("JEWELRY");
         assertTrue(gameService.isGameOver());
     }
 
@@ -184,19 +184,19 @@ public class GameServiceImplTest {
         initVariables.addVisitedLocation(1L);
         assertEquals(Integer.valueOf(0), gameService.getScore());
 
-        initVariables.addToInventory("FOOD");
+        initVariables.addItem("FOOD");
         assertEquals(Integer.valueOf(5), gameService.getScore());
-        initVariables.addToInventory("BOOTLE");
+        initVariables.addItem("BOOTLE");
         assertEquals(Integer.valueOf(10), gameService.getScore());
-        initVariables.addToInventory("GOLD");
+        initVariables.addItem("GOLD");
         assertEquals(Integer.valueOf(42), gameService.getScore());
-        initVariables.addToInventory("JEWELRY");
+        initVariables.addItem("JEWELRY");
         assertEquals(Integer.valueOf(82), gameService.getScore());
-        initVariables.addToInventory("SILVER");
+        initVariables.addItem("SILVER");
         assertEquals(Integer.valueOf(110), gameService.getScore());
-        initVariables.addToInventory("DIAMONDS");
+        initVariables.addItem("DIAMONDS");
         assertEquals(Integer.valueOf(174), gameService.getScore());
-        initVariables.addToInventory("COINS");
+        initVariables.addItem("COINS");
         assertEquals(Integer.valueOf(194), gameService.getScore());
     }
 

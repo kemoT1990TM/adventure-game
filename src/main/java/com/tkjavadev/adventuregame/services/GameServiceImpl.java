@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
+
 @Service
 public class GameServiceImpl implements GameService {
     private final Logger log = LoggerFactory.getLogger(GameServiceImpl.class);
@@ -68,6 +70,10 @@ public class GameServiceImpl implements GameService {
         return initVariables.printInventory();
     }
 
+    @Override
+    public List<String> getInventory() {
+        return initVariables.getInventory();
+    }
 
     /*
     Adding item to inventory.
@@ -83,12 +89,20 @@ public class GameServiceImpl implements GameService {
             if (initVariables.checkInventory(item.getName())) {
                     itemMessage = item.getName() + " -> ALREADY IN INVENTORY";
             } else {
-                initVariables.addToInventory(item.getName());
+                initVariables.addItem(item.getName());
                     itemMessage = item.getName() + " -> ADDED TO INVENTORY";
             }
         } else {
             itemMessage = "YOU NEED " + item.getRequired() + " TO GET " + item.getName();
         }
+    }
+
+    @Override
+    public void dropItem(Item item) {
+        //resets gateMessage
+        gateMessage = null;
+        initVariables.dropItem(item.getName());
+        itemMessage = item.getName() + " -> DROPPED";
     }
 
     /*
@@ -160,7 +174,7 @@ public class GameServiceImpl implements GameService {
                 break;
             case 306:
                 if (initVariables.checkInventory(requiredItem)) {
-                    loc = 28L;
+                    loc = 27L;
                     gateMessage = "THE LITTLE BIRD ATTACKS THE GREEN SNAKE, AND IN AN ASTOUNDING FLURRY DRIVES THE SNAKE AWAY.";
                     break;
                 }
