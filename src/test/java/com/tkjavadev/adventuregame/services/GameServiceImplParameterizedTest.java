@@ -54,9 +54,9 @@ public class GameServiceImplParameterizedTest {
                 {303L, 20L},
                 {304L, 22L},
                 {305L, 80L},
-                {306L, 28L},
-                {307L, 29L},
-                {308L, 30L},
+                {306L, 32L},
+                {307L, 32L},
+                {308L, 32L},
                 {309L, 80L},
                 {310L, 80L},
                 {311L, 9L}

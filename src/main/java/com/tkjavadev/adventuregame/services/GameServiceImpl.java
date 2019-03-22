@@ -112,107 +112,112 @@ public class GameServiceImpl implements GameService {
     Opening the grate while having the keys in inventory
     Attacking a snake with a bird etc.
      */
-    public Long randomizer(Long destination, String requiredItem) {
+    private Long randomizer(Long destination, String requiredItem) {
         double random = Math.random();
         Long loc;
         switch (destination.intValue()) {
             case 300:
-                loc = 6L;
                 if (random > 0.5) {
                     loc = 5L;
+                    break;
                 }
+                loc = 6L;
                 break;
             case 301:
-                loc = 23L;
                 if (initVariables.checkInventory(requiredItem)) {
                     loc = 9L;
                     gateMessage="THE GRATE IS OPEN.";
                     break;
                 }
+                loc = 23L;
                 gateMessage = "THE GRATE IS LOCKED.";
                 break;
             case 302:
-                loc = 25L;
                 if (initVariables.checkInventory(requiredItem)) {
                     loc = 8L;
                     gateMessage="THE GRATE IS OPEN.";
                     break;
                 }
+                loc = 25L;
                 gateMessage = "THE GRATE IS LOCKED.";
                 log.info("random = {}",random);
                 break;
             case 303:
-                loc = 20L;
                 if (initVariables.checkInventory(requiredItem)) {
                     loc = 15L;
                     break;
                 }
+                loc = 20L;
                 gateMessage = "YOU NEED ROD TO GO THERE";
                 break;
             case 304:
-                loc = 22L;
                 if (initVariables.checkInventory(requiredItem)) {
                     loc = 14L;
                     break;
                 }
+                loc = 22L;
                 gateMessage = "YOU NEED ROD TO GO THERE";
                 break;
             case 306:
-                loc = 28L;
                 if (initVariables.checkInventory(requiredItem)) {
-                    loc = 32L;
+                    loc = 28L;
                     gateMessage = "THE LITTLE BIRD ATTACKS THE GREEN SNAKE, AND IN AN ASTOUNDING FLURRY DRIVES THE SNAKE AWAY.";
                     break;
                 }
+                loc = 32L;
                 gateMessage = "YOU NEED A BIRD TO KILL THE SNAKE";
                 break;
             case 307:
-                loc = 29L;
                 if (initVariables.checkInventory(requiredItem)) {
-                    loc = 32L;
+                    loc = 29L;
                     gateMessage = "THE LITTLE BIRD ATTACKS THE GREEN SNAKE, AND IN AN ASTOUNDING FLURRY DRIVES THE SNAKE AWAY.";
                     break;
                 }
+                loc = 32L;
                 gateMessage = "YOU NEED A BIRD TO KILL THE SNAKE";
                 break;
             case 308:
-                loc = 30L;
                 if (initVariables.checkInventory(requiredItem)) {
-                    loc = 32L;
+                    loc = 30L;
                     gateMessage = "THE LITTLE BIRD ATTACKS THE GREEN SNAKE, AND IN AN ASTOUNDING FLURRY DRIVES THE SNAKE AWAY.";
                     break;
                 }
+                loc = 32L;
                 gateMessage = "YOU NEED A BIRD TO KILL THE SNAKE";
                 break;
             case 311:
-                loc = 9L;
                 if (initVariables.checkInventory(requiredItem)) {
                     loc = 8L;
                     gateMessage="THE GRATE IS OPEN.";
                     break;
                 }
+                loc = 9L;
                 gateMessage = "THE GRATE IS LOCKED.";
                 break;
             case 312:
-                loc = 68L;
                 if (random > 0.2) {
                     loc = 65L;
+                    break;
                 }
+                loc = 68L;
                 break;
             case 313:
-                loc = 39L;
                 if (random > 0.2 && random <= 0.5) {
                     loc = 65L;
+                    break;
                 }
                 if (random > 0.5) {
                     loc = 70L;
+                    break;
                 }
+                loc = 39L;
                 break;
             case 314:
-                loc = 71L;
                 if (random > 0.25) {
                     loc = 72L;
+                    break;
                 }
+                loc = 71L;
                 break;
             default:
                 loc = 80L;
