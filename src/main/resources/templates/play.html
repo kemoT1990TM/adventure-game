@@ -9,28 +9,26 @@
     <title>ADVENTURE!</title>
 </head>
 <body>
-<div class="row bordered inventory">
-    <h2 class="fieldtitle">INVENTORY</h2>
-    <!--<h3 th:text="${__${T(com.tkjavadev.adventuregame.util.AttributeNames).INVENTORY}__}">Inventory</h3>-->
-    <div>
+<div class="row titlediv">
+    <h1 class="title">ADVENTURE TIME!</h1>
+<div class="playdiv">
+    <h2 class="playtitle">INVENTORY:</h2>
         <table>
             <tr th:each="item:${get_inventory}">
                 <form th:object="${dropItem}" th:action="@{__${T(com.tkjavadev.adventuregame.util.GameMappings).DROP}__}" method="post">
                     <input type="hidden" th:value="${item}" th:id="name" th:name="name"/>
-                    <button class="btn" type="submit" th:text="${item}" id="dropButton">ITEM</button>
+                    <button class="btn-item" type="submit" id="dropButton" th:text="${item}">lamp</button>
                 </form>
             </tr>
         </table>
-    </div>
 </div>
-<div class="row bordered">
-    <h2 class="fieldtitle">LOCATION</h2>
+<div class="playdiv">
+    <h2 class="playtitle">LOCATION:</h2>
     <h3 class="container" th:text="${__${T(com.tkjavadev.adventuregame.util.AttributeNames).DESCRIPTION}__}">
         He determined to drop his litigation with the monastry, and relinguish his claims to the wood-cuting and fishery rihgts at once. He was the more ready to do this becuase the rights had becom much less valuable, and he had indeed the vaguest idea where the wood and river in quedtion were.</h3>
     </div>
-    <div class="row bordered">
-        <h2 class="fieldtitle">DIRECTIONS</h2>
-        <div>
+    <div class="playdiv">
+        <h2 class="playtitle">DIRECTIONS:</h2>
         <table>
         <h4 class="inline"><a class="btn-solid" th:href="@{__${T(com.tkjavadev.adventuregame.util.GameMappings).EXIT}__}">QUIT</a></h4>
         <tr th:each="gate:${gates}">
@@ -44,10 +42,6 @@
             </form>
         </tr>
     </table>
-        </div>
-        <div class="message">
-    <h3 class="messagetext" id="msgGate" th:text="${__${T(com.tkjavadev.adventuregame.util.AttributeNames).GATE_MESSAGE}__}">GATE MESSAGE GATE MESSAGE</h3>
-        </div>
         <!--<div>-->
             <!--<form th:object="${destination}" th:action="@{__${T(com.tkjavadev.adventuregame.util.GameMappings).CHANGE}__}" method="post">-->
                 <!--<input type="text" th:field="*{destId}"/>-->
@@ -55,22 +49,26 @@
             <!--</form>-->
         <!--</div>-->
 </div>
-<div class="row bordered" id="items">
-    <h2 class="fieldtitle">ITEMS</h2>
-    <div>
+<div class="playdiv">
+    <h2 class="playtitle">ITEMS IN LOCATION:</h2>
     <table>
         <tr th:each="item:${items}">
             <form th:object="${invItem}" th:action="@{__${T(com.tkjavadev.adventuregame.util.GameMappings).ADD}__}" method="post">
                 <input type="hidden" th:value="${item.getName()}" th:id="name" th:name="name"/>
                 <input type="hidden" th:value="${item.getRequired()}" th:id="required" th:name="required"/>
-                <button class="btn" type="submit" th:text="${item.getName()}" id="item">ITEM</button>
+                <button class="btn-item" type="submit" th:text="${item.getName()}" id="item">key</button>
             </form>
         </tr>
     </table>
-        </div>
-        <div class="message">
-    <h3 class="messagetext" id="msgItem" th:text="${__${T(com.tkjavadev.adventuregame.util.AttributeNames).ITEM_MESSAGE}__}">ITEM MESSAGE ITEM MESSAGE</h3>
     </div>
+    <div class="alert">
+  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+  <h3 id="msgGate" th:text="${__${T(com.tkjavadev.adventuregame.util.AttributeNames).GATE_MESSAGE}__}">GATE MESSAGE</h3>
+</div>
+<div class="alert">
+  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+  <h3 id="msgItem" th:text="${__${T(com.tkjavadev.adventuregame.util.AttributeNames).ITEM_MESSAGE}__}">ITEM MESSAGE</h3>
+</div>
 </div>
 <div>
     <footer>
