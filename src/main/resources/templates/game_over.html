@@ -1,28 +1,33 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8"/>
-    <link rel="stylesheet" type="text/css" href="css/Grid.css"/>
-    <link rel="stylesheet" type="text/css" href="css/normalize.css"/>
-    <link rel="stylesheet" type="text/css" href="css/style.css"/>
-    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&amp;subset=latin-ext" rel="stylesheet"/>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" type="text/css" href="css/Grid.css" />
+    <link rel="stylesheet" type="text/css" href="css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <!--    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&amp;subset=latin-ext" rel="stylesheet"/>-->
+    <link rel="stylesheet" type="text/css" href="css/MyFontsWebfontsKit.css">
     <title>GAME FINISHED!</title>
 </head>
-<body>
-<div class="row titlediv">
-    <h1 class="title">YOUR ADVENTURE HAS COME TO AN END!</h1>
-    <div class="score">
-        <h3> You scored <span th:text="${__${T(com.tkjavadev.adventuregame.util.AttributeNames).SCORE}__}"></span> point's out of a possible 258 and visited <span th:text="${__${T(com.tkjavadev.adventuregame.util.AttributeNames).VISITED}__}"></span> locations</h3>
-        <h3 th:text="${__${T(com.tkjavadev.adventuregame.util.AttributeNames).RANK}__}">RATING</h3>
-    </div>
 
-    <h4><a class="btn-solid" th:href="@{__${T(com.tkjavadev.adventuregame.util.GameMappings).RESTART}__}">PLAY AGAIN</a></h4>
-    <h4><a class="btn-solid" th:href="@{__${T(com.tkjavadev.adventuregame.util.GameMappings).HOME}__}">HOME</a></h4>
-   </div>
-     <div>
+<body>
+    <div class="content">
+        <div class="row titlediv">
+            <h1 class="title">YOUR ADVENTURE HAS COME TO AN END!</h1>
+            <div class="score">
+                <h3 class="txt"> You scored <span th:text="${__${T(com.tkjavadev.adventuregame.util.AttributeNames).SCORE}__}"></span> point's out of a possible 258 and visited <span th:text="${__${T(com.tkjavadev.adventuregame.util.AttributeNames).VISITED}__}"></span> locations</h3>
+                <h3 class="txt" th:text="${__${T(com.tkjavadev.adventuregame.util.AttributeNames).RANK}__}">RATING</h3>
+            </div>
+            <h4><a class="btn-solid" th:href="@{__${T(com.tkjavadev.adventuregame.util.GameMappings).RESTART}__}">PLAY AGAIN</a></h4>
+            <h4><a class="btn-solid" th:href="@{__${T(com.tkjavadev.adventuregame.util.GameMappings).HOME}__}">HOME</a></h4>
+        </div>
+    </div>
+    <div class="footer">
         <footer>
-            <p>Copyright &copy; 2019 Tomasz Kartasiński. All rights reserved.</p>
+            <p>Copyright &copy; 2019 Tomasz Kartasinski. All rights reserved.</p>
         </footer>
     </div>
 </body>
+
 </html>

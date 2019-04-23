@@ -268,6 +268,8 @@ public class GameServiceImpl implements GameService {
      */
     @Override
     public void reset() {
+        gateMessage=null;
+        itemMessage=null;
         initVariables.reset();
     }
 
