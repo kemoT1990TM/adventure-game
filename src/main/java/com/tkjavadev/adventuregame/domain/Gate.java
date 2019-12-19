@@ -1,9 +1,14 @@
 package com.tkjavadev.adventuregame.domain;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class,property="id")
 public class Gate {
 
     // == fields ==
@@ -13,10 +18,6 @@ public class Gate {
     private String direction;
     private Long destId;
     private String required;
-
-
-    public Gate() {
-    }
 
     // == methods ==
     /*
