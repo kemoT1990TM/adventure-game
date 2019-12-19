@@ -3,6 +3,7 @@ package com.tkjavadev.adventuregame.services;
 import com.tkjavadev.adventuregame.core.InitVariables;
 import com.tkjavadev.adventuregame.domain.Gate;
 import com.tkjavadev.adventuregame.domain.Item;
+import com.tkjavadev.adventuregame.domain.Location;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -47,4 +48,6 @@ public interface GameService {
     InitVariables getInitVariables();
 
     void setInitVariables(InitVariables initVariables);
+
+    Mono<Location> getLocation();
 }

@@ -3,6 +3,7 @@ package com.tkjavadev.adventuregame.services;
 import com.tkjavadev.adventuregame.core.InitVariables;
 import com.tkjavadev.adventuregame.domain.Gate;
 import com.tkjavadev.adventuregame.domain.Item;
+import com.tkjavadev.adventuregame.domain.Location;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,6 +74,11 @@ public class GameServiceImpl implements GameService {
     @Override
     public List<String> getInventory() {
         return initVariables.getInventory();
+    }
+
+    @Override
+    public Mono<Location> getLocation() {
+        return locationService.getLocationByLocId(initVariables.getLocationId());
     }
 
     /*
