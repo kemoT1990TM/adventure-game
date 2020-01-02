@@ -25,6 +25,7 @@ import org.springframework.web.server.WebSession;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -86,10 +87,16 @@ public class GameRestController {
     }
 
     @GetMapping("/inventory")
-    public @ResponseBody String getInventory(WebSession webSession) {
+    public @ResponseBody List<Item> getInventory(WebSession webSession) {
         loadInitVariables(webSession);
         replace(webSession);
-        return gameService.printInventory();
+        List<Item> inventoryItems=new ArrayList<>();
+        for(String item:gameService.getInventory()){
+            Item invItem = new Item();
+            invItem.setName(item);
+            inventoryItems.add(invItem);
+        }
+        return inventoryItems;
     }
 //
 //    @GetMapping("/results")
@@ -99,24 +106,6 @@ public class GameRestController {
 //        return gameService.;
 //    }
 
-//        Play play= new Play();
-//        play.description= gameService.getDescription();
-//        play.gates = gameService.getAvailableGates();
-//        play.items = gameService.getAvailableItems();
-//        play.inventory = gameService.printInventory();
-//        play.getInventory = gameService.getInventory();
-//        play.itemMessage = gameService.getItemMessage();
-//        play.gateMessage = gameService.getGateMessage();
-////        log.info("play = {}",webSession.getId());
-//        if (gameService.isGameOver()) {
-////            log.info("game over = {}",webSession.getId());
-//            play.visited = gameService.getVisitedLocations();
-//            play.score = gameService.getScore();
-//            play.rank = gameService.getRank();
-//            return play;
-//        }
-//        return play;
-//    }
 
     @PostMapping("/change")
     public void changeDirection(@RequestBody Gate gate, WebSession webSession) {
@@ -133,20 +122,19 @@ public class GameRestController {
 //        log.info("process = {}",webSession.getId());
     }
 
-    @PostMapping(GameMappings.ADD)
+    @PostMapping("/take")
     public void addItemToInventory(@RequestBody Item item, WebSession webSession) {
         loadInitVariables(webSession);
         gameService.addItemToInventory(item);
         replace(webSession);
     }
-//
-//    @PostMapping(GameMappings.DROP)
-//    public String dropItem(@ModelAttribute("dropItem") Item item, WebSession webSession) {
-//        loadInitVariables(webSession);
-//        gameService.dropItem(item);
-//        replace(webSession);
-//        return GameMappings.REDIRECT_PLAY;
-//    }
+
+    @PostMapping("/drop")
+    public void dropItem(@RequestBody Item item, WebSession webSession) {
+        loadInitVariables(webSession);
+        gameService.dropItem(item);
+        replace(webSession);
+    }
 
     @GetMapping("/restart")
     public void restart(WebSession webSession) {
