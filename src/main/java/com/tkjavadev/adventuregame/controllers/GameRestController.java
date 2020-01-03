@@ -18,7 +18,9 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/game")
@@ -50,32 +52,28 @@ public class GameRestController {
 
     // == methods ==
     @GetMapping("/gates")
-    public @ResponseBody
-    Flux<Gate> getGates(WebSession webSession) {
+    public @ResponseBody Flux<Gate> getGates(WebSession webSession) {
         loadInitVariables(webSession);
         replace(webSession);
         return gameService.getAvailableGates();
     }
 
     @GetMapping("/items")
-    public @ResponseBody
-    Flux<Item> getItems(WebSession webSession) {
+    public @ResponseBody Flux<Item> getItems(WebSession webSession) {
         loadInitVariables(webSession);
         replace(webSession);
         return gameService.getAvailableItems();
     }
 
     @GetMapping("/location")
-    public @ResponseBody
-    Mono<Location> getLocation(WebSession webSession) {
+    public @ResponseBody Mono<Location> getLocation(WebSession webSession) {
         loadInitVariables(webSession);
         replace(webSession);
         return gameService.getLocation();
     }
 
     @GetMapping("/inventory")
-    public @ResponseBody
-    List<Item> getInventory(WebSession webSession) {
+    public @ResponseBody List<Item> getInventory(WebSession webSession) {
         loadInitVariables(webSession);
         replace(webSession);
         List<Item> inventoryItems = new ArrayList<>();
@@ -92,14 +90,28 @@ public class GameRestController {
         loadInitVariables(webSession);
         replace(webSession);
         List<String> results = new ArrayList<>();
-        results.add(gameService.getVisitedLocations().toString());
         results.add(gameService.getScore().toString());
+        results.add(gameService.getVisitedLocations().toString());
         results.add(gameService.getRank());
         return results;
     }
 
+    @GetMapping("/item/message")
+    public @ResponseBody Map getItemMessage(WebSession webSession) {
+        loadInitVariables(webSession);
+        replace(webSession);
+        return  Collections.singletonMap("message", gameService.getItemMessage());
+    }
 
-    @PostMapping("/change")
+    @GetMapping("/gate/message")
+    public @ResponseBody Map getGateMessage(WebSession webSession) {
+        loadInitVariables(webSession);
+        replace(webSession);
+        return Collections.singletonMap("message", gameService.getGateMessage());
+    }
+
+
+    @PostMapping("/gate/change")
     public void changeDirection(@RequestBody Gate gate, WebSession webSession) {
         loadInitVariables(webSession);
         gameService.changeDirection(gate);
@@ -107,14 +119,14 @@ public class GameRestController {
         replace(webSession);
     }
 
-    @PostMapping("/take")
+    @PostMapping("/item/take")
     public void addItemToInventory(@RequestBody Item item, WebSession webSession) {
         loadInitVariables(webSession);
         gameService.addItemToInventory(item);
         replace(webSession);
     }
 
-    @PostMapping("/drop")
+    @PostMapping("/item/drop")
     public void dropItem(@RequestBody Item item, WebSession webSession) {
         loadInitVariables(webSession);
         gameService.dropItem(item);
