@@ -19,15 +19,19 @@ public class GameServiceImpl implements GameService {
 
     // == fields ==
     private LocationService locationService;
+    private GateService gateService;
+    private ItemService itemService;
     private InitVariables initVariables;
     private String itemMessage;
     private String gateMessage;
 
     // == constructors ==
     @Autowired
-    public GameServiceImpl(InitVariables initVariables, LocationService locationService) {
+    public GameServiceImpl(InitVariables initVariables, LocationService locationService, GateService gateService, ItemService itemService) {
         this.initVariables = initVariables;
         this.locationService = locationService;
+        this.gateService = gateService;
+        this.itemService = itemService;
     }
 
     public InitVariables getInitVariables() {
@@ -44,7 +48,7 @@ public class GameServiceImpl implements GameService {
      */
     @Override
     public Flux<Gate> getAvailableGates() {
-        return locationService.getGatesByLocId(initVariables.getLocationId());
+        return gateService.getGatesByLocId(initVariables.getLocationId());
     }
 
     /*
@@ -60,7 +64,7 @@ public class GameServiceImpl implements GameService {
      */
     @Override
     public Flux<Item> getAvailableItems() {
-        return locationService.getItemsByLocId(initVariables.getLocationId());
+        return itemService.getItemsByLocId(initVariables.getLocationId());
     }
 
     /*

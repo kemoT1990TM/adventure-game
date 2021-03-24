@@ -14,6 +14,7 @@ import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -27,12 +28,14 @@ public class GameServiceImplTest {
 
     @Mock
     private LocationService locationService;
+    private ItemService itemService;
+    private GateService gateService;
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         initVariables = new InitVariablesImpl();
-        gameService = new GameServiceImpl(initVariables, locationService);
+        gameService = new GameServiceImpl(initVariables, locationService, gateService, itemService);
     }
 
     @Test
@@ -73,7 +76,7 @@ public class GameServiceImplTest {
         gate.setRequired("NOT");
         List<Gate> gates=new ArrayList<>();
         gates.add(gate);
-        location.setGates(gates);
+        location.setGates(gates.stream().map(Gate::getId).collect(Collectors.toList()));
 
 
         assertEquals(Long.valueOf(99L),gameService.changeDirection(gate));
@@ -91,14 +94,14 @@ public class GameServiceImplTest {
     public void getAvailableGates() {
         Location location = new Location();
         List<Gate> gates = new ArrayList<>();
-        location.setGates(gates);
+        location.setGates(gates.stream().map(Gate::getId).collect(Collectors.toList()));
 
-        when(locationService.getGatesByLocId(anyLong())).thenReturn(Flux.fromIterable(gates));
+        when(gateService.getGatesByLocId(anyLong())).thenReturn(Flux.fromIterable(gates));
 
         List<Gate> gatesReturned=gameService.getAvailableGates().collectList().block();
 
         assertEquals(gates,gatesReturned);
-        verify(locationService, times(1)).getGatesByLocId(anyLong());
+        verify(gateService, times(1)).getGatesByLocId(anyLong());
     }
 
     @Test
@@ -118,13 +121,13 @@ public class GameServiceImplTest {
         Item item=new Item();
         List<Item> items = new ArrayList<>();
         items.add(item);
-        location.setItems(items);
+        location.setItems(items.stream().map(Item::getId).collect(Collectors.toList()));
 
-        when(locationService.getItemsByLocId(anyLong())).thenReturn(Flux.just(item));
+        when(itemService.getItemsByLocId(anyLong())).thenReturn(Flux.just(item));
 
         List<Item> itemsReturned=gameService.getAvailableItems().collectList().block();
         assertEquals(items, itemsReturned);
-        verify(locationService, times(1)).getItemsByLocId(anyLong());
+        verify(itemService, times(1)).getItemsByLocId(anyLong());
     }
 
     @Test
@@ -133,7 +136,7 @@ public class GameServiceImplTest {
         item1.setName("item1");
         item1.setRequired("NOT");
 
-        when(locationService.getItemByLocIdAndName(anyLong(), anyString())).thenReturn(Mono.just(item1));
+        when(itemService.getItemByLocIdAndName(anyLong(), anyString())).thenReturn(Mono.just(item1));
 
 
         assertNull(gameService.getItemMessage());
@@ -150,7 +153,7 @@ public class GameServiceImplTest {
         Item item2 = new Item();
         item2.setName("item2");
         item2.setRequired("item3");
-        when(locationService.getItemByLocIdAndName(anyLong(), anyString())).thenReturn(Mono.just(item2));
+        when(itemService.getItemByLocIdAndName(anyLong(), anyString())).thenReturn(Mono.just(item2));
         gameService.addItemToInventory(item2);
         assertEquals("YOU NEED " + item2.getRequired() + " TO GET " + item2.getName(), gameService.getItemMessage());
 

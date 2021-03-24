@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.anyLong;
@@ -33,6 +34,8 @@ public class GameServiceImplParameterizedTest {
 
     @Mock
     private LocationService locationService;
+    private ItemService itemService;
+    private GateService gateService;
 
     public GameServiceImplParameterizedTest(Long input, Long output) {
         this.input = input;
@@ -43,7 +46,7 @@ public class GameServiceImplParameterizedTest {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         initVariables = new InitVariablesImpl();
-        gameService = new GameServiceImpl(initVariables, locationService);
+        gameService = new GameServiceImpl(initVariables, locationService, gateService, itemService);
     }
 
     @Parameterized.Parameters
@@ -74,9 +77,9 @@ public class GameServiceImplParameterizedTest {
         gate.setRequired("NOT");
         List<Gate> gates=new ArrayList<>();
         gates.add(gate);
-        location.setGates(gates);
+        location.setGates(gates.stream().map(Gate::getId).collect(Collectors.toList()));
 
-        when(locationService.getGatesByLocId(anyLong())).thenReturn(Flux.fromIterable(gates));
+        when(gateService.getGatesByLocId(anyLong())).thenReturn(Flux.fromIterable(gates));
 
         initVariables.setLocationId(1L);
         gate.setRequired("KEYS");

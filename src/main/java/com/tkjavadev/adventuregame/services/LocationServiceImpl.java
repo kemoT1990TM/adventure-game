@@ -18,7 +18,6 @@ public class LocationServiceImpl implements LocationService, Serializable {
     private final Logger log= LoggerFactory.getLogger(LocationServiceImpl.class);
 
     // == fields ==
-//    private final LocationRepository locationRepository;
     private final LocationReactiveRepository locationReactiveRepository;
 
     // == constructors ==
@@ -28,28 +27,8 @@ public class LocationServiceImpl implements LocationService, Serializable {
 
 
     // == methods ==
-//    /*
-//    Returns Location searching by ID
-//     */
-//    @Override
-//    public Location getLocationById(String id) {
-//                   Optional<Location> locationOptional = locationRepository.findById(id);
-//            if (!locationOptional.isPresent()) {
-//            throw new NotFoundException("Location Not Found. For ID value: "+id.toString());
-////                System.out.println("Location Not Found. For ID value: " + id.toString());
-//            }
-//        return locationOptional.get();
-//    }
-
-    /*
-    Returns Location searching by locID
-     */
     @Override
     public Mono<Location> getLocationByLocId(Long locId) {
-//        Optional<Location> locationOptional = locationRepository.findByLocId(locId);
-//        if (!locationOptional.isPresent()) {
-//            throw new NotFoundException("Location Not Found. For ID value: "+locId.toString());
-//        }
         return locationReactiveRepository.findByLocId(locId);
     }
 
@@ -60,36 +39,6 @@ public class LocationServiceImpl implements LocationService, Serializable {
     public Mono<Void> saveLocation(Location location) {
         locationReactiveRepository.save(location);
         return Mono.empty();
-    }
-
-    /*
-    Returns Item searching by Location ID and name of Item
-    */
-    @Override
-    public Mono<Item> getItemByLocIdAndName(Long locId, String name) {
-
-//        Optional<Location> locationOptional = locationRepository.findByLocId(locId);
-//
-//        if (!locationOptional.isPresent()){
-//            throw new NotFoundException("Location id not found. Id: " + locId);
-//        }
-//
-//        Location location = locationOptional.get();
-//        Optional<Item> itemOptional = location.getItems().stream()
-//                .filter(item -> item.getName().equals(name)).findFirst();
-//        if(!itemOptional.isPresent()){
-//            throw new NotFoundException("Item name not found: " + name);
-//        }
-        return locationReactiveRepository.findByLocId(locId)
-                .flatMapIterable(Location::getItems).filter(item -> item.getName().equals(name)).singleOrEmpty();
-    }
-
-    public Flux<Gate> getGatesByLocId(Long locId) {
-        return locationReactiveRepository.findByLocId(locId).flatMapIterable(Location::getGates);
-    }
-
-    public Flux<Item> getItemsByLocId(Long locId) {
-        return locationReactiveRepository.findByLocId(locId).flatMapIterable(Location::getItems);
     }
 
     public Mono<String> getDescriptionByLocId(Long locId) {
