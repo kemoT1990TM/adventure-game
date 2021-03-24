@@ -53,64 +53,64 @@ public class LocationServiceImplTest {
         verify(locationReactiveRepository,times(1)).save(location);
     }
 
-    @Test
-    public void getItemByLocIdAndName() {
-        Location location=new Location();
-        location.setLocId(1L);
-        Item item=new Item();
-        item.setName("item");
-        item.setLocId(1L);
-        List<Item> items=new ArrayList<>();
-        items.add(item);
-        location.setItems(items);
+//    @Test
+//    public void getItemByLocIdAndName() {
+//        Location location=new Location();
+//        location.setLocId(1L);
+//        Item item=new Item();
+//        item.setName("item");
+//        item.setLocId(1L);
+//        List<Item> items=new ArrayList<>();
+//        items.add(item);
+//        location.setItems(items);
+//
+//        when(locationReactiveRepository.findByLocId(anyLong())).thenReturn(Mono.just(location));
+//
+//        Item itemReturned=locationService.getItemByLocIdAndName(1L,"item").block();
+//
+//        assertNotNull("Null item returned",itemReturned);
+//        assertEquals(Long.valueOf(1L),itemReturned.getLocId());
+//        assertEquals("item",itemReturned.getName());
+//        verify(locationReactiveRepository,times(1)).findByLocId(anyLong());
+//    }
 
-        when(locationReactiveRepository.findByLocId(anyLong())).thenReturn(Mono.just(location));
+//    @Test
+//    public void getItemsByLocId() {
+//        Location location=new Location();
+//        location.setLocId(1L);
+//        Item item=new Item();
+//        item.setName("item");
+//        item.setLocId(1L);
+//        List<Item> items=new ArrayList<>();
+//        items.add(item);
+//        location.setItems(items);
+//
+//        when(locationReactiveRepository.findByLocId(anyLong())).thenReturn(Mono.just(location));
+//
+//        List<Item> itemsReturned=locationService.getItemsByLocId(1L).collectList().block();
+//
+//        assertNotNull("Null list of items returned",itemsReturned);
+//        assertEquals(items,itemsReturned);
+//        verify(locationReactiveRepository,times(1)).findByLocId(anyLong());
+//    }
 
-        Item itemReturned=locationService.getItemByLocIdAndName(1L,"item").block();
-
-        assertNotNull("Null item returned",itemReturned);
-        assertEquals(Long.valueOf(1L),itemReturned.getLocId());
-        assertEquals("item",itemReturned.getName());
-        verify(locationReactiveRepository,times(1)).findByLocId(anyLong());
-    }
-
-    @Test
-    public void getItemsByLocId() {
-        Location location=new Location();
-        location.setLocId(1L);
-        Item item=new Item();
-        item.setName("item");
-        item.setLocId(1L);
-        List<Item> items=new ArrayList<>();
-        items.add(item);
-        location.setItems(items);
-
-        when(locationReactiveRepository.findByLocId(anyLong())).thenReturn(Mono.just(location));
-
-        List<Item> itemsReturned=locationService.getItemsByLocId(1L).collectList().block();
-
-        assertNotNull("Null list of items returned",itemsReturned);
-        assertEquals(items,itemsReturned);
-        verify(locationReactiveRepository,times(1)).findByLocId(anyLong());
-    }
-
-    @Test
-    public void getGatesByLocId() {
-        Location location=new Location();
-        location.setLocId(1L);
-        Gate gate=new Gate();
-        List<Gate> gates=new ArrayList<>();
-        gates.add(gate);
-        location.setGates(gates);
-
-        when(locationReactiveRepository.findByLocId(anyLong())).thenReturn(Mono.just(location));
-
-        List<Gate> gatesReturned=locationService.getGatesByLocId(1L).collectList().block();
-
-        assertNotNull("Null list of gates returned",gatesReturned);
-        assertEquals(gates,gatesReturned);
-        verify(locationReactiveRepository,times(1)).findByLocId(anyLong());
-    }
+//    @Test
+//    public void getGatesByLocId() {
+//        Location location=new Location();
+//        location.setLocId(1L);
+//        Gate gate=new Gate();
+//        List<Gate> gates=new ArrayList<>();
+//        gates.add(gate);
+//        location.setGates(gates);
+//
+//        when(locationReactiveRepository.findByLocId(anyLong())).thenReturn(Mono.just(location));
+//
+//        List<Gate> gatesReturned=locationService.getGatesByLocId(1L).collectList().block();
+//
+//        assertNotNull("Null list of gates returned",gatesReturned);
+//        assertEquals(gates,gatesReturned);
+//        verify(locationReactiveRepository,times(1)).findByLocId(anyLong());
+//    }
 
     @Test
     public void getDescriptionByLocId() {

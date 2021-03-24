@@ -14,8 +14,8 @@ public class Location {
     private String id;
     private Long locId;
     private String description;
-    private List<Gate> gates = new ArrayList<>();
-    private List<Item> items = new ArrayList<>();
+    private List<String> gates = new ArrayList<>();
+    private List<String> items = new ArrayList<>();
 
     // == methods ==
     public String getId() {
@@ -34,11 +34,11 @@ public class Location {
         this.id = id;
     }
 
-    public List<Gate> getGates() {
+    public List<String> getGates() {
         return gates;
     }
 
-    public void setGates(List<Gate> gates) {
+    public void setGates(List<String> gates) {
         this.gates = gates;
     }
 
@@ -50,11 +50,11 @@ public class Location {
         this.description = description;
     }
 
-    public List<Item> getItems() {
+    public List<String> getItems() {
         return items;
     }
 
-    public void setItems(List<Item> items) {
+    public void setItems(List<String> items) {
         this.items = items;
     }
 }

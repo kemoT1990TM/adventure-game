@@ -20,7 +20,8 @@ public class HazelcastConfig {
 
         final Config config = new Config();
         config.setInstanceName(HAZELCAST_INSTANCE_NAME);
-        config.getGroupConfig().setName(GROUP_CONFIG_NAME);
+        config.getSetConfig(GROUP_CONFIG_NAME);
+//        config.getGroupConfig().setName(GROUP_CONFIG_NAME);
         config.addMapConfig(mapConfig());
 
         final NetworkConfig networkConfig = config.getNetworkConfig();
@@ -39,10 +40,13 @@ public class HazelcastConfig {
     // as the default is 0 which means infinite.
     // In this example I have set it to a low value of 30 seconds for demonstration purposes.
     private MapConfig mapConfig() {
+
+
         final MapConfig mapConfig = new MapConfig();
         mapConfig.setName(MAP_CONFIG_NAME);
         mapConfig.setTimeToLiveSeconds(-1);
-        mapConfig.setEvictionPolicy(EvictionPolicy.LRU);
+        mapConfig.setEvictionConfig(mapConfig.getEvictionConfig().setEvictionPolicy(EvictionPolicy.LRU));
+//        mapConfig.setEvictionPolicy(EvictionPolicy.LRU);
         mapConfig.addEntryListenerConfig(new EntryListenerConfig(HazelcastEntryListener.class.getName(), false, false ) );
         return mapConfig;
     }

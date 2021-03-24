@@ -8,13 +8,15 @@ import com.tkjavadev.adventuregame.repositories.reactive.ItemReactiveRepository;
 import com.tkjavadev.adventuregame.repositories.reactive.LocationReactiveRepository;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
-//@Component
+@Component
 public class AdventureBootStrap implements ApplicationListener<ContextRefreshedEvent> {
 
     private final GateReactiveRepository gateReactiveRepository;
@@ -30,7 +32,7 @@ public class AdventureBootStrap implements ApplicationListener<ContextRefreshedE
     @Override
     public void onApplicationEvent(ContextRefreshedEvent arg0) {
 
-//        loadData();
+        loadData();
     }
 
     /*
@@ -105,8 +107,10 @@ public class AdventureBootStrap implements ApplicationListener<ContextRefreshedE
                 Location location = new Location();
                 location.setLocId(loc);
                 location.setDescription(description);
-                location.setGates(gateReactiveRepository.findByLocId(loc).collectList().block());
-                location.setItems(itemReactiveRepository.findByLocId(loc).collectList().block());
+                location.setGates(gateReactiveRepository.findByLocId(loc).collectList().block().stream().map(Gate::getId).collect(Collectors.toList()));
+                System.out.println(location.getGates());
+                location.setItems(itemReactiveRepository.findByLocId(loc).collectList().block().stream().map(Item::getId).collect(Collectors.toList()));
+                System.out.println(location.getItems());
                 locationReactiveRepository.save(location).block();
             }
 
