@@ -3,7 +3,7 @@ package com.tkjavadev.adventuregame.domain;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,10 +18,12 @@ public class Location {
     private String description;
 
     @Fetch(FetchMode.JOIN)
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "locId", fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "locId", insertable = false, updatable = false)
     private List<Gate> gates = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "locId")
+    @OneToMany
+    @JoinColumn(name = "locId", insertable = false, updatable = false)
     private List<Item> items = new ArrayList<>();
 
     // == methods ==
