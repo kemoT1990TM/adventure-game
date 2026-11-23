@@ -1,4 +1,4 @@
-FROM openjdk:10-jre-slim
+FROM eclipse-temurin:25-jre
 VOLUME /tmp
 ARG JAR_FILE
 COPY ${JAR_FILE} app.jar

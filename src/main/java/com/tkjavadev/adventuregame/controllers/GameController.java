@@ -52,7 +52,7 @@ public class GameController {
         this.webDataBinder=webDataBinder;
     }
 
-    @GetMapping({"","/","/index"})
+    @GetMapping("/index")
     public String start() {
         log.info("Homepage");
         return ViewNames.HOME;
