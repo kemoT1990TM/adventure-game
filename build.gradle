@@ -1,112 +1,60 @@
-// [START gradle]
-buildscript {    // Configuration for building
-	ext {
-		springBootVersion = '2.1.2.RELEASE'
-	}
-	repositories {
-		jcenter()    // Bintray's repositories - a fast Maven Central mirror & more
-		mavenCentral()
-	}
-	dependencies {
-		classpath 'com.google.cloud.tools:appengine-gradle-plugin:1.+'    // Latest 1.x.x release
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-	}
+plugins {
+	id 'java'
+	id 'war'
+	id 'jacoco'
+	id 'org.springframework.boot' version '3.5.16'
+	id 'io.spring.dependency-management' version '1.1.7'
 }
-
-repositories {   // repositories for Jar's you access in your code
-	maven {
-		url 'https://oss.sonatype.org/content/repositories/snapshots' // SNAPSHOT repositories (if needed)
-	}
-	mavenCentral()
-	jcenter()
-}
-
-apply plugin: 'java'                              // standard Java tasks
-apply plugin: 'war'                               // standard Web Archive plugin
-apply plugin: 'com.google.cloud.tools.appengine'  // App Engine tasks
-apply plugin: 'org.springframework.boot'
-apply plugin: 'io.spring.dependency-management'
-apply plugin: 'jacoco'
-
-dependencies {
-	compile 'com.google.appengine:appengine-api-1.0-sdk:+'  // Latest App Engine Api's
-	providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
-
-	compile 'jstl:jstl:1.2'
-
-//  --- My dependecies ---
-	runtime 'mysql:mysql-connector-java:8.0.13'
-	compile 'com.google.cloud.sql:mysql-socket-factory:1.0.11'
-
-	compile 'org.springframework.cloud:spring-cloud-gcp-starter-sql-mysql:1.0.0.RELEASE'
-
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	runtimeOnly 'org.springframework.boot:spring-boot-devtools'
-	compileOnly 'org.projectlombok:lombok'
-	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
-//	testCompile 'org.springframework.boot:spring-boot-starter-tomcat'
-	testCompile 'org.springframework.boot:spring-boot-starter-test'
-	
-//  --- End of my dependecies ---
-
-	compile 'com.google.cloud:google-cloud:+'   // Latest Cloud API's http://googlecloudplatform.github.io/google-cloud-java
-
-	testCompile 'junit:junit:4.12'
-	testCompile 'com.google.truth:truth:0.33'
-	testCompile 'org.mockito:mockito-all:1.10.19'
-
-	testCompile 'com.google.appengine:appengine-testing:+'
-	testCompile 'com.google.appengine:appengine-api-stubs:+'
-	testCompile 'com.google.appengine:appengine-tools-sdk:+'
-}
-
-// Always run unit tests
-appengineDeploy.dependsOn test
-appengineStage.dependsOn test
-
-// [START model]
-appengine {  // App Engine tasks configuration
-	deploy {   // deploy configuration
-		version = '1'
-		project = 'adventure-game-228714'
-	}
-}
-
-test {
-	useJUnit()
-	testLogging.showStandardStreams = true
-	beforeTest { descriptor ->
-		logger.lifecycle("test: " + descriptor + "  Running")
-	}
-
-	onOutput { descriptor, event ->
-		logger.lifecycle("test: " + descriptor + ": " + event.message )
-	}
-	afterTest { descriptor, result ->
-		logger.lifecycle("test: " + descriptor + ": " + result )
-	}
-}
-
-jacoco {
-	toolVersion = "0.8.2"
-}
-
-jacocoTestReport {
-	reports {
-		xml.enabled true
-		html.enabled true
-	}
-}
-
-// [END model]
 
 group = 'com.tkjavadev'
 version = '0.0.1-SNAPSHOT'
 
-sourceCompatibility = 1.8     // App Engine Flexible uses Java 8
-targetCompatibility = 1.8     // App Engine Flexible uses Java 8
+java {
+	sourceCompatibility = JavaVersion.VERSION_17
+	targetCompatibility = JavaVersion.VERSION_17
+}
 
-check.dependsOn jacocoTestReport
-// [END gradle]
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	// In-memory DB used by default; MySQL driver for the optional "mysql" profile
+	runtimeOnly 'com.h2database:h2'
+	runtimeOnly 'com.mysql:mysql-connector-j'
+
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	// Existing tests are JUnit 4 - run them on the JUnit Platform via the vintage engine
+	testImplementation 'junit:junit:4.13.2'
+	testRuntimeOnly 'org.junit.vintage:junit-vintage-engine'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.withType(JavaCompile).configureEach {
+	options.encoding = 'UTF-8'
+	options.release = 17
+}
+
+test {
+	useJUnitPlatform()
+	finalizedBy jacocoTestReport
+}
+
+jacoco {
+	toolVersion = '0.8.13'
+}
+
+jacocoTestReport {
+	dependsOn test
+	reports {
+		xml.required = true
+		html.required = true
+	}
+}

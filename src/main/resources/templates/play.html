@@ -11,20 +11,20 @@
 <body>    
 <div class="row bordered inventory">
     <h2 class="fieldtitle">INVENTORY</h2>
-    <h3 th:text="${__${T(com.tkjavadev.adventuregame.util.AttributeNames).INVENTORY}__}">Inventory</h3>
+    <h3 th:text="${inventory}">Inventory</h3>
 </div>
 <div class="row bordered">
     <h2 class="fieldtitle">LOCATION</h2>
-    <h3 class="container" th:text="${__${T(com.tkjavadev.adventuregame.util.AttributeNames).DESCRIPTION}__}">
+    <h3 class="container" th:text="${description}">
         He determined to drop his litigation with the monastry, and relinguish his claims to the wood-cuting and fishery rihgts at once. He was the more ready to do this becuase the rights had becom much less valuable, and he had indeed the vaguest idea where the wood and river in quedtion were.</h3>
     </div>
     <div class="row bordered">
         <h2 class="fieldtitle">DIRECTIONS</h2>
         <div>
         <table>
-        <h4 class="inline"><a class="btn-solid" th:href="@{__${T(com.tkjavadev.adventuregame.util.GameMappings).EXIT}__}">QUIT</a></h4>
+        <h4 class="inline"><a class="btn-solid" th:href="@{/exit}">QUIT</a></h4>
         <tr th:each="gate:${gates}">
-            <form th:action="@{__${T(com.tkjavadev.adventuregame.util.GameMappings).CHANGE}__}" method="post">
+            <form th:action="@{/change}" method="post">
                 <input type="hidden" th:value="${gate.getDirection()}" id="direction" name="direction"/>
                 <button class="btn" type="submit" value="value" th:text="${gate.getFullName()}">DIRECTION</button>
             </form>
@@ -32,7 +32,7 @@
     </table>
         </div>
         <div class="message">
-    <h3 class="messagetext" id="msgGate" th:text="${__${T(com.tkjavadev.adventuregame.util.AttributeNames).GATE_MESSAGE}__}">GATE MESSAGE GATE MESSAGE</h3>
+    <h3 class="messagetext" id="msgGate" th:text="${gate_message}">GATE MESSAGE GATE MESSAGE</h3>
         </div>
 </div>
 <div class="row bordered" id="items">
@@ -40,7 +40,7 @@
     <div>
     <table>
         <tr th:each="item:${items}">
-            <form th:action="@{__${T(com.tkjavadev.adventuregame.util.GameMappings).ADD}__}" method="post">
+            <form th:action="@{/add}" method="post">
                 <input type="hidden" th:value="${item.getName()}" id="item" name="item"/>
                 <button class="btn" type="submit" value="value" th:text="${item.getName()}">ITEM</button>
             </form>
@@ -48,7 +48,7 @@
     </table>
         </div>
         <div class="message">
-    <h3 class="messagetext" id="msgItem" th:text="${__${T(com.tkjavadev.adventuregame.util.AttributeNames).ITEM_MESSAGE}__}">ITEM MESSAGE ITEM MESSAGE</h3>
+    <h3 class="messagetext" id="msgItem" th:text="${item_message}">ITEM MESSAGE ITEM MESSAGE</h3>
     </div>
 </div>
 <div>
@@ -57,6 +57,5 @@
     </footer>
 </div>
     <script src="js/script.js"></script>
-    <script src="js/jquery.js"></script>
 </body>
 </html>
