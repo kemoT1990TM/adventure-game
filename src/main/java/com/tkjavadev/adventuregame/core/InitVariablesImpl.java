@@ -2,7 +2,6 @@ package com.tkjavadev.adventuregame.core;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.annotation.SessionScope;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -11,7 +10,6 @@ import java.util.List;
 import java.util.Set;
 
 @Component
-@SessionScope
 public class InitVariablesImpl implements InitVariables, Serializable {
     // == fields ==
     private Long locationId;
@@ -21,8 +19,8 @@ public class InitVariablesImpl implements InitVariables, Serializable {
 
     // == constructors ==
     @Autowired
-    public InitVariablesImpl(@LocId Long locationId) {
-        this.locationId = locationId;
+    public InitVariablesImpl() {
+        this.locationId = 1L;
         locIds=new HashSet<>();
         locIds.add(locationId);
         this.inventory=new ArrayList<>();
@@ -60,10 +58,13 @@ public class InitVariablesImpl implements InitVariables, Serializable {
         return locIds.size()-1;
     }
 
-    public void addToInventory(String item){
+    public void addItem(String item){
         inventory.add(item);
     }
 
+    public void dropItem(String item){
+        inventory.remove(item);
+    }
     /*
     Checking if inventory is containing specified item
      */
@@ -103,7 +104,7 @@ public class InitVariablesImpl implements InitVariables, Serializable {
         if(checkInventory("FOOD")) itemPoints += 5;
         if(checkInventory("BOOTLE")) itemPoints += 5;
         if(checkInventory("GOLD")) itemPoints += 32;
-        if(checkInventory("JEWELERY")) itemPoints += 40;
+        if(checkInventory("JEWELRY")) itemPoints += 40;
         if(checkInventory("SILVER")) itemPoints += 28;
         if(checkInventory("DIAMONDS")) itemPoints += 64;
         if(checkInventory("COINS")) itemPoints += 20;

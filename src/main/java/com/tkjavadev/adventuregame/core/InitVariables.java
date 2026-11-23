@@ -14,7 +14,9 @@ public interface InitVariables {
 
     void reset();
 
-    void addToInventory(String item);
+    void addItem(String item);
+
+    void dropItem(String item);
 
     boolean checkInventory(String item);
 

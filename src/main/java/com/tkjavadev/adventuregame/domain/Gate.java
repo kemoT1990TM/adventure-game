@@ -1,18 +1,19 @@
 package com.tkjavadev.adventuregame.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
+@Document
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class,property="id")
 public class Gate {
 
     // == fields ==
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+    private String id;
     private Long locId;
     private String direction;
     private Long destId;
@@ -132,5 +133,17 @@ public class Gate {
 
     public void setRequired(String required) {
         this.required = required;
+    }
+
+    public Gate getInstance(){
+        return this;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

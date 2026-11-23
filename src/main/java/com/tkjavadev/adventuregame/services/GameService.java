@@ -1,29 +1,37 @@
 package com.tkjavadev.adventuregame.services;
 
+import com.tkjavadev.adventuregame.core.InitVariables;
 import com.tkjavadev.adventuregame.domain.Gate;
 import com.tkjavadev.adventuregame.domain.Item;
+import com.tkjavadev.adventuregame.domain.Location;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 
 public interface GameService {
 
-    String getDescription();
+    Mono<String> getDescription();
 
     boolean isGameOver();
 
-    Long changeDirection(String direction);
+    Long changeDirection(Gate gate);
 
-    List<Gate> getAvailableGates();
+    Flux<Gate> getAvailableGates();
 
     void reset();
 
     Integer getVisitedLocations();
 
-    List<Item> getAvailableItems();
+    Flux<Item> getAvailableItems();
 
     String printInventory();
 
-    void addItemToInventory(String name);
+    List<String> getInventory();
+
+    void addItemToInventory(Item item);
+
+    void dropItem(Item item);
 
     String getItemMessage();
 
@@ -36,4 +44,10 @@ public interface GameService {
     Integer getScore();
 
     String getRank();
+
+    InitVariables getInitVariables();
+
+    void setInitVariables(InitVariables initVariables);
+
+    Mono<Location> getLocation();
 }

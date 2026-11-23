@@ -1,14 +1,14 @@
 package com.tkjavadev.adventuregame.services;
 
-import com.tkjavadev.adventuregame.domain.Item;
 import com.tkjavadev.adventuregame.domain.Location;
+import reactor.core.publisher.Mono;
 
 public interface LocationService {
 
-    Location getLocationById(Long id);
+    Mono<Location> getLocationByLocId(Long locId);
 
-    void saveLocation(Location location);
+    Mono<Void> saveLocation(Location location);
 
-    Item getItemByLocIdAndName(Long id, String name);
+    Mono<String> getDescriptionByLocId(Long locId);
 
 }

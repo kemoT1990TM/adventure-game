@@ -1,3 +1,0 @@
-create table location (id bigint not null auto_increment, description longtext, primary key (id)) engine=InnoDB;
-create table gate (id bigint not null auto_increment, dest_id bigint, direction varchar(255), loc_id bigint, primary key (id)) engine=InnoDB;
-create table item (id bigint not null auto_increment, loc_id bigint, name varchar(255), description varchar(255), required varchar(255),primary key (id)) engine=InnoDB;

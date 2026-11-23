@@ -1,45 +1,44 @@
 package com.tkjavadev.adventuregame.domain;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
+@Document
 public class Location {
 
     // == fields ==
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Lob
+    private String id;
+    private Long locId;
     private String description;
-
-    @Fetch(FetchMode.JOIN)
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "locId", insertable = false, updatable = false)
-    private List<Gate> gates = new ArrayList<>();
-
-    @OneToMany
-    @JoinColumn(name = "locId", insertable = false, updatable = false)
-    private List<Item> items = new ArrayList<>();
+    private List<String> gates = new ArrayList<>();
+    private List<String> items = new ArrayList<>();
 
     // == methods ==
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public Long getLocId() {
+        return locId;
+    }
+
+    public void setLocId(Long locId) {
+        this.locId = locId;
+    }
+
+    public void setId(String id) {
         this.id = id;
     }
 
-    public List<Gate> getGates() {
+    public List<String> getGates() {
         return gates;
     }
 
-    public void setGates(List<Gate> gates) {
+    public void setGates(List<String> gates) {
         this.gates = gates;
     }
 
@@ -51,11 +50,11 @@ public class Location {
         this.description = description;
     }
 
-    public List<Item> getItems() {
+    public List<String> getItems() {
         return items;
     }
 
-    public void setItems(List<Item> items) {
+    public void setItems(List<String> items) {
         this.items = items;
     }
 }

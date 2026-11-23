@@ -1,15 +1,19 @@
 package com.tkjavadev.adventuregame.config;
 
-import com.tkjavadev.adventuregame.util.ViewNames;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+//@Configuration
+//@EnableWebFlux
+public class WebConfig {
 
-@Configuration
-public class WebConfig implements WebMvcConfigurer {
+//    @Override
+//    public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
+//        if(exchange.getRequest().getURI().getPath().equals("/")){
+//            return chain.filter(exchange.mutate().request(exchange.getRequest().mutate().path(ViewNames.HOME).build()).build());
+//        }
+//        return chain.filter(exchange);
+//    }
 
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/").setViewName(ViewNames.HOME);
-    }
+//    @Override
+//    public void addViewControllers(ViewControllerRegistry registry) {
+//        registry.addViewController("/").setViewName(ViewNames.HOME);
+//    }
 }

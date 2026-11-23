@@ -10,11 +10,13 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import reactor.core.publisher.Flux;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -28,10 +30,16 @@ public class GameServiceImplParameterizedTest {
     private Long output;
 
     @Mock
-    InitVariables initVariables;
+    private InitVariables initVariables;
 
     @Mock
-    LocationService locationService;
+    private LocationService locationService;
+
+    @Mock
+    private ItemService itemService;
+
+    @Mock
+    private GateService gateService;
 
     public GameServiceImplParameterizedTest(Long input, Long output) {
         this.input = input;
@@ -41,8 +49,8 @@ public class GameServiceImplParameterizedTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        initVariables = new InitVariablesImpl(1L);
-        gameService = new GameServiceImpl(initVariables, locationService);
+        initVariables = new InitVariablesImpl();
+        gameService = new GameServiceImpl(initVariables, locationService, gateService, itemService);
     }
 
     @Parameterized.Parameters
@@ -53,9 +61,9 @@ public class GameServiceImplParameterizedTest {
                 {303L, 20L},
                 {304L, 22L},
                 {305L, 80L},
-                {306L, 28L},
-                {307L, 29L},
-                {308L, 30L},
+                {306L, 32L},
+                {307L, 32L},
+                {308L, 32L},
                 {309L, 80L},
                 {310L, 80L},
                 {311L, 9L}
@@ -65,7 +73,7 @@ public class GameServiceImplParameterizedTest {
     @Test
     public void changeDirection() {
         Location location=new Location();
-        location.setId(1L);
+        location.setLocId(1L);
         Gate gate=new Gate();
         gate.setLocId(1L);
         gate.setDirection("E");
@@ -73,14 +81,14 @@ public class GameServiceImplParameterizedTest {
         gate.setRequired("NOT");
         List<Gate> gates=new ArrayList<>();
         gates.add(gate);
-        location.setGates(gates);
+        location.setGates(gates.stream().map(Gate::getId).collect(Collectors.toList()));
 
-        when(locationService.getLocationById(anyLong())).thenReturn(location);
+        when(gateService.getGatesByLocId(anyLong())).thenReturn(Flux.fromIterable(gates));
 
         initVariables.setLocationId(1L);
         gate.setRequired("KEYS");
 
         gate.setDestId(input);
-        assertEquals(Long.valueOf(output),gameService.changeDirection(gate.getDirection()));
+        assertEquals(Long.valueOf(output),gameService.changeDirection(gate));
     }
 }
