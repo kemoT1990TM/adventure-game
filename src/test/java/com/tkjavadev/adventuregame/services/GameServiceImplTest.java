@@ -28,7 +28,11 @@ public class GameServiceImplTest {
 
     @Mock
     private LocationService locationService;
+
+    @Mock
     private ItemService itemService;
+
+    @Mock
     private GateService gateService;
 
     @Before

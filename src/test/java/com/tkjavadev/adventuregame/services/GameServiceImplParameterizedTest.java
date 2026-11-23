@@ -34,7 +34,11 @@ public class GameServiceImplParameterizedTest {
 
     @Mock
     private LocationService locationService;
+
+    @Mock
     private ItemService itemService;
+
+    @Mock
     private GateService gateService;
 
     public GameServiceImplParameterizedTest(Long input, Long output) {
